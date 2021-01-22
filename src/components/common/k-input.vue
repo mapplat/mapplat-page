@@ -3,7 +3,13 @@
     <div class="k-input-label">
       {{label}}
     </div>
-    <el-input :placeholder="placeholder" v-model="input"  @change="changeHandler"></el-input>
+    <el-input
+    :class="{'el-input-line-border': isLineBorder}"
+    :placeholder="placeholder"
+    v-model="input"
+    @change="changeHandler">
+    <slot></slot>
+    </el-input>
   </div>
 </template>
 
@@ -25,6 +31,14 @@ export default {
     rule: {
       type: Object,
       default: () => {},
+    },
+    size: {
+      type: String,
+      default: 'small',
+    },
+    isLineBorder: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -52,7 +66,15 @@ export default {
 .k-input {
   .k-input-label {
     font-size: 1.4rem;
-    padding: $s-padding 0;
+    padding: 6px 0;
+  }
+  .el-input-line-border {
+    .el-input__inner {
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+    }
   }
 }
 </style>
