@@ -4,12 +4,16 @@
       {{label}}
     </div>
     <el-input
-    :class="{'el-input-line-border': isLineBorder}"
+    :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
     :placeholder="placeholder"
+    :type="type"
     v-model="input"
     @change="changeHandler">
-    <slot></slot>
+    <template #suffix>
+      <slot name="suffix"></slot>
+    </template>
     </el-input>
+    <div class="k-input-error-tip" v-if="errorTip">{{ errorTip }}</div>
   </div>
 </template>
 
@@ -36,6 +40,10 @@ export default {
       type: String,
       default: 'small',
     },
+    type: {
+      type: String,
+      default: 'text',
+    },
     isLineBorder: {
       type: Boolean,
       default: false,
@@ -49,7 +57,8 @@ export default {
   },
   methods: {
     changeHandler(val) {
-      if (this.rule) {
+      console.log(this.rule);
+      if (this.rule && this.rule.reg) {
         const { reg, tip } = this.rule;
         if (!reg.test(val)) {
           this.errorTip = tip || 'input illegal';
@@ -64,9 +73,10 @@ export default {
 </script>
 <style lang="scss">
 .k-input {
+  position: relative;
   .k-input-label {
-    font-size: 1.4rem;
-    padding: 6px 0;
+    font-size: 1.2rem;
+    padding: 4px 0;
   }
   .el-input-line-border {
     .el-input__inner {
@@ -74,7 +84,23 @@ export default {
       border-left: 0;
       border-right: 0;
       border-radius: 0;
+      padding-left: 0;
+      padding-right: 0;
     }
+  }
+  .k-input-error {
+    .el-input__inner {
+      border-color: $red;
+    }
+  }
+  .k-input-error-tip {
+    position: absolute;
+    left: 0px;
+    font-size: 12px;
+    color: $red;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>

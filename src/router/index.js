@@ -1,7 +1,6 @@
-import VueRouter from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 
-const { createRouter, createWebHashHistory } = VueRouter;
 const routes = [
   {
     path: '/',
@@ -43,9 +42,4 @@ const router = createRouter({
 //   logout(to.path);
 // });
 
-// 忽略路由重复错误
-const originalPush = VueRouter.prototype.push;
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch((err) => err);
-};
 export default router;

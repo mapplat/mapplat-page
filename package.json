@@ -10,7 +10,9 @@
     "report": "vue-cli-service build --report"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "element-plus": "^1.0.1-beta.26",
+    "qs": "^6.9.6",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
@@ -40,7 +42,9 @@
     },
     "rules": {
       "no-param-reassign": "off",
-      "no-console": "off"
+      "no-console": "off",
+      "max-len": 0,
+      "func-names": "off"
     }
   },
   "browserslist": [
