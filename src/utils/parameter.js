@@ -156,7 +156,7 @@ class Parameter {
       // convert
       const isConvert = 'convert' in rule ? rule.convert : this.convert;
       if (isConvert) {
-        this.convert(rule, obj, key);
+        this.convertValue(rule, obj, key);
       }
 
       // 检查参数是否合法
@@ -179,9 +179,10 @@ class Parameter {
     return null;
   }
 
-  // addRule(type, check, override, convertType){
+  addRule(type, check) {
+    TYPE_MAP[type] = check;
+  }
 
-  // }
   formatRule(rule) {
     rule = rule || {};
     if (typeof rule === 'string') {
@@ -194,7 +195,7 @@ class Parameter {
     return rule;
   }
 
-  convert(rule, obj, key) {
+  convertValue(rule, obj, key) {
     const convertType = rule.convertType || CONVERT_MAP[rule.type];
     const value = obj[key];
 
