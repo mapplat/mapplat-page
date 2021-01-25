@@ -37,6 +37,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@c_kai/parameter@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@c_kai/parameter/download/@c_kai/parameter-2.0.0.tgz#ebe0b953f328d1424b38dcebc840bb68b8e23d41"
+  integrity sha1-6+C5U/Mo0UJLONzryEC7aLjiPUE=
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

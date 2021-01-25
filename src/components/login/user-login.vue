@@ -69,7 +69,7 @@
       ref="verifycode"
       v-model="verifycode">
       <template #suffix>
-        <span @click="getVerifycode" class="verifycode-content verifycode-content-active">{{verifycodeMsg}}</span>
+        <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
       </template>
       </KInput>
       <KInput
@@ -146,9 +146,16 @@ export default {
       const result = await userAPI.signup(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('注册成功');
+
+        this.toSignin();
       } else {
         this.$error('注册失败', result);
       }
+    },
+    toSignin() {
+      this.type = 'signin';
+      this.password = null;
+      this.verifycode = null;
     },
     async signin() {
       const params = {
@@ -183,11 +190,14 @@ export default {
       const result = await userAPI.updatePassworld(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('修改密码成功');
+
+        this.toSignin();
       } else {
         this.$error('修改密码失败', result);
       }
     },
     async getVerifycode() {
+      if (!this.isCanVerifycode) return;
       const params = {
         email: this.email,
       };
@@ -256,8 +266,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: not-allowed;
     color: $light-gray;
+    cursor: not-allowed;
   }
   .verifycode-content-active {
     color: $primary;
