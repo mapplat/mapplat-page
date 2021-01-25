@@ -9,15 +9,18 @@
       :isLineBorder="true"
       class="sx-m-padding"
       label="邮箱"
+      ref="email"
       :rule="rules.email"
       v-model="email">
       </KInput>
-      <div class="forget-passworld" @click="type = 'passworld'">忘记密码?</div>
+      <div class="forget-password" @click="type = 'password'">忘记密码?</div>
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
+      :rule="rules.password"
       label="密码"
-      v-model="passworld">
+      ref="password"
+      v-model="password">
       </KInput>
     </div>
     <div class="user-info-wrapper" v-if="type === 'signup'">
@@ -25,12 +28,16 @@
       :isLineBorder="true"
       class="sx-m-padding"
       label="邮箱"
+      ref="email"
+      :rule="rules.email"
       v-model="email">
       </KInput>
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
       label="验证码"
+      :rule="rules.verifycode"
+      ref="verifycode"
       v-model="verifycode">
       <template #suffix>
         <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
@@ -40,20 +47,26 @@
       :isLineBorder="true"
       class="sx-m-padding"
       label="密码"
-      v-model="passworld">
+      :rule="rules.password"
+      ref="password"
+      v-model="password">
       </KInput>
     </div>
-    <div class="user-info-wrapper" v-if="type === 'passworld'">
+    <div class="user-info-wrapper" v-if="type === 'password'">
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
       label="邮箱"
+      :rule="rules.email"
+      ref="email"
       v-model="email">
       </KInput>
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
       label="验证码"
+      :rule="rules.verifycode"
+      ref="verifycode"
       v-model="verifycode">
       <template #suffix>
         <span @click="getVerifycode" class="verifycode-content verifycode-content-active">{{verifycodeMsg}}</span>
@@ -63,7 +76,9 @@
       :isLineBorder="true"
       class="sx-m-padding"
       label="密码"
-      v-model="passworld">
+      :rule="rules.password"
+      ref="password"
+      v-model="password">
       </KInput>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signin'">
@@ -74,8 +89,8 @@
       <el-button type="primary" @click="signup">注册账号</el-button>
       <el-button plain @click="type = 'signin'">返回登录</el-button>
     </div>
-    <div class="user-option-wrapper" v-if="type === 'passworld'">
-      <el-button type="primary" @click="signin">修改密码</el-button>
+    <div class="user-option-wrapper" v-if="type === 'password'">
+      <el-button type="primary" @click="updatePassworld">修改密码</el-button>
       <el-button plain @click="type = 'signin'">返回登录</el-button>
     </div>
   </div>
@@ -84,6 +99,7 @@
 
 import KInput from '@/components/common/k-input.vue';
 import userAPI from '@/apis/user';
+import paramsRules from '@/utils/paramsRules';
 
 const verifycodeMsgConfig = {
   true: '获取验证码',
@@ -91,11 +107,11 @@ const verifycodeMsgConfig = {
 };
 
 const rules = {
-  email: {
-    reg: /\d/,
-    tip: '邮箱不合法',
-  },
+  email: paramsRules.email,
+  password: paramsRules.password,
+  verifycode: paramsRules.verifycode,
 };
+
 export default {
   components: {
     KInput,
@@ -108,8 +124,7 @@ export default {
   data() {
     return {
       email: null,
-      passworld: null,
-      repeatPassworld: null,
+      password: null,
       verifycode: null,
       isCanVerifycode: true,
       verifycodeMsg: '获取验证码',
@@ -118,48 +133,85 @@ export default {
   },
   methods: {
     async signup() {
-      const result = await userAPI.signup();
+      const params = {
+        email: this.email,
+        verifycode: this.verifycode,
+        password: this.password,
+      };
+      if (this.$validateRefs()) {
+        this.$error('参数不合法');
+        return;
+      }
+
+      const result = await userAPI.signup(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('注册成功');
-        this.close();
       } else {
         this.$error('注册失败', result);
       }
     },
     async signin() {
-      const result = await userAPI.signin();
+      const params = {
+        email: this.email,
+        password: this.password,
+      };
+
+      const errors = this.$validateRefs();
+      if (errors) {
+        this.$error('参数不合法');
+        return;
+      }
+
+      const result = await userAPI.signin(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('登录成功');
-        this.close();
       } else {
         this.$error('登录失败', result);
       }
     },
-    async changePassworld() {
-      const result = await userAPI.signin();
+    async updatePassworld() {
+      const params = {
+        email: this.email,
+        verifycode: this.verifycode,
+        password: this.password,
+      };
+      if (this.$validateRefs()) {
+        this.$error('参数不合法');
+        return;
+      }
+
+      const result = await userAPI.updatePassworld(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('修改密码成功');
-        this.close();
       } else {
         this.$error('修改密码失败', result);
       }
     },
     async getVerifycode() {
-      const result = await userAPI.getVerifycode();
+      const params = {
+        email: this.email,
+      };
+      if (this.$validateRefs(['email'])) {
+        this.$error('参数不合法');
+        return;
+      }
+
+      const result = await userAPI.getVerifycode(params);
       if (result && result.data && result.data.code === 0) {
         this.$success('验证码已发送到邮箱');
-        this.close();
       } else {
         this.$error('验证码发送到失败', result);
+        return;
       }
       this.isCanVerifycode = false;
       let times = 60;
       this.verifycodeMsg = `${times}${verifycodeMsgConfig[this.isCanVerifycode]}`;
       const interval = setInterval(() => {
-        if (times === 0) {
+        if (times <= 0) {
           clearInterval(interval);
           this.isCanVerifycode = true;
           this.verifycodeMsg = verifycodeMsgConfig[this.isCanVerifycode];
+          return;
         }
         times -= 1;
         this.verifycodeMsg = `${times}${verifycodeMsgConfig[this.isCanVerifycode]}`;
@@ -190,7 +242,7 @@ export default {
     margin: 0 1.5rem;
   }
   .user-option-wrapper {
-    margin: 0 1.5rem;
+    margin: 12px 1.5rem;
 
     .el-button {
       width: 100%;
@@ -204,19 +256,21 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $primary;
     cursor: not-allowed;
+    color: $light-gray;
   }
   .verifycode-content-active {
-    color: $light-gray;
-    cursor: pointer;
-  }
-  .forget-passworld {
-    position: relative;
-    text-align: right;
-    top: 36px;
     color: $primary;
     cursor: pointer;
+  }
+  .forget-password {
+    position: relative;
+    float: right;
+    text-align: right;
+    top: 16px;
+    color: $primary;
+    cursor: pointer;
+    z-index: 9;
   }
 }
 </style>

@@ -10,6 +10,7 @@
     "report": "vue-cli-service build --report"
   },
   "dependencies": {
+    "@c_kai/parameter": "^2.0.0",
     "axios": "^0.21.1",
     "element-plus": "^1.0.1-beta.26",
     "qs": "^6.9.6",
@@ -44,7 +45,9 @@
       "no-param-reassign": "off",
       "no-console": "off",
       "max-len": 0,
-      "func-names": "off"
+      "func-names": "off",
+      "import/ignore": "off",
+      "no-underscore-dangle": "off"
     }
   },
   "browserslist": [

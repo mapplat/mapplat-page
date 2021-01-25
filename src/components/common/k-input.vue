@@ -8,7 +8,8 @@
     :placeholder="placeholder"
     :type="type"
     v-model="input"
-    @change="changeHandler">
+    @input="validate"
+    @change="validate">
     <template #suffix>
       <slot name="suffix"></slot>
     </template>
@@ -28,7 +29,7 @@ export default {
       type: String,
       default: null,
     },
-    value: {
+    modelValue: {
       type: String,
       default: null,
     },
@@ -52,21 +53,22 @@ export default {
   data() {
     return {
       errorTip: null,
-      input: this.value,
+      input: this.modelValue,
     };
   },
   methods: {
-    changeHandler(val) {
-      console.log(this.rule);
-      if (this.rule && this.rule.reg) {
-        const { reg, tip } = this.rule;
-        if (!reg.test(val)) {
-          this.errorTip = tip || 'input illegal';
-          return;
+    validate() {
+      let errorTip = null;
+      if (this.rule && this.rule.format) {
+        const { format, msg } = this.rule;
+        if (!format.test(this.input)) {
+          errorTip = msg || 'input illegal';
         }
       }
-      this.errorTip = null;
-      this.$emit('update:value', val);
+
+      this.errorTip = errorTip;
+      this.$emit('update:modelValue', this.input);
+      return errorTip;
     },
   },
 };

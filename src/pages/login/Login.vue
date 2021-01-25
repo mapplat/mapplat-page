@@ -11,7 +11,7 @@ export default {
   components: {
     UserLogin,
   },
-  data() {
+  setup() {
     return {
       loginBg,
     };
