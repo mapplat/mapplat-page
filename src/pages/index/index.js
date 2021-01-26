@@ -16,6 +16,7 @@ import App from './Index.vue';
 
   if (result && result.data && result.data.code === 0) {
     app.config.globalProperties.$user = result.data.data;
+    router.$user = result.data.data;
   } else {
     logout();
     return;

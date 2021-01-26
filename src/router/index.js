@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import { logout } from '@/utils/utils';
+import Home from '@/views/Home.vue';
 
 const routes = [
   {
@@ -14,7 +15,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component() {
-      return import(/* webpackChunkName: "about" */ '../views/About.vue');
+      return import(/* webpackChunkName: "about" */ '@/views/About.vue');
     },
   },
 ];
@@ -24,22 +25,11 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   let userinfo = localStorage.getItem('userinfo');
-//   if (userinfo) {
-//     userinfo = JSON.parse(userinfo);
-//     const { meta } = to;
-//     if (meta && meta.role) {
-//       if (meta.role.indexOf(userinfo.role) === -1) {
-//         router.push({
-//           path: '/no-authority',
-//         });
-//         return;
-//       }
-//     }
-//     return next();
-//   }
-//   logout(to.path);
-// });
+router.beforeEach(async (to, from, next) => {
+  if (router.$user) {
+    return next();
+  }
+  return logout();
+});
 
 export default router;
