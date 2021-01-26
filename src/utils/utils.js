@@ -6,10 +6,11 @@ function getType(data) {
 
 async function logout(to = '') {
   localStorage.removeItem('token');
-  await userAPI.logout();
+  await userAPI.signout();
   window.open(`/login.html?to=${to}`, '_self');
 }
-export default {
+
+export {
   getType,
   logout,
 };

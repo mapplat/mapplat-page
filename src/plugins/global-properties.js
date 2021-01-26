@@ -1,4 +1,4 @@
-import utils from '@/utils/utils';
+import { logout } from '@/utils/utils';
 import Parameter from '@c_kai/parameter';
 
 const parameter = new Parameter();
@@ -23,7 +23,7 @@ export default {
           case 102: {
             message = '会话已失效请重新登陆';
             setTimeout(() => {
-              utils.logout();
+              logout();
             }, 1500);
             break;
           }

@@ -4,6 +4,9 @@ import qs from 'qs';
 const instance = axios.create({
   baseURL: '/api',
   timeout: 25000,
+  headers: {
+    token: localStorage.getItem('token'),
+  },
   paramsSerializer(params) {
     return qs.stringify(params);
   },

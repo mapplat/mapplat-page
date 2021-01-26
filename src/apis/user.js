@@ -1,6 +1,9 @@
 import instance from './instance';
 
 const user = {
+  info() {
+    return instance.get('/user/info');
+  },
   signin(params) {
     return instance.post('/user/signin', params);
   },

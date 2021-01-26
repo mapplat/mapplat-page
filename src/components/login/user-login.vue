@@ -120,13 +120,15 @@ export default {
     KInput,
   },
   setup() {
+    const loginUsername = localStorage.getItem('login_username');
     return {
+      loginUsername,
       rules,
     };
   },
   data() {
     return {
-      email: null,
+      email: this.loginUsername,
       password: null,
       verifycode: null,
       isCanVerifycode: true,
@@ -173,8 +175,14 @@ export default {
       }
 
       const result = await userAPI.signin(params);
+      localStorage.setItem('login_username', this.email);
       if (result && result.data && result.data.code === 0) {
         this.$success('登录成功');
+        localStorage.setItem('token', result.data.data.token);
+
+        setTimeout(() => {
+          window.open('/', '_self');
+        }, 300);
       } else {
         this.$error('登录失败', result);
       }

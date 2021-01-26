@@ -3,14 +3,28 @@ import router from '@/router';
 import elementPlusPlugins from '@/plugins/element-plus';
 import componentPlugins from '@/plugins/component';
 import globalProperties from '@/plugins/global-properties';
+import userAPI from '@/apis/user';
+import { logout } from '@/utils/utils';
 
 import '@/assets/style/index.scss';
 import App from './Index.vue';
 
-const app = createApp(App);
-app.config.productionTip = false;
-app.use(router);
-app.use(elementPlusPlugins);
-app.use(componentPlugins);
-app.use(globalProperties);
-app.mount('#app');
+(async () => {
+  const app = createApp(App);
+
+  const result = await userAPI.info();
+
+  if (result && result.data && result.data.code === 0) {
+    app.config.globalProperties.$user = result.data.data;
+  } else {
+    logout();
+    return;
+  }
+
+  app.config.productionTip = false;
+  app.use(router);
+  app.use(elementPlusPlugins);
+  app.use(componentPlugins);
+  app.use(globalProperties);
+  app.mount('#app');
+})();

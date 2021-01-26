@@ -3,21 +3,13 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
+  <div>
+    {{$user}}
+  </div>
   <router-view/>
 </template>
 <script>
-export default {
-  methods: {
-    info() {
-      console.log(this);
-      // this.$message.info('hello');
-      this.$message.success({
-        message: '恭喜你，这是一条成功消息',
-        type: 'success',
-      });
-    },
-  },
-};
+export default {};
 </script>
 <style lang="scss">
 

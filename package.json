@@ -18,6 +18,7 @@
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-umd": "^7.12.1",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -46,7 +47,7 @@
       "no-console": "off",
       "max-len": 0,
       "func-names": "off",
-      "import/ignore": "off",
+      "import/named": "off",
       "no-underscore-dangle": "off"
     }
   },
