@@ -13,13 +13,14 @@
       :rule="rules.email"
       v-model="email">
       </KInput>
-      <div class="forget-password" @click="type = 'password'">忘记密码?</div>
+      <div class="forget-password" @click="forgetPassword">忘记密码?</div>
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
       :rule="rules.password"
       label="密码"
       ref="password"
+      type="password"
       v-model="password">
       </KInput>
     </div>
@@ -49,6 +50,7 @@
       label="密码"
       :rule="rules.password"
       ref="password"
+      type="password"
       v-model="password">
       </KInput>
     </div>
@@ -78,6 +80,7 @@
       label="密码"
       :rule="rules.password"
       ref="password"
+      type="password"
       v-model="password">
       </KInput>
     </div>
@@ -175,6 +178,12 @@ export default {
       } else {
         this.$error('登录失败', result);
       }
+    },
+    forgetPassword() {
+      this.type = 'signin';
+      this.password = null;
+      this.verifycode = null;
+      this.type = 'password';
     },
     async updatePassworld() {
       const params = {
