@@ -21,6 +21,7 @@
       label="密码"
       ref="password"
       type="password"
+      @keyupEnter="signin"
       v-model="password">
       </KInput>
     </div>
@@ -51,6 +52,7 @@
       :rule="rules.password"
       ref="password"
       type="password"
+      @keyupEnter="signup"
       v-model="password">
       </KInput>
     </div>
@@ -81,6 +83,7 @@
       :rule="rules.password"
       ref="password"
       type="password"
+      @keyupEnter="updatePassworld"
       v-model="password">
       </KInput>
     </div>

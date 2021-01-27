@@ -8,8 +8,8 @@
     :placeholder="placeholder"
     :type="type"
     v-model="input"
-    @input="validate"
-    @change="validate">
+    @keyup.enter="$emit('keyupEnter')"
+    @input="validate">
     <template #suffix>
       <slot name="suffix"></slot>
     </template>
