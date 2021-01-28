@@ -1,4 +1,4 @@
-import KIcon from '@/components/common/k-icon.vue';
+import KIcon from '@/components/common/k-icon';
 
 const components = {
   KIcon,

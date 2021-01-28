@@ -13,6 +13,7 @@
     "@c_kai/parameter": "^2.0.0",
     "axios": "^0.21.1",
     "element-plus": "^1.0.1-beta.26",
+    "mitt": "^2.1.0",
     "qs": "^6.9.6",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
@@ -49,7 +50,15 @@
       "func-names": "off",
       "import/named": "off",
       "no-underscore-dangle": "off",
-      "vue/no-setup-props-destructure": "off"
+      "vue/no-setup-props-destructure": "off",
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          "js": "never",
+          "vue": "never"
+        }
+      ]
     }
   },
   "browserslist": [

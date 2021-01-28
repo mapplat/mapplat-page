@@ -4,8 +4,11 @@ import {
   ElFormItem,
   ElInput,
   ElSelect,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItem,
+  ElMenuItemGroup,
   ElNotification,
-  ElMessage,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import '@/assets/style/reset-element.scss';
@@ -17,8 +20,11 @@ const components = [
   ElFormItem,
   ElInput,
   ElSelect,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItem,
+  ElMenuItemGroup,
   ElNotification,
-  ElMessage,
 ];
 
 export default {

@@ -7,7 +7,7 @@ import userAPI from '@/apis/user';
 import { logout } from '@/utils/utils';
 
 import '@/assets/style/index.scss';
-import App from './Index.vue';
+import App from './index.vue';
 
 (async () => {
   const app = createApp(App);

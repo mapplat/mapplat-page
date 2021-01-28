@@ -5,7 +5,7 @@
 </template>
 <script>
 import loginBg from '@/assets/imgs/login-bg.png';
-import UserLogin from '@/components/login/user-login.vue';
+import UserLogin from '@/components/login/user-login';
 
 export default {
   components: {

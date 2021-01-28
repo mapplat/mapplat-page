@@ -3,7 +3,7 @@ import elementPlusPlugins from '@/plugins/element-plus';
 import componentPlugins from '@/plugins/component';
 import globalProperties from '@/plugins/global-properties';
 import '@/assets/style/index.scss';
-import App from './Login.vue';
+import App from './login.vue';
 
 const app = createApp(App);
 app.config.productionTip = false;

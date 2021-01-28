@@ -1,9 +1,11 @@
+import mitt from 'mitt';
 import Parameter from '@c_kai/parameter';
 import { logout } from '@/utils/utils';
 
 const parameter = new Parameter();
 export default {
   install(app) {
+    app.config.globalProperties.$bus = mitt();
     app.config.globalProperties.parameter = parameter;
     app.config.globalProperties.logout = logout;
     app.config.globalProperties.$validateRefs = function (refs) {

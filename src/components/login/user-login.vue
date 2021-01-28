@@ -103,7 +103,7 @@
 </template>
 <script>
 
-import KInput from '@/components/common/k-input.vue';
+import KInput from '@/components/common/k-input';
 import userAPI from '@/apis/user';
 import paramsRules from '@/utils/paramsRules';
 
