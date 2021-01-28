@@ -2,11 +2,14 @@
   <div class="left-nav">
     <div class="k-logo">
       <k-icon icon="icon-logo" :size="42"></k-icon>
-      <span v-show="!isCollapse" class="title">MapPlat</span>
+      <span v-show="!collapse" class="title">MapPlat</span>
     </div>
     <div class="left-nav-content">
-      <LeftMenu :collapse="isCollapse"></LeftMenu>
+      <LeftMenu :collapse="collapse"></LeftMenu>
     </div>
+    <!-- <div @click="changeCollapse" class="waitch-collapse" :style="{'justify-content':collapse ? 'center' : 'flex-end'}">
+      <k-icon :icon="collapse ? 'icon-youjiantou' : 'icon-zuojiantou'" :size="28"></k-icon>
+    </div> -->
   </div>
 </template>
 
@@ -19,13 +22,13 @@ export default {
   },
   data() {
     return {
-      isCollapse: false,
+      collapse: false,
     };
   },
   created() {
     this.$bus.off('update-menu-collapse');
     this.$bus.on('update-menu-collapse', (val) => {
-      this.isCollapse = val;
+      this.collapse = val;
     });
   },
 };
@@ -33,6 +36,7 @@ export default {
 
 <style lang="scss">
 .left-nav{
+  position: relative;
   background-color: $black;
   height: 100%;
 
@@ -41,8 +45,7 @@ export default {
     justify-content: center;
     align-items: center;
     height: $top-bar-height;
-    padding-left: 24px;
-    padding-right: 24px;
+    padding: 0 24px;
     background-color: $black;
     .title {
       font-size: 2rem;
@@ -53,6 +56,20 @@ export default {
   }
   .left-nav-content {
     padding-top: 12px;
+  }
+  .waitch-collapse {
+    position: absolute;
+    bottom: 0;
+    height: 48px;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    color: $white;
+    &:hover {
+      color: $primary;
+    }
   }
 }
 </style>

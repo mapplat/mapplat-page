@@ -8,6 +8,10 @@ import {
   ElSubmenu,
   ElMenuItem,
   ElMenuItemGroup,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElBadge,
   ElNotification,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
@@ -24,6 +28,10 @@ const components = [
   ElSubmenu,
   ElMenuItem,
   ElMenuItemGroup,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElBadge,
   ElNotification,
 ];
 

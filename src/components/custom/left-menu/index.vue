@@ -1,11 +1,10 @@
 <template>
-  <div
-    class="nav-menu"
-    :style="{ width: isCollapse ? '80px' : 'auto' }">
+  <div class="nav-menu">
     <el-menu
       :router="false"
       :uniqueOpened="false"
-      :collapse="isCollapse"
+      :collapse-transition="false"
+      :collapse="collapse"
       background-color="#24292e"
       text-color="#ffffff"
       active-text-color="#0B8BF4">
@@ -36,7 +35,7 @@
 
 export default {
   props: {
-    isCollapse: {
+    collapse: {
       type: Boolean,
       default: false,
     },

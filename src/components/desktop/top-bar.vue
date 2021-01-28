@@ -1,25 +1,35 @@
 <template>
   <div class="top-nav">
     <div class="left-wrapper">
-      <div class="collapse-wrapper align-center" @click="changeIsCollapse">
-        <k-icon :icon="isCollapse ? 'icon-yousuojin' : 'icon-zuosuojin'" :size="20"></k-icon>
+      <div class="collapse-wrapper align-center" @click="changeCollapse">
+        <k-icon :icon="collapse ? 'icon-yousuojin' : 'icon-zuosuojin'" :size="20"></k-icon>
       </div>
     </div>
-    <div class="right-wrapper"></div>
+    <div class="right-wrapper align-center">
+      <el-badge class="notice-wrapper zy-m-margin" :value="12">
+        <k-icon icon="icon-notice" :size="20"></k-icon>
+      </el-badge>
+      <MapplatUser class="zy-m-margin"></MapplatUser>
+    </div>
   </div>
 </template>
 
 <script>
+import MapplatUser from '@/components/custom/mapplat-user';
+
 export default {
+  components: {
+    MapplatUser,
+  },
   data() {
     return {
-      isCollapse: false,
+      collapse: false,
     };
   },
   methods: {
-    changeIsCollapse() {
-      this.isCollapse = !this.isCollapse;
-      this.$bus.emit('update-menu-collapse', this.isCollapse);
+    changeCollapse() {
+      this.collapse = !this.collapse;
+      this.$bus.emit('update-menu-collapse', this.collapse);
     },
   },
 };
@@ -40,8 +50,13 @@ export default {
     }
   }
   .right-wrapper {
+    padding-right: 24px;
     float: right;
     height: 100%;
+
+    .notice-wrapper {
+      cursor: pointer;
+    }
   }
 }
 </style>

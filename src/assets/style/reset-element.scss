@@ -4,4 +4,28 @@
 
 .el-menu {
   border: 0;
+  width: 100%;
+  .el-submenu {
+    &.is-active {
+      .el-submenu__title {
+        color: $primary !important;
+      }
+    }
+  }
 }
+// 折叠
+.el-menu--collapse {
+  .nav-title-wrapper {
+    justify-content: center;
+  }
+}
+
+
+.el-dropdown-menu{
+  padding: 6px 0;
+  .el-dropdown-menu__item{
+    padding: 0 12px;
+    min-width: 120px;
+  }
+}
+

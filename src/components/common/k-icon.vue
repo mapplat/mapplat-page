@@ -21,6 +21,11 @@ export default {
     },
     color: {
       type: String,
+      default: null,
+    },
+    margin: {
+      type: String,
+      default: null,
     },
   },
   computed: {
@@ -28,8 +33,9 @@ export default {
       return {
         width: `${this.width || this.size}px`,
         height: `${this.height || this.size}px`,
-        color: this.color || null,
+        color: this.color,
         fontSize: `${this.size}px`,
+        margin: this.margin,
       };
     },
   },

@@ -21,8 +21,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: $top-bar-height;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding:0 24px;
   background-color: $black;
   .title {
     font-size: 2rem;
