@@ -48,7 +48,8 @@
       "max-len": 0,
       "func-names": "off",
       "import/named": "off",
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "vue/no-setup-props-destructure": "off"
     }
   },
   "browserslist": [

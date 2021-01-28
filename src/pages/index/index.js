@@ -13,7 +13,6 @@ import App from './Index.vue';
   const app = createApp(App);
 
   const result = await userAPI.info();
-
   if (result && result.data && result.data.code === 0) {
     app.config.globalProperties.$user = result.data.data;
     router.$user = result.data.data;

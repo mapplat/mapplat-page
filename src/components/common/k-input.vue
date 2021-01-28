@@ -8,6 +8,7 @@
     :placeholder="placeholder"
     :type="type"
     v-model="input"
+    :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
     @input="validate">
     <template #suffix>
@@ -49,6 +50,12 @@ export default {
       type: Boolean,
       default: false,
     },
+  },
+  setup(props) {
+    const showPassword = props.type === 'password';
+    return {
+      showPassword,
+    };
   },
   data() {
     return {
