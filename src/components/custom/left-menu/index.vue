@@ -1,30 +1,22 @@
 <template>
   <div class="nav-menu">
     <el-menu
-      :router="false"
+      :router="true"
       :uniqueOpened="false"
       :collapse-transition="false"
       :collapse="collapse"
       background-color="#24292e"
       text-color="#ffffff"
       active-text-color="#0B8BF4">
-      <el-submenu index="1">
-        <template #title>
-          <div class="nav-title-wrapper">
-            <k-icon icon="icon-data" :size="20"></k-icon>
-            <span class="nav-title">数据</span>
-          </div>
-        </template>
-        <el-menu-item index="1-1">
-          我的数据
-        </el-menu-item>
-        <el-menu-item index="1-2">
-          公共数据
-        </el-menu-item>
-      </el-submenu>
-      <el-menu-item index="2">
+      <el-menu-item index="/desktop/datasets">
         <div class="nav-title-wrapper">
-          <k-icon icon="icon-map_pro" :size="20"/>
+          <k-icon icon="icon-datasets" :size="20"/>
+          <span class="nav-title">数据</span>
+        </div>
+      </el-menu-item>
+      <el-menu-item index="/desktop/maps">
+        <div class="nav-title-wrapper">
+          <k-icon icon="icon-maps" :size="20"/>
           <span class="nav-title">地图</span>
         </div>
       </el-menu-item>
@@ -72,7 +64,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav-menu {
-  // min-width: 200px;
   .nav-title-wrapper {
     display: flex;
     align-items: center;

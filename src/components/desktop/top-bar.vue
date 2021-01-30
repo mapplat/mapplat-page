@@ -1,9 +1,6 @@
 <template>
   <div class="top-nav">
     <div class="left-wrapper">
-      <div class="collapse-wrapper align-center" @click="changeCollapse">
-        <k-icon :icon="collapse ? 'icon-yousuojin' : 'icon-zuosuojin'" :size="20"></k-icon>
-      </div>
     </div>
     <div class="right-wrapper align-center">
       <el-badge class="notice-wrapper zy-m-margin" :value="12">
@@ -25,12 +22,6 @@ export default {
     return {
       collapse: false,
     };
-  },
-  methods: {
-    changeCollapse() {
-      this.collapse = !this.collapse;
-      this.$bus.emit('update-menu-collapse', this.collapse);
-    },
   },
 };
 </script>

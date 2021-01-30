@@ -11,6 +11,8 @@ import {
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
   ElBadge,
   ElNotification,
 } from 'element-plus';
@@ -31,6 +33,8 @@ const components = [
   ElDropdown,
   ElDropdownItem,
   ElDropdownMenu,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
   ElBadge,
   ElNotification,
 ];

@@ -1,22 +1,65 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { logout } from '@/utils/utils';
 import Desktop from '@/components/desktop';
+import Datasets from '@/components/datasets';
+import Maps from '@/components/maps';
 
-const routes = [
-  {
-    path: '/',
-    name: 'desktop',
-    component: Desktop,
+const breadcrumbsConf = {
+  'my-data': [{
+    name: '数据',
+    path: '/desktop/datasets',
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component() {
-      return import(/* webpackChunkName: "about" */ '@/views/About.vue');
+    name: '我的数据',
+    path: '/desktop/datasets/my-data',
+  }],
+  'my-map': [{
+    name: '地图',
+    path: '/desktop/maps',
+  },
+  {
+    name: '我的数据',
+    path: '/desktop/maps/my-map',
+  }],
+};
+
+const routes = [
+  // {
+  //   path: '/',
+  //   redirect: (to) => {
+  //     console.log(to);
+  //     return { path: '/desktop' };
+  //   },
+  // },
+  {
+    path: '/desktop',
+    name: 'desktop',
+    component: Desktop,
+    children: [{
+      path: 'datasets/my-data',
+      name: 'my-data',
+      component: Datasets,
+      meta: { breadcrumbs: breadcrumbsConf['my-data'] },
     },
+    {
+      path: 'maps/my-map',
+      name: 'my-map',
+      component: Maps,
+      meta: { breadcrumbs: breadcrumbsConf['my-map'] },
+    },
+    {
+      path: '',
+      redirect: () => ({ name: 'my-data' }),
+    },
+    {
+      path: 'maps/:others*',
+      redirect: () => ({ name: 'my-map' }),
+    },
+    {
+      path: 'datasets/:others*',
+      redirect: () => ({ name: 'my-data' }),
+    },
+    ],
   },
 ];
 

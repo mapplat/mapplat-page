@@ -53,3 +53,12 @@ body {
 .zy-m-margin {
   margin: 0 12px;
 }
+
+.icon-primary {
+  color: $gray !important;
+  &:hover {
+    color: $primary !important;
+  }
+}
+
+

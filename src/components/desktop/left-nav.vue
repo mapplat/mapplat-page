@@ -1,5 +1,5 @@
 <template>
-  <div class="left-nav">
+  <div class="left-nav" :class="{'left-nav-collapse': collapse}">
     <div class="k-logo">
       <k-icon icon="icon-logo" :size="42"></k-icon>
       <span v-show="!collapse" class="title">MapPlat</span>
@@ -7,9 +7,9 @@
     <div class="left-nav-content">
       <LeftMenu :collapse="collapse"></LeftMenu>
     </div>
-    <!-- <div @click="changeCollapse" class="waitch-collapse" :style="{'justify-content':collapse ? 'center' : 'flex-end'}">
+    <div @click="changeCollapse" class="waitch-collapse">
       <k-icon :icon="collapse ? 'icon-youjiantou' : 'icon-zuojiantou'" :size="28"></k-icon>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -25,16 +25,20 @@ export default {
       collapse: false,
     };
   },
-  created() {
-    this.$bus.off('update-menu-collapse');
-    this.$bus.on('update-menu-collapse', (val) => {
-      this.collapse = val;
-    });
+  methods: {
+    changeCollapse() {
+      this.collapse = !this.collapse;
+    },
   },
 };
 </script>
 
 <style lang="scss">
+.left-nav-collapse {
+  .k-logo {
+    padding: 0 !important;
+  }
+}
 .left-nav{
   position: relative;
   background-color: $black;
@@ -47,6 +51,7 @@ export default {
     height: $top-bar-height;
     padding: 0 24px;
     background-color: $black;
+    cursor: pointer;
     .title {
       font-size: 2rem;
       font-weight: 360;
@@ -68,7 +73,7 @@ export default {
     padding: 0 24px;
     color: $white;
     &:hover {
-      color: $primary;
+      color: $primary !important;
     }
   }
 }

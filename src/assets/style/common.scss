@@ -4,3 +4,14 @@
   border-right: 0;
   border-radius: 0;
 }
+
+.component-wrapper {
+  height: 100%;
+  .el-menu--collapse {
+    padding: 0 24px;
+  }
+  .component-content {
+    height: calc(100% - 60px);
+    background-color: $light-gray;
+  }
+}
