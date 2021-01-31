@@ -10,7 +10,7 @@
           <el-dropdown-item disabled>
             <div class="mapplat-wrapper-username">{{username}}</div>
           </el-dropdown-item>
-          <el-dropdown-item command="accountManage">
+          <el-dropdown-item command="toProfile">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-user" :size="20" margin="0 6px"></k-icon>
               个人中心
@@ -51,6 +51,11 @@ export default {
           break;
         case 'accountManage':
           this.accountManage();
+          break;
+        case 'toProfile':
+          this.$router.push({
+            name: 'profile',
+          });
           break;
         default:
           break;

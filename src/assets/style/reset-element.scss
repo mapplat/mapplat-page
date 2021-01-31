@@ -29,3 +29,19 @@
   }
 }
 
+.el-button {
+  min-width: 90px;
+}
+
+
+.el-dialog {
+  min-width: 600px;
+
+  .el-dialog__close {
+    font-size: 24px;
+  }
+  .el-dialog__body{
+    padding: 20px;
+  }
+}
+

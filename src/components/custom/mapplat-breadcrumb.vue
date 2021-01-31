@@ -1,7 +1,7 @@
 <template>
   <div class="mapplat-breadcrumb no-user-select">
     <el-breadcrumb>
-      <el-breadcrumb-item :to="{ path: '/desktop' }">
+      <el-breadcrumb-item :to="{ path: '/' }">
         <k-icon icon="icon-home" :size="20"></k-icon>
       </el-breadcrumb-item>
       <el-breadcrumb-item
@@ -44,7 +44,9 @@ export default {
 
 <style lang="scss" scopen>
 .mapplat-breadcrumb {
-  padding: 12px;
+  display: flex;
+  height: 100%;
+  padding-left: 12px;
   .icon-home {
     &:hover {
       color: $primary;

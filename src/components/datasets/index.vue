@@ -15,9 +15,7 @@
     </el-menu>
     <div class="component-content">
       <keep-alive>
-        <component
-          v-bind:is="activeIndex"
-        ></component>
+        <component :is="activeIndex"></component>
       </keep-alive>
     </div>
   </div>

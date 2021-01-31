@@ -14,6 +14,7 @@ import {
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElBadge,
+  ElDialog,
   ElNotification,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
@@ -36,6 +37,7 @@ const components = [
   ElBreadcrumb,
   ElBreadcrumbItem,
   ElBadge,
+  ElDialog,
   ElNotification,
 ];
 

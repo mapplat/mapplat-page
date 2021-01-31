@@ -1,12 +1,13 @@
 <template>
   <div class="k-input">
-    <div class="k-input-label">
+    <div class="k-input-label" v-if="label">
       {{label}}
     </div>
     <el-input
     :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
     :placeholder="placeholder"
     :type="type"
+    :size="size"
     v-model="input"
     :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
@@ -47,6 +48,10 @@ export default {
       default: 'text',
     },
     isLineBorder: {
+      type: Boolean,
+      default: false,
+    },
+    round: {
       type: Boolean,
       default: false,
     },
@@ -110,6 +115,11 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .el-input__suffix {
+    display: flex;
+    align-items: center;
   }
 }
 </style>

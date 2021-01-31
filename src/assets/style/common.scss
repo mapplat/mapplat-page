@@ -7,11 +7,16 @@
 
 .component-wrapper {
   height: 100%;
-  .el-menu--collapse {
+  .el-menu {
     padding: 0 24px;
   }
   .component-content {
     height: calc(100% - 60px);
     background-color: $light-gray;
   }
+}
+
+.component-options-wrapper {
+  display: flex;
+  padding: 12px 24px;
 }

@@ -3,63 +3,78 @@ import { logout } from '@/utils/utils';
 import Desktop from '@/components/desktop';
 import Datasets from '@/components/datasets';
 import Maps from '@/components/maps';
+import Profile from '@/components/profile';
 
 const breadcrumbsConf = {
   'my-data': [{
     name: '数据',
-    path: '/desktop/datasets',
+    path: '/datasets',
   },
   {
     name: '我的数据',
-    path: '/desktop/datasets/my-data',
+    path: '/datasets/my-data',
   }],
   'my-map': [{
     name: '地图',
-    path: '/desktop/maps',
+    path: '/maps',
   },
   {
     name: '我的数据',
-    path: '/desktop/maps/my-map',
+    path: '/maps/my-map',
+  }],
+  profile: [{
+    name: '个人中心',
+    path: '/profile',
   }],
 };
 
 const routes = [
-  // {
-  //   path: '/',
-  //   redirect: (to) => {
-  //     console.log(to);
-  //     return { path: '/desktop' };
-  //   },
-  // },
   {
-    path: '/desktop',
-    name: 'desktop',
+    path: '/',
+    redirect: (to) => {
+      console.log(to);
+      return { path: '/datasets' };
+    },
+  },
+  {
+    path: '/datasets',
+    name: 'datasets',
     component: Desktop,
     children: [{
-      path: 'datasets/my-data',
+      path: '/datasets/my-data',
       name: 'my-data',
       component: Datasets,
-      meta: { breadcrumbs: breadcrumbsConf['my-data'] },
+      meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
     },
     {
-      path: 'maps/my-map',
+      path: '/datasets/:others*',
+      redirect: () => ({ name: 'my-data' }),
+    }],
+  },
+  {
+    path: '/maps',
+    name: 'maps',
+    component: Desktop,
+    children: [{
+      path: '/maps/my-map',
       name: 'my-map',
       component: Maps,
-      meta: { breadcrumbs: breadcrumbsConf['my-map'] },
+      meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
     },
     {
-      path: '',
-      redirect: () => ({ name: 'my-data' }),
-    },
-    {
-      path: 'maps/:others*',
+      path: '/maps/:others*',
       redirect: () => ({ name: 'my-map' }),
-    },
-    {
-      path: 'datasets/:others*',
-      redirect: () => ({ name: 'my-data' }),
-    },
-    ],
+    }],
+  },
+  {
+    path: '/profile',
+    component: Desktop,
+    children: [{
+      path: '',
+      name: 'profile',
+      component: Profile,
+      meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
+    }],
   },
 ];
 

@@ -1,6 +1,7 @@
 <template>
   <div class="top-nav">
     <div class="left-wrapper">
+      <MapplatBreadcrumb></MapplatBreadcrumb>
     </div>
     <div class="right-wrapper align-center">
       <el-badge class="notice-wrapper zy-m-margin" :value="12">
@@ -13,10 +14,12 @@
 
 <script>
 import MapplatUser from '@/components/custom/mapplat-user';
+import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb';
 
 export default {
   components: {
     MapplatUser,
+    MapplatBreadcrumb,
   },
   data() {
     return {

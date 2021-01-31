@@ -4,7 +4,6 @@
     <div class="right-content">
       <TopBar class="top-bar-wrapper"></TopBar>
       <div class="desktop-content">
-        <!-- <MapplatBreadcrumb></MapplatBreadcrumb> -->
         <router-view></router-view>
       </div>
     </div>
@@ -14,13 +13,11 @@
 <script>
 import LeftNav from '@/components/desktop/left-nav';
 import TopBar from '@/components/desktop/top-bar';
-// import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb';
 
 export default {
   components: {
     LeftNav,
     TopBar,
-    // MapplatBreadcrumb,
   },
 };
 </script>
