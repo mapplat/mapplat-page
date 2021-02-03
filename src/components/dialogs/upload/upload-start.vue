@@ -9,20 +9,20 @@
         <label for="select-file" class="upload-start-content"><k-icon class="zy-m-margin" icon="icon-shangchuan" :size="24"></k-icon>拖拽文件至此处或点击上传文件</label>
       </div>
       <div v-if="type === 'confirm-file'">
-        <el-collapse v-model="activeCollapse" @change="handleChange">
+        <el-collapse v-model="activeCollapse">
           <el-collapse-item name="support">
             <template #title>
               选择要上传的文件
               <k-icon icon="icon-xuanze" :size="20" margin="0 12px" color="#16BB83"></k-icon>
             </template>
-            {{formatFiles.support}}
+            <FilesTable :files="formatFiles.support" :selectable="true" @updateSelectFiles="updateSelectFiles"></FilesTable>
           </el-collapse-item>
           <el-collapse-item name="not-support">
             <template #title>
               不支持上传的文件
               <k-icon icon="icon-no" :size="20" margin="0 12px" color="#F56C6C"></k-icon>
             </template>
-            {{formatFiles.noSupport}}
+            <FilesTable :files="formatFiles.notSupport"></FilesTable>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -36,6 +36,7 @@
 
 <script>
 import KLoading from '@/components/common/k-loading';
+import FilesTable from './files-table';
 
 const limitFileSize = 100 * 1048576;
 
@@ -48,6 +49,7 @@ const stepTypes = {
 
 export default {
   components: {
+    FilesTable,
     KLoading,
   },
   setup() {
@@ -153,13 +155,10 @@ export default {
       }
 
       const files = Array.from(evt.target.files).map((val) => {
-        if (val.webkitRelativePath) {
-          val._webkitRelativePath = val.webkitRelativePath;
-        } else {
-          val._webkitRelativePath = val.name;
-        }
+        val._webkitRelativePath = val.webkitRelativePath || val.name;
         return val;
       });
+
       this.handerFiles(files);
 
       this.loading = false;
@@ -167,7 +166,6 @@ export default {
     handerFiles(files) {
       this.type = stepTypes.confirmFile;
       this.formatFiles = this.classifyFiles(files);
-      console.log(files);
     },
     getFilesTypeByName(name) {
       if (!name) return null;
@@ -179,14 +177,13 @@ export default {
       for (const file of files) {
         const fileInfo = {
           _file: file,
-          name: file._webkitRelativePath,
+          _webkitRelativePath: file._webkitRelativePath,
+          name: file.name,
           size: file.size,
-          fileName: file.name.split('.').shift(),
           type: this.getFilesTypeByName(file.name),
-          key: file._webkitRelativePath,
         };
 
-        if (fileInfo.size > limitFileSize || acceptTyles.indexOf(fileInfo.type) === -1) {
+        if (fileInfo.size > limitFileSize || acceptTyles.indexOf(`.${fileInfo.type}`) === -1) {
           notSupport.push(fileInfo);
         } else {
           support.push(fileInfo);
@@ -196,6 +193,9 @@ export default {
         support,
         notSupport,
       };
+    },
+    updateSelectFiles(files) {
+      console.log(files);
     },
   },
 };
