@@ -19,6 +19,7 @@ import {
   ElCollapseItem,
   ElTable,
   ElTableColumn,
+  ElPopover,
   ElNotification,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
@@ -46,6 +47,7 @@ const components = [
   ElCollapseItem,
   ElTable,
   ElTableColumn,
+  ElPopover,
   ElNotification,
 ];
 

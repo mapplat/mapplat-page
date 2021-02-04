@@ -5,6 +5,8 @@ import { logout } from '@/utils/utils';
 const parameter = new Parameter();
 export default {
   install(app) {
+    // app.config.globalProperties.$title = '地图板';
+    app.config.globalProperties.$title = 'mapplat';
     app.config.globalProperties.$size = 'medium';
     app.config.globalProperties.$bus = mitt();
     app.config.globalProperties.parameter = parameter;

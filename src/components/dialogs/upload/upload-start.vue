@@ -10,37 +10,29 @@
       </div>
       <div v-if="type === 'confirm-file'">
         <el-collapse v-model="activeCollapse">
-          <el-collapse-item name="support">
-            <template #title>
-              选择要上传的文件
-              <k-icon icon="icon-xuanze" :size="20" margin="0 12px" color="#16BB83"></k-icon>
-            </template>
+          <el-collapse-item title="选择要上传的文件" name="support">
             <FilesTable :files="formatFiles.support" :selectable="true" @updateSelectFiles="updateSelectFiles"></FilesTable>
           </el-collapse-item>
-          <el-collapse-item name="not-support">
-            <template #title>
-              不支持上传的文件
-              <k-icon icon="icon-no" :size="20" margin="0 12px" color="#F56C6C"></k-icon>
-            </template>
+          <el-collapse-item title="不支持上传的文件" name="not-support">
             <FilesTable :files="formatFiles.notSupport"></FilesTable>
           </el-collapse-item>
         </el-collapse>
       </div>
     </div>
     <div class="upload-dialog-options">
-      <el-button @click="handleClose">取 消</el-button>
+      <el-button v-if="type === 'confirm-file'" @click="reSelected">重新选择</el-button>
       <el-button v-if="type === 'confirm-file'" :disabled="loading" type="primary" @click="handerNext">开始上传</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import KLoading from '@/components/common/k-loading';
 import FilesTable from './files-table';
 
 const limitFileSize = 100 * 1048576;
+const limitFileCount = 5;
 
-const acceptTyles = ['.geojson', '.json', '.csv', '.xls', '.xlsx', '.zip'];
+const acceptTyles = ['.geojson', '.json', '.csv', '.xls', '.xlsx'];
 
 const stepTypes = {
   inputFile: 'input-file',
@@ -50,7 +42,6 @@ const stepTypes = {
 export default {
   components: {
     FilesTable,
-    KLoading,
   },
   setup() {
     return {
@@ -59,6 +50,7 @@ export default {
   },
   data() {
     return {
+      selectedFiles: [],
       formatFiles: {
         support: [],
         noSupport: [],
@@ -69,14 +61,30 @@ export default {
     };
   },
   methods: {
-    handleClose() {
+    reSelected() {
+      this.selectedFiles = [];
+      this.formatFiles = {
+        support: [],
+        noSupport: [],
+      };
       this.type = stepTypes.inputFile;
-      this.formatFiles = {};
       this.loading = false;
-      this.$emit('close');
+      this.activeCollapse = 'support';
     },
     handerNext() {
-
+      if (!Array.isArray(this.selectedFiles) || !this.selectedFiles.length) {
+        this.$error('未选择上传的文件');
+        return;
+      }
+      if (this.selectedFiles.length > limitFileCount) {
+        this.$error(`选择上传的文件数量不能超过${limitFileCount}个`);
+        return;
+      }
+      this.$bus.emit('push-upload-files', this.selectedFiles);
+      this.$nextTick(() => {
+        this.reSelected();
+        this.$emit('close');
+      });
     },
     dragenter(e) {
       e.stopPropagation();
@@ -164,6 +172,14 @@ export default {
       this.loading = false;
     },
     handerFiles(files) {
+      if (!files.length) {
+        this.$error('未选择文件');
+        return;
+      }
+      if (files.length > 100) {
+        this.$error('选择文件数量过多');
+        return;
+      }
       this.type = stepTypes.confirmFile;
       this.formatFiles = this.classifyFiles(files);
     },
@@ -195,7 +211,7 @@ export default {
       };
     },
     updateSelectFiles(files) {
-      console.log(files);
+      this.selectedFiles = files;
     },
   },
 };

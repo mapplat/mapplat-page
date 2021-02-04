@@ -19,7 +19,7 @@ const breadcrumbsConf = {
     path: '/maps',
   },
   {
-    name: '我的数据',
+    name: '我的地图',
     path: '/maps/my-map',
   }],
   profile: [{

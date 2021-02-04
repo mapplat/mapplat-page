@@ -3,12 +3,12 @@ const pages = {
   index: {
     entry: './src/pages/index/index.js',
     template: './src/pages/index/index.html',
-    title: 'MapPlat',
+    title: 'Mapplat',
   },
   login: {
     entry: './src/pages/login/login.js',
     template: './src/pages/login/login.html',
-    title: 'MapPlat-Login',
+    title: 'Mapplat Login',
   },
 };
 

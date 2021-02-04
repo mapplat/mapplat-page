@@ -1,20 +1,9 @@
 <template>
   <div class="k-logo">
     <k-icon icon="icon-logo" :size="42"></k-icon>
-    <span class="title">{{title}}</span>
+    <span class="title">{{$title}}</span>
   </div>
 </template>
-
-<script>
-const title = 'MAPPLAT';
-export default {
-  setup() {
-    return {
-      title,
-    };
-  },
-};
-</script>
 <style lang="scss">
 .k-logo {
   display: flex;

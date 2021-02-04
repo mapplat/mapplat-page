@@ -13,9 +13,12 @@
       </el-table-column>
       <el-table-column
         prop="name"
+        sortable
         label="文件名称">
       </el-table-column>
       <el-table-column
+        prop="size"
+        sortable
         label="文件大小">
         <template #default="scope">
           {{ formatSize(scope.row.size) }}
@@ -43,7 +46,7 @@ export default {
     };
   },
   mounted() {
-    // this.$refs.multipleTable.toggleAllSelection();
+    this.$refs.multipleTable.toggleAllSelection();
   },
   methods: {
     handleSelectionChange(files) {

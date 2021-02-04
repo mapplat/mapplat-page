@@ -7,17 +7,22 @@
         <router-view></router-view>
       </div>
     </div>
+
+    <!-- dialog -->
+    <UploadProgress></UploadProgress>
   </div>
 </template>
 
 <script>
 import LeftNav from '@/components/desktop/left-nav';
 import TopBar from '@/components/desktop/top-bar';
+import UploadProgress from '@/components/custom/upload-progress';
 
 export default {
   components: {
     LeftNav,
     TopBar,
+    UploadProgress,
   },
 };
 </script>

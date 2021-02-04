@@ -20,13 +20,10 @@
   </div>
 </template>
 <script>
-import KInput from '@/components/common/k-input';
-
 import UploadDialog from '@/components/dialogs/upload';
 
 export default {
   components: {
-    KInput,
     UploadDialog,
   },
   data() {

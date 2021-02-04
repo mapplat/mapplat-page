@@ -2,7 +2,7 @@
   <div class="user-login shadow">
     <div class="user-login-title">
       <k-icon icon="icon-logo" :size="48"></k-icon>
-      <span class="title">MapPlat</span>
+      <span class="title">{{$title}}</span>
     </div>
     <div class="user-info-wrapper" v-if="type === 'signin'">
       <KInput
@@ -103,7 +103,6 @@
 </template>
 <script>
 
-import KInput from '@/components/common/k-input';
 import userAPI from '@/apis/user';
 import paramsRules from '@/utils/paramsRules';
 
@@ -119,9 +118,6 @@ const rules = {
 };
 
 export default {
-  components: {
-    KInput,
-  },
   setup() {
     const loginUsername = localStorage.getItem('login_username');
     return {
