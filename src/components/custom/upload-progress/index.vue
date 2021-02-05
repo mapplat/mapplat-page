@@ -2,11 +2,13 @@
   <div class="upload-progress shadow">
     <el-popover
       placement="top"
+      :width="540"
       title="上传数据"
-      :width="200"
+      :show-arrow="true"
+      popper-class="upload-progress-wrapper"
       trigger="click">
       <div class="upload-progress-content">
-        {{files}}
+        <FileProgress :key="index" v-for="(file, index) in files" :file="file" :index="index"></FileProgress>
       </div>
       <template #reference>
         <k-icon id="uploadProgressTriger" icon="icon-shangchuan" :size="24"></k-icon>
@@ -16,16 +18,22 @@
 </template>
 <script>
 
-export default {
+import Scheduler from '@c_kai/scheduler';
+import FileProgress from '@/components/custom/upload-progress/file-progress';
+import { getFileHash } from '@/utils/utils';
 
+const scheduler = new Scheduler(3);
+export default {
+  components: {
+    FileProgress,
+  },
   mounted() {
     this.$bus.off('push-upload-files');
     this.$bus.on('push-upload-files', (files) => {
+      // 处理files
       this.files.push(...files);
-      const e = document.createEvent('MouseEvents');
-      e.initEvent('click', true, true);
-      console.log(this.uploadProgressTriger);
-      document.querySelector('#uploadProgressTriger').dispatchEvent(e);
+      this.handlerFiles(files);
+      this.uploadProgressTriger();
     });
   },
   data() {
@@ -33,6 +41,27 @@ export default {
       visible: true,
       files: [],
     };
+  },
+  methods: {
+    uploadProgressTriger() {
+      const e = document.createEvent('MouseEvents');
+      e.initEvent('click', true, true);
+      document.querySelector('#uploadProgressTriger').dispatchEvent(e);
+    },
+    handlerFiles(files) {
+      console.log(files);
+      files.forEach((file) => {
+        console.log(file);
+        scheduler.add(this.uploadFiles, file);
+      });
+    },
+    async uploadFiles(file) {
+      console.log(file);
+      const { hash, blocks } = await getFileHash(file);
+      file.hash = hash;
+      file.blocks = blocks;
+      console.log(file);
+    },
   },
 };
 </script>
@@ -51,6 +80,14 @@ export default {
   opacity: .2;
   &:hover {
     opacity: 1;
+  }
+}
+.upload-progress-wrapper {
+  .upload-progress-content {
+    .file-progress {
+      padding: 8px 0;
+      border-bottom: 1px solid $light-gray;
+    }
   }
 }
 </style>

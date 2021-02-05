@@ -21,7 +21,7 @@
         sortable
         label="文件大小">
         <template #default="scope">
-          {{ formatSize(scope.row.size) }}
+          {{ formatFileSize(scope.row.size) }}
         </template>
       </el-table-column>
     </el-table>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { formatFileSize } from '@/utils/utils';
+
 export default {
   props: {
     selectable: {
@@ -52,21 +54,7 @@ export default {
     handleSelectionChange(files) {
       this.$emit('updateSelectFiles', files);
     },
-    formatSize(size) {
-      if (size <= 1024) {
-        return `${size}B`;
-      }
-      size /= 1024;
-      if (size <= 1024) {
-        return `${parseInt(size)}KB`;
-      }
-      size /= 1024;
-      if (size <= 1024) {
-        return `${parseInt(size)}MB`;
-      }
-      size /= 1024;
-      return `${parseInt(size)}GB`;
-    },
+    formatFileSize,
   },
 };
 </script>

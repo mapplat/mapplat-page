@@ -164,6 +164,11 @@
   resolved "https://registry.npm.taobao.org/@c_kai/parameter/download/@c_kai/parameter-2.0.0.tgz#ebe0b953f328d1424b38dcebc840bb68b8e23d41"
   integrity sha1-6+C5U/Mo0UJLONzryEC7aLjiPUE=
 
+"@c_kai/scheduler@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@c_kai/scheduler/download/@c_kai/scheduler-2.0.0.tgz#3a0b165b8d7815a762ff7e1bfaf46cdb51b1abd9"
+  integrity sha1-OgsWW414Fadi/34b+vRs21Gxq9k=
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -3100,6 +3105,11 @@ fast-levenshtein@~2.0.6:
   version "2.0.6"
   resolved "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz?cache=0&sync_timestamp=1595428000133&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffast-levenshtein%2Fdownload%2Ffast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fast-sha256@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npm.taobao.org/fast-sha256/download/fast-sha256-1.3.0.tgz#7916ba2054eeb255982608cccd0f6660c79b7ae6"
+  integrity sha1-eRa6IFTuslWYJgjMzQ9mYMebeuY=
 
 faye-websocket@^0.11.3:
   version "0.11.3"
