@@ -1,27 +1,31 @@
 <template>
   <div class="upload-progress shadow">
     <el-popover
-      placement="top-start"
+      placement="top"
       title="上传数据"
       :width="200"
-      v-model:visible="visible"
-      trigger="manual">
+      trigger="click">
       <div class="upload-progress-content">
         {{files}}
       </div>
       <template #reference>
-        <k-icon icon="icon-shangchuan" :size="24"></k-icon>
+        <k-icon id="uploadProgressTriger" icon="icon-shangchuan" :size="24"></k-icon>
       </template>
     </el-popover>
   </div>
 </template>
 <script>
+
 export default {
+
   mounted() {
     this.$bus.off('push-upload-files');
     this.$bus.on('push-upload-files', (files) => {
-      console.log(files);
       this.files.push(...files);
+      const e = document.createEvent('MouseEvents');
+      e.initEvent('click', true, true);
+      console.log(this.uploadProgressTriger);
+      document.querySelector('#uploadProgressTriger').dispatchEvent(e);
     });
   },
   data() {
