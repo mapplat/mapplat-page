@@ -29,10 +29,11 @@
 <script>
 import FilesTable from './files-table';
 
-const limitFileSize = 100 * 1048576;
+// const limitFileSize = 100 * 1048576;
+const limitFileSize = 100000 * 1048576;
 const limitFileCount = 5;
 
-const acceptTyles = ['.geojson', '.json', '.csv', '.xls', '.xlsx'];
+const acceptTyles = ['.geojson', '.json', '.csv', '.xls', '.xlsx', '.zip'];
 
 const stepTypes = {
   inputFile: 'input-file',
@@ -191,18 +192,12 @@ export default {
       const support = [];
       const notSupport = [];
       for (const file of files) {
-        const fileInfo = {
-          _file: file,
-          _webkitRelativePath: file._webkitRelativePath,
-          name: file.name,
-          size: file.size,
-          type: this.getFilesTypeByName(file.name),
-        };
-
-        if (fileInfo.size > limitFileSize || acceptTyles.indexOf(`.${fileInfo.type}`) === -1) {
-          notSupport.push(fileInfo);
+        const { size: fileSize } = file;
+        const fileType = this.getFilesTypeByName(file.name);
+        if (fileSize > limitFileSize || acceptTyles.indexOf(`.${fileType}`) === -1) {
+          notSupport.push(file);
         } else {
-          support.push(fileInfo);
+          support.push(file);
         }
       }
       return {

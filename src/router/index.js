@@ -31,10 +31,7 @@ const breadcrumbsConf = {
 const routes = [
   {
     path: '/',
-    redirect: (to) => {
-      console.log(to);
-      return { path: '/datasets' };
-    },
+    redirect: () => ({ path: '/datasets' }),
   },
   {
     path: '/datasets',

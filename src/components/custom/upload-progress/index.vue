@@ -49,18 +49,15 @@ export default {
       document.querySelector('#uploadProgressTriger').dispatchEvent(e);
     },
     handlerFiles(files) {
-      console.log(files);
       files.forEach((file) => {
-        console.log(file);
-        scheduler.add(this.uploadFiles, file);
+        scheduler.add(this.uploadFiles, [file]);
       });
     },
     async uploadFiles(file) {
-      console.log(file);
       const { hash, blocks } = await getFileHash(file);
+
       file.hash = hash;
       file.blocks = blocks;
-      console.log(file);
     },
   },
 };

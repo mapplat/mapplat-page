@@ -50,22 +50,23 @@ async function getFileHash(file) {
   const { size } = file;
   for (let start = 0; start < size; start += splitFileSize) {
     const buffer = await file.slice(start, start + splitFileSize).arrayBuffer();
-    hasher.update(buffer);
+    const u8Buffer = new Uint8Array(buffer);
 
     blocks.push({
-      hash: sha256(buffer),
+      hash: sha256(u8Buffer),
       index: start / splitFileSize,
     });
+
+    hasher.update(u8Buffer);
   }
   const hash = hasher.digest();
 
   return {
-    hash,
+    hash: buf2hex(hash),
     blocks,
   };
 }
 export {
-  buf2hex,
   fixedNum,
   getType,
   logout,
