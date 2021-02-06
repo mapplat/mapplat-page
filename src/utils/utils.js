@@ -1,7 +1,6 @@
 import sha256 from 'fast-sha256';
 import userAPI from '@/apis/user';
-
-const splitFileSize = 8 * 1048576;
+import FILES from '@/constant/FILES';
 
 /**
  *
@@ -47,14 +46,18 @@ async function getFileHash(file) {
   const blocks = [];
   const hasher = new sha256.Hash();
 
+  const { splitSize } = FILES;
   const { size } = file;
-  for (let start = 0; start < size; start += splitFileSize) {
-    const buffer = await file.slice(start, start + splitFileSize).arrayBuffer();
+  for (let start = 0; start < size; start += splitSize) {
+    const end = start + splitSize > size ? size : start + splitSize;
+    const buffer = await file.slice(start, end).arrayBuffer();
     const u8Buffer = new Uint8Array(buffer);
 
     blocks.push({
-      hash: sha256(u8Buffer),
-      index: start / splitFileSize,
+      hash: buf2hex(sha256(u8Buffer)),
+      index: start / splitSize,
+      start,
+      end,
     });
 
     hasher.update(u8Buffer);

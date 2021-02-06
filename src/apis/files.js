@@ -7,7 +7,7 @@ const formDataHeaders = {
 
 const files = {
   precreate(fileHash, params) {
-    return instance.get(`/file/${fileHash}/precreate`, params);
+    return instance.post(`/file/${fileHash}/precreate`, params);
   },
   block(fileHash, params, chunkFile) {
     const { hash, index } = params;

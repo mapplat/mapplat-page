@@ -27,13 +27,8 @@
 </template>
 
 <script>
+import FILES from '@/constant/FILES';
 import FilesTable from './files-table';
-
-// const limitFileSize = 100 * 1048576;
-const limitFileSize = 100000 * 1048576;
-const limitFileCount = 5;
-
-const acceptTyles = ['.geojson', '.json', '.csv', '.xls', '.xlsx', '.zip'];
 
 const stepTypes = {
   inputFile: 'input-file',
@@ -46,7 +41,7 @@ export default {
   },
   setup() {
     return {
-      acceptTyles: acceptTyles.join(','),
+      acceptTyles: FILES.types.map((val) => `.${val}`).join(','),
     };
   },
   data() {
@@ -77,8 +72,8 @@ export default {
         this.$error('未选择上传的文件');
         return;
       }
-      if (this.selectedFiles.length > limitFileCount) {
-        this.$error(`选择上传的文件数量不能超过${limitFileCount}个`);
+      if (this.selectedFiles.length > FILES.limitCount) {
+        this.$error(`选择上传的文件数量不能超过${FILES.limitCount}个`);
         return;
       }
       this.$bus.emit('push-upload-files', this.selectedFiles);
@@ -194,7 +189,8 @@ export default {
       for (const file of files) {
         const { size: fileSize } = file;
         const fileType = this.getFilesTypeByName(file.name);
-        if (fileSize > limitFileSize || acceptTyles.indexOf(`.${fileType}`) === -1) {
+        file._type = fileType;
+        if (fileSize > FILES.limitSize || FILES.types.indexOf(fileType) === -1) {
           notSupport.push(file);
         } else {
           support.push(file);

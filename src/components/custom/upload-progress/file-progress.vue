@@ -98,7 +98,7 @@ export default {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 50%;
+    max-width: 100%;
     background-color: $light-primary;
     z-index: -1;
   }
