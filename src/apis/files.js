@@ -3,24 +3,23 @@ import instance from './instance';
 
 const formDataHeaders = {
   'Content-Type': 'multipart/form-data',
+  token: localStorage.getItem('token'),
 };
 
 const files = {
   precreate(fileHash, params) {
     return instance.post(`/file/${fileHash}/precreate`, params);
   },
-  block(fileHash, params, chunkFile) {
-    const { hash, index } = params;
-    const url = `/file/${fileHash}/block?index=${index}&hash=${hash}`;
+  block(blockHash, chunkFile) {
+    const url = `/api/file/${blockHash}/block`;
     const formData = new FormData();
     formData.append('file', chunkFile);
     return axios.post(url, formData, {
       headers: formDataHeaders,
-      token: localStorage.getItem('token'),
     });
   },
-  merge(fileHash) {
-    return instance.post(`/file/${fileHash}/precreate`);
+  merge(fileId) {
+    return instance.post(`/file/${fileId}/create`);
   },
 };
 

@@ -20,7 +20,7 @@
 
 import Scheduler from '@c_kai/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress';
-import { getFileHash } from '@/utils/utils';
+import { getFileHash, fixedNum } from '@/utils/utils';
 import filesAPI from '@/apis/files';
 
 const scheduler = new Scheduler(3);
@@ -56,8 +56,6 @@ export default {
     },
     async uploadFiles(file) {
       const { hash, blocks } = await getFileHash(file);
-      //
-      console.log(file);
 
       const preCreate = await filesAPI.precreate(hash, {
         name: file.name,
@@ -65,7 +63,31 @@ export default {
         size: file.size,
         blocks,
       });
-      console.log(preCreate);
+      if (!preCreate || !preCreate.data || preCreate.data.code !== 0) {
+        this.$error('上传失败', preCreate);
+      }
+
+      const { id: fileId, existHashs } = preCreate.data.data;
+      let filterBlocks = blocks;
+      if (Array.isArray(existHashs) && existHashs.length) {
+        filterBlocks = blocks.filter((block) => existHashs.indexOf(block.hash) === -1);
+      }
+
+      const filterBlocksLength = filterBlocks.length;
+      // 上传分片
+      for (let index = 0; index < filterBlocksLength; index += 1) {
+        const { hash: blockHash, start, end } = filterBlocks[index];
+        const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
+        if (blockRes && blockRes.data && blockRes.data.code === 0) {
+          file.percentage = fixedNum(index / filterBlocksLength, 2);
+        } else {
+          this.$error('上传失败', preCreate);
+          return;
+        }
+      }
+
+      const mergeFile = await filesAPI.merge(fileId);
+      console.log(mergeFile);
     },
   },
 };
