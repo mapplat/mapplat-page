@@ -11,6 +11,8 @@
           </div>
           <div  v-if="!uploadInfo.status">
             {{fixedNum(uploadInfo.percentage, 1)}}%
+            -
+            {{fixedNum(file.percentage, 1)}}%
           </div>
       </div>
     </div>

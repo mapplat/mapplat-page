@@ -23,7 +23,7 @@ import FileProgress from '@/components/custom/upload-progress/file-progress';
 import { getFileHash, fixedNum } from '@/utils/utils';
 import filesAPI from '@/apis/files';
 
-const scheduler = new Scheduler(3);
+const scheduler = new Scheduler(1);
 export default {
   components: {
     FileProgress,
@@ -32,6 +32,13 @@ export default {
     this.$bus.off('push-upload-files');
     this.$bus.on('push-upload-files', (files) => {
       // 处理files
+      files = files.map((val) => {
+        val.uploadInfo = {
+          percentage: 0,
+        };
+        val.percentage = 0;
+        return val;
+      });
       this.files.push(...files);
       this.handlerFiles(files);
       this.uploadProgressTriger();
@@ -75,20 +82,22 @@ export default {
 
       const filterBlocksLength = filterBlocks.length;
       // 上传分片
+      console.log(filterBlocksLength);
       for (let index = 0; index < filterBlocksLength; index += 1) {
         const { hash: blockHash, start, end } = filterBlocks[index];
         const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
         if (blockRes && blockRes.data && blockRes.data.code === 0) {
-          file.uploadInfo = {
-            percentage: fixedNum(index / filterBlocksLength, 4) * 100,
-          };
+          file.percentage = fixedNum(index / filterBlocksLength, 4) * 100;
+          // file.uploadInfo = {
+          //   percentage: fixedNum(index / filterBlocksLength, 4) * 100,
+          // };
         } else {
           this.$error('上传失败', preCreate);
           return;
         }
       }
-
       const mergeFile = await filesAPI.merge(fileId);
+      file.percentage = 100;
       console.log(mergeFile);
     },
   },
