@@ -79,7 +79,9 @@ export default {
         const { hash: blockHash, start, end } = filterBlocks[index];
         const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
         if (blockRes && blockRes.data && blockRes.data.code === 0) {
-          file.percentage = fixedNum(index / filterBlocksLength, 2);
+          file.uploadInfo = {
+            percentage: fixedNum(index / filterBlocksLength, 4) * 100,
+          };
         } else {
           this.$error('上传失败', preCreate);
           return;

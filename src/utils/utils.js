@@ -69,6 +69,7 @@ async function getFileHash(file) {
     blocks,
   };
 }
+
 export {
   fixedNum,
   getType,
