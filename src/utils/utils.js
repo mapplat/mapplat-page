@@ -2,6 +2,22 @@ import sha256 from 'fast-sha256';
 import userAPI from '@/apis/user';
 import FILES from '@/constant/FILES';
 
+function getRandom(max, min = 0, digits = 4) {
+  max = Number(max);
+  min = Number(min);
+  const num = Number((min + Math.random() * (max - min)).toFixed(digits));
+  return Number.isNaN(num) ? null : num;
+}
+
+function getRandomStr(len) {
+  const dictionary = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const dictionaryLen = dictionary.length;
+  let str = '';
+  for (let i = 0; i < len; i += 1) {
+    str += dictionary[Math.floor(getRandom(dictionaryLen))];
+  }
+  return str;
+}
 /**
  *
  * @param {number} num 数字
@@ -71,6 +87,7 @@ async function getFileHash(file) {
 }
 
 export {
+  getRandomStr,
   fixedNum,
   getType,
   logout,

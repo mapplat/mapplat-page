@@ -8,7 +8,10 @@
       popper-class="upload-progress-wrapper"
       trigger="click">
       <div class="upload-progress-content">
-        <FileProgress :key="index" v-for="(file, index) in files" :file="file" :index="index"></FileProgress>
+        <FileProgress :key="index" v-for="(file, index) in formatFiles"
+          :index="index"
+          :file="file"
+          ></FileProgress>
       </div>
       <template #reference>
         <k-icon id="uploadProgressTriger" icon="icon-shangchuan" :size="24"></k-icon>
@@ -20,7 +23,7 @@
 
 import Scheduler from '@c_kai/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress';
-import { getFileHash, fixedNum } from '@/utils/utils';
+import { getFileHash, fixedNum, getRandomStr } from '@/utils/utils';
 import filesAPI from '@/apis/files';
 import FILES from '@/constant/FILES';
 
@@ -33,14 +36,18 @@ export default {
     this.$bus.off('push-upload-files');
     this.$bus.on('push-upload-files', (files) => {
       // 处理files
-      files = files.map((val) => {
-        val.uploadInfo = {
-          percentage: 0,
-        };
-        val.percentage = 0;
-        return val;
+      files.forEach((file) => {
+        file.key = getRandomStr(16);
       });
       this.files.push(...files);
+      this.formatFiles.push(...files.map((file) => ({
+        key: file.key,
+        name: file.name,
+        size: file.size,
+        percentage: 0,
+        status: '',
+        msg: '',
+      })));
       this.handlerFiles(files);
       this.uploadProgressTriger();
     });
@@ -49,6 +56,7 @@ export default {
     return {
       visible: true,
       files: [],
+      formatFiles: [],
     };
   },
   methods: {
@@ -72,7 +80,14 @@ export default {
         blocks,
       });
       if (!preCreate || !preCreate.data || preCreate.data.code !== 0) {
-        this.$error('上传失败', preCreate);
+        this.updateByKey(file.key, {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          percentage: 100,
+          status: 'exception',
+          msg: '上传失败',
+        });
       }
 
       const { id: fileId, existHashs } = preCreate.data.data;
@@ -83,23 +98,56 @@ export default {
 
       const filterBlocksLength = filterBlocks.length;
       // 上传分片
-      console.log(filterBlocksLength);
       for (let index = 0; index < filterBlocksLength; index += 1) {
         const { hash: blockHash, start, end } = filterBlocks[index];
         const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
         if (blockRes && blockRes.data && blockRes.data.code === 0) {
-          file.percentage = fixedNum(index / filterBlocksLength, 4) * 100;
-          // file.uploadInfo = {
-          //   percentage: fixedNum(index / filterBlocksLength, 4) * 100,
-          // };
+          this.updateByKey(file.key, {
+            key: file.key,
+            name: file.name,
+            size: file.size,
+            percentage: fixedNum(index / filterBlocksLength, 3) * 100,
+          });
         } else {
-          this.$error('上传失败', preCreate);
+          this.updateByKey(file.key, {
+            key: file.key,
+            name: file.name,
+            size: file.size,
+            percentage: 100,
+            status: 'exception',
+            msg: '上传失败',
+          });
           return;
         }
       }
-      const mergeFile = await filesAPI.merge(fileId);
-      file.percentage = 100;
-      console.log(mergeFile);
+      const mergeRes = await filesAPI.merge(fileId);
+      this.updateByKey(file.key, {
+        key: file.key,
+        name: file.name,
+        size: file.size,
+        percentage: 100,
+        status: 'success',
+      });
+
+      if (!mergeRes || !mergeRes.data || mergeRes.data.code !== 0) {
+        this.updateByKey(file.key, {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          percentage: 100,
+          status: 'exception',
+          msg: '上传失败',
+        });
+        return;
+      }
+
+      console.log(mergeRes);
+      // 开始入库
+      // const { key } = mergeRes.data.data;
+    },
+    updateByKey(key, info) {
+      const index = this.formatFiles.findIndex((val) => val.key === key);
+      this.formatFiles.splice(index, 1, info);
     },
   },
 };

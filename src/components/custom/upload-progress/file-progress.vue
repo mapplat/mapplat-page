@@ -5,13 +5,11 @@
       <div class="file-name text-ellipsis">{{file.name}}</div>
       <div class="file-size text-ellipsis">{{formatFileSize(file.size)}}</div>
       <div class="file-status text-ellipsis">
-          <k-icon v-if="uploadInfo.status === 'success'" icon="icon-xuanze" :size="20"/>
-          <div v-if="uploadInfo.status === 'exception'">
-            {{uploadInfo.exception}}
+          <k-icon v-if="file.status === 'success'" icon="icon-xuanze" :size="20"/>
+          <div v-if="file.status === 'exception'">
+            {{file.msg}}
           </div>
-          <div  v-if="!uploadInfo.status">
-            {{fixedNum(uploadInfo.percentage, 1)}}%
-            -
+          <div  v-if="!file.status">
             {{fixedNum(file.percentage, 1)}}%
           </div>
       </div>
@@ -22,35 +20,22 @@
 <script>
 import { formatFileSize, fixedNum } from '@/utils/utils';
 
-// success exception
 export default {
   props: {
-    file: Object,
-    default: () => {},
+    file: {
+      type: Object,
+    },
   },
   data() {
     return {
-      uploadInfo: {
-        status: '',
-        percentage: 0,
-        exception: '',
-      },
       progressStye: {},
-
     };
   },
   watch: {
-    'file.uploadInfo': {
-      deep: true,
+    file: {
       immediate: true,
-      handler(val) {
-        this.uploadInfo = val || {};
-      },
-    },
-    status: {
-      immediate: true,
-      handler(val) {
-        switch (val) {
+      handler() {
+        switch (this.file.status) {
           case 'success':
             this.progressStye = {
               width: '100%',
@@ -65,7 +50,7 @@ export default {
             break;
           default:
             this.progressStye = {
-              width: `${this.uploadInfo.percentage}%`,
+              width: `${this.file.percentage}%`,
               'background-color': '#e2eeff',
             };
         }
