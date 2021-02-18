@@ -162,6 +162,26 @@ export default {
         });
       }
       // 开始入库
+      const jobInfo = jobAPI.info(jobRes.data.data.jobHash);
+      if (!jobInfo || !jobInfo.data || jobInfo.data.code !== 0) {
+        this.updateByKey(file.key, {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          percentage: 100,
+          status: 'exception',
+          msg: '入库失败',
+        });
+        return;
+      }
+      this.updateByKey(file.key, {
+        key: file.key,
+        name: file.name,
+        size: file.size,
+        percentage: 100,
+        status: 'success',
+        msg: '入库成功',
+      });
     },
     updateByKey(key, info) {
       const index = this.formatFiles.findIndex((val) => val.key === key);
