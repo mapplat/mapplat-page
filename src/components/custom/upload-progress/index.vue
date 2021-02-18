@@ -25,6 +25,7 @@ import Scheduler from '@c_kai/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress';
 import { getFileHash, fixedNum, getRandomStr } from '@/utils/utils';
 import filesAPI from '@/apis/files';
+import jobAPI from '@/apis/job';
 import FILES from '@/constant/FILES';
 
 const scheduler = new Scheduler(FILES.concurrentCount);
@@ -88,6 +89,7 @@ export default {
           status: 'exception',
           msg: '上传失败',
         });
+        return;
       }
 
       const { id: fileId, existHashs } = preCreate.data.data;
@@ -101,14 +103,7 @@ export default {
       for (let index = 0; index < filterBlocksLength; index += 1) {
         const { hash: blockHash, start, end } = filterBlocks[index];
         const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
-        if (blockRes && blockRes.data && blockRes.data.code === 0) {
-          this.updateByKey(file.key, {
-            key: file.key,
-            name: file.name,
-            size: file.size,
-            percentage: fixedNum(index / filterBlocksLength, 3) * 100,
-          });
-        } else {
+        if (!blockRes || !blockRes.data || blockRes.data.code !== 0) {
           this.updateByKey(file.key, {
             key: file.key,
             name: file.name,
@@ -119,16 +114,15 @@ export default {
           });
           return;
         }
+        this.updateByKey(file.key, {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          percentage: fixedNum(index / filterBlocksLength, 3) * 100,
+        });
       }
-      const mergeRes = await filesAPI.merge(fileId);
-      this.updateByKey(file.key, {
-        key: file.key,
-        name: file.name,
-        size: file.size,
-        percentage: 100,
-        status: 'success',
-      });
 
+      const mergeRes = await filesAPI.merge(fileId);
       if (!mergeRes || !mergeRes.data || mergeRes.data.code !== 0) {
         this.updateByKey(file.key, {
           key: file.key,
@@ -141,9 +135,33 @@ export default {
         return;
       }
 
+      this.updateByKey(file.key, {
+        key: file.key,
+        name: file.name,
+        size: file.size,
+        percentage: 100,
+        status: 'success',
+        msg: '上传成功',
+      });
       console.log(mergeRes);
-      // 开始入库
       // const { key } = mergeRes.data.data;
+      const jobRes = jobAPI.create({
+        type: 'file-import',
+        params: {
+          fileId: mergeRes.data.data.id,
+        },
+      });
+      if (!jobRes || !jobRes.data || jobRes.data.code !== 0) {
+        this.updateByKey(file.key, {
+          key: file.key,
+          name: file.name,
+          size: file.size,
+          percentage: 100,
+          status: 'exception',
+          msg: '入库失败',
+        });
+      }
+      // 开始入库
     },
     updateByKey(key, info) {
       const index = this.formatFiles.findIndex((val) => val.key === key);

@@ -5,13 +5,24 @@
       <div class="file-name text-ellipsis">{{file.name}}</div>
       <div class="file-size text-ellipsis">{{formatFileSize(file.size)}}</div>
       <div class="file-status text-ellipsis">
-          <k-icon v-if="file.status === 'success'" icon="icon-xuanze" :size="20"/>
-          <div v-if="file.status === 'exception'">
-            {{file.msg}}
-          </div>
-          <div  v-if="!file.status">
-            {{fixedNum(file.percentage, 1)}}%
-          </div>
+          <template v-if="file.status === 'success'">
+            <k-icon icon="icon-xuanze" :size="20"/>
+            <div>
+              {{file.msg}}
+x            </div>
+          </template>
+
+          <template v-if="file.status === 'exception'">
+            <div>
+              {{file.msg}}
+            </div>
+          </template>
+
+          <template v-if="!file.status">
+            <div>
+              {{fixedNum(file.percentage, 1)}}%
+            </div>
+          </template>
       </div>
     </div>
   </div>
