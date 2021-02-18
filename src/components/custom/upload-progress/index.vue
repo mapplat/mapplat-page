@@ -22,8 +22,9 @@ import Scheduler from '@c_kai/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress';
 import { getFileHash, fixedNum } from '@/utils/utils';
 import filesAPI from '@/apis/files';
+import FILES from '@/constant/FILES';
 
-const scheduler = new Scheduler(1);
+const scheduler = new Scheduler(FILES.concurrentCount);
 export default {
   components: {
     FileProgress,
