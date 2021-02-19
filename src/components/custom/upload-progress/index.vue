@@ -46,8 +46,8 @@ export default {
         name: file.name,
         size: file.size,
         percentage: 0,
-        status: '',
-        msg: '',
+        status: 'progress',
+        msg: '开始上传',
       })));
       this.handlerFiles(files);
       this.uploadProgressTriger();
@@ -85,7 +85,6 @@ export default {
           key: file.key,
           name: file.name,
           size: file.size,
-          percentage: 100,
           status: 'exception',
           msg: '上传失败',
         });
@@ -108,7 +107,6 @@ export default {
             key: file.key,
             name: file.name,
             size: file.size,
-            percentage: 100,
             status: 'exception',
             msg: '上传失败',
           });
@@ -119,6 +117,7 @@ export default {
           name: file.name,
           size: file.size,
           percentage: fixedNum(index / filterBlocksLength, 3) * 100,
+          status: 'progress',
         });
       }
 
@@ -128,7 +127,6 @@ export default {
           key: file.key,
           name: file.name,
           size: file.size,
-          percentage: 100,
           status: 'exception',
           msg: '上传失败',
         });
@@ -139,53 +137,128 @@ export default {
         key: file.key,
         name: file.name,
         size: file.size,
-        percentage: 100,
         status: 'success',
-        msg: '上传成功',
+        msg: '开始入库',
       });
-      console.log(mergeRes);
-      // const { key } = mergeRes.data.data;
-      const jobRes = jobAPI.create({
+
+      const jobRes = await jobAPI.create({
         type: 'file-import',
         params: {
           fileId: mergeRes.data.data.id,
         },
       });
+
       if (!jobRes || !jobRes.data || jobRes.data.code !== 0) {
         this.updateByKey(file.key, {
           key: file.key,
           name: file.name,
           size: file.size,
-          percentage: 100,
           status: 'exception',
           msg: '入库失败',
         });
       }
+
+      // setInterval(() => {
+      //   this.updateImport(jobRes.data.data.jobUuid, file);
+      // }, 3000);
+      // // 开始入库
+      // const jobInfo = await jobAPI.info(jobRes.data.data.jobUuid);
+
+      // if (!jobInfo || !jobInfo.data || jobInfo.data.code !== 0) {
+      //   this.updateByKey(file.key, {
+      //     key: file.key,
+      //     name: file.name,
+      //     size: file.size,
+      //     status: 'exception',
+      //     msg: '入库失败',
+      //   });
+      //   return;
+      // }
+      // switch (jobInfo.data.data.status) {
+      //   case 'create':
+      //   case 'progress':
+      //     this.updateByKey(file.key, {
+      //       key: file.key,
+      //       name: file.name,
+      //       size: file.size,
+      //       status: 'progress',
+      //       percentage: jobInfo.data.data.percentage,
+      //       msg: '正在入库',
+      //     });
+      //     break;
+      //   case 'success':
+      //     this.updateByKey(file.key, {
+      //       key: file.key,
+      //       name: file.name,
+      //       size: file.size,
+      //       status: 'success',
+      //       msg: '上传成功',
+      //     });
+      //     break;
+      //   case 'exception':
+      //   default:
+      //     this.updateByKey(file.key, {
+      //       key: file.key,
+      //       name: file.name,
+      //       size: file.size,
+      //       status: 'exception',
+      //       msg: '上传失败',
+      //     });
+      //     break;
+      // }
+    },
+    updateByKey(key, info) {
+      const index = this.formatFiles.findIndex((val) => val.key === key);
+      this.formatFiles.splice(index, 1, info);
+    },
+    updateImportStatus() {
+
+    },
+    async updateImport(jobUuid, file) {
       // 开始入库
-      const jobInfo = jobAPI.info(jobRes.data.data.jobHash);
+      const jobInfo = await jobAPI.info(jobUuid);
       if (!jobInfo || !jobInfo.data || jobInfo.data.code !== 0) {
         this.updateByKey(file.key, {
           key: file.key,
           name: file.name,
           size: file.size,
-          percentage: 100,
           status: 'exception',
           msg: '入库失败',
         });
         return;
       }
-      this.updateByKey(file.key, {
-        key: file.key,
-        name: file.name,
-        size: file.size,
-        percentage: 100,
-        status: 'success',
-        msg: '入库成功',
-      });
-    },
-    updateByKey(key, info) {
-      const index = this.formatFiles.findIndex((val) => val.key === key);
-      this.formatFiles.splice(index, 1, info);
+      switch (jobInfo.data.data.status) {
+        case 'create':
+        case 'progress':
+          this.updateByKey(file.key, {
+            key: file.key,
+            name: file.name,
+            size: file.size,
+            status: 'progress',
+            percentage: jobInfo.data.data.percentage,
+            msg: '正在入库',
+          });
+          break;
+        case 'success':
+          this.updateByKey(file.key, {
+            key: file.key,
+            name: file.name,
+            size: file.size,
+            status: 'success',
+            msg: '上传成功',
+          });
+          break;
+        case 'exception':
+        default:
+          this.updateByKey(file.key, {
+            key: file.key,
+            name: file.name,
+            size: file.size,
+            status: 'exception',
+            msg: '上传失败',
+          });
+          break;
+      }
     },
   },
 };
