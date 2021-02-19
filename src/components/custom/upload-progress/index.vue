@@ -29,6 +29,7 @@ import jobAPI from '@/apis/job';
 import FILES from '@/constant/FILES';
 
 const scheduler = new Scheduler(FILES.concurrentCount);
+let timeInterval;
 export default {
   components: {
     FileProgress,
@@ -52,11 +53,6 @@ export default {
       this.handlerFiles(files);
       this.uploadProgressTriger();
     });
-
-    setInterval(() => {
-      // 定时更新入库任务进度
-      this.updateImportStatus();
-    }, 3000);
   },
   data() {
     return {
@@ -169,6 +165,11 @@ export default {
 
       this.importJobUuids.add(jobRes.data.data.jobUuid);
 
+      clearInterval(timeInterval);
+      timeInterval = setInterval(() => {
+        // 定时更新入库任务进度
+        this.updateImportStatus();
+      }, 3000);
       this.updateImportStatus();
     },
     updateByKey(key, info) {
@@ -181,10 +182,11 @@ export default {
     },
     async updateImportStatus() {
       if (this.importJobUuids.size === 0) {
+        clearInterval(timeInterval);
         return;
       }
       const jobListRes = await jobAPI.list({
-        jobUuids: this.importJobUuids,
+        jobUuids: Array.from(this.importJobUuids),
       });
       if (jobListRes && jobListRes.data && jobListRes.data.code === 0) {
         jobListRes.data.data.forEach((jobInfo) => {
@@ -226,6 +228,10 @@ export default {
               break;
           }
         });
+
+        if (this.importJobUuids.size === 0) {
+          clearInterval(timeInterval);
+        }
       }
     },
   },
