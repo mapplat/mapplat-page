@@ -52,12 +52,18 @@ export default {
       this.handlerFiles(files);
       this.uploadProgressTriger();
     });
+
+    setInterval(() => {
+      // 定时更新入库任务进度
+      this.updateImportStatus();
+    }, 3000);
   },
   data() {
     return {
       visible: true,
       files: [],
       formatFiles: [],
+      importJobUuids: new Set(),
     };
   },
   methods: {
@@ -145,6 +151,9 @@ export default {
         type: 'file-import',
         params: {
           fileId: mergeRes.data.data.id,
+          key: file.key,
+          name: file.name,
+          size: file.size,
         },
       });
 
@@ -158,106 +167,65 @@ export default {
         });
       }
 
-      // setInterval(() => {
-      //   this.updateImport(jobRes.data.data.jobUuid, file);
-      // }, 3000);
-      // // 开始入库
-      // const jobInfo = await jobAPI.info(jobRes.data.data.jobUuid);
+      this.importJobUuids.add(jobRes.data.data.jobUuid);
 
-      // if (!jobInfo || !jobInfo.data || jobInfo.data.code !== 0) {
-      //   this.updateByKey(file.key, {
-      //     key: file.key,
-      //     name: file.name,
-      //     size: file.size,
-      //     status: 'exception',
-      //     msg: '入库失败',
-      //   });
-      //   return;
-      // }
-      // switch (jobInfo.data.data.status) {
-      //   case 'create':
-      //   case 'progress':
-      //     this.updateByKey(file.key, {
-      //       key: file.key,
-      //       name: file.name,
-      //       size: file.size,
-      //       status: 'progress',
-      //       percentage: jobInfo.data.data.percentage,
-      //       msg: '正在入库',
-      //     });
-      //     break;
-      //   case 'success':
-      //     this.updateByKey(file.key, {
-      //       key: file.key,
-      //       name: file.name,
-      //       size: file.size,
-      //       status: 'success',
-      //       msg: '上传成功',
-      //     });
-      //     break;
-      //   case 'exception':
-      //   default:
-      //     this.updateByKey(file.key, {
-      //       key: file.key,
-      //       name: file.name,
-      //       size: file.size,
-      //       status: 'exception',
-      //       msg: '上传失败',
-      //     });
-      //     break;
-      // }
+      this.updateImportStatus();
     },
     updateByKey(key, info) {
       const index = this.formatFiles.findIndex((val) => val.key === key);
-      this.formatFiles.splice(index, 1, info);
+      if (index !== -1) {
+        this.formatFiles.splice(index, 1, info);
+      } else {
+        this.formatFiles.push(info);
+      }
     },
-    updateImportStatus() {
-
-    },
-    async updateImport(jobUuid, file) {
-      // 开始入库
-      const jobInfo = await jobAPI.info(jobUuid);
-      if (!jobInfo || !jobInfo.data || jobInfo.data.code !== 0) {
-        this.updateByKey(file.key, {
-          key: file.key,
-          name: file.name,
-          size: file.size,
-          status: 'exception',
-          msg: '入库失败',
-        });
+    async updateImportStatus() {
+      if (this.importJobUuids.size === 0) {
         return;
       }
-      switch (jobInfo.data.data.status) {
-        case 'create':
-        case 'progress':
-          this.updateByKey(file.key, {
-            key: file.key,
-            name: file.name,
-            size: file.size,
-            status: 'progress',
-            percentage: jobInfo.data.data.percentage,
-            msg: '正在入库',
-          });
-          break;
-        case 'success':
-          this.updateByKey(file.key, {
-            key: file.key,
-            name: file.name,
-            size: file.size,
-            status: 'success',
-            msg: '上传成功',
-          });
-          break;
-        case 'exception':
-        default:
-          this.updateByKey(file.key, {
-            key: file.key,
-            name: file.name,
-            size: file.size,
-            status: 'exception',
-            msg: '上传失败',
-          });
-          break;
+      const jobListRes = await jobAPI.list({
+        jobUuids: this.importJobUuids,
+      });
+      if (jobListRes && jobListRes.data && jobListRes.data.code === 0) {
+        jobListRes.data.data.forEach((jobInfo) => {
+          const {
+            jobUuid, status, percentage, params,
+          } = jobInfo;
+          switch (status) {
+            case 'create':
+            case 'progress':
+              this.updateByKey(params.key, {
+                key: params.key,
+                name: params.name,
+                size: params.size,
+                status: 'progress',
+                percentage,
+                msg: '正在入库',
+              });
+              break;
+            case 'success':
+              this.updateByKey(params.key, {
+                key: params.key,
+                name: params.name,
+                size: params.size,
+                status: 'success',
+                msg: '上传成功',
+              });
+              this.importJobUuids.delete(jobUuid);
+              break;
+            case 'exception':
+            default:
+              this.updateByKey(params.key, {
+                key: params.key,
+                name: params.name,
+                size: params.size,
+                status: 'exception',
+                msg: '上传失败',
+              });
+              this.importJobUuids.delete(jobUuid);
+              break;
+          }
+        });
       }
     },
   },

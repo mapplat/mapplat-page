@@ -6,13 +6,14 @@
       <div class="file-size text-ellipsis">{{formatFileSize(file.size)}}</div>
       <div class="file-status text-ellipsis">
           <template v-if="file.status === 'success'">
-            <k-icon icon="icon-xuanze" :size="20"/>
+            <k-icon icon="icon-xuanze" :size="18"/>
             <div class="file-status-msg">
               {{file.msg}}
              </div>
           </template>
 
           <template v-if="file.status === 'exception'">
+            <k-icon icon="icon-shibai" :size="18"/>
             <div class="file-status-msg">
               {{file.msg}}
             </div>
