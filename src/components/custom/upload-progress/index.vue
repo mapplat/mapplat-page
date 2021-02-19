@@ -144,7 +144,7 @@ export default {
       });
 
       const jobRes = await jobAPI.create({
-        type: 'file-import',
+        type: 'FILE_IMPORT',
         params: {
           fileId: mergeRes.data.data.id,
           key: file.key,
