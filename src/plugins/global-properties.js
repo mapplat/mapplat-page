@@ -1,6 +1,6 @@
 import mitt from 'mitt';
 import Parameter from '@c_kai/parameter';
-import { logout } from '@/utils/utils';
+import { logout, formatDate } from '@/utils/utils';
 
 const parameter = new Parameter();
 export default {
@@ -11,6 +11,7 @@ export default {
     app.config.globalProperties.$bus = mitt();
     app.config.globalProperties.parameter = parameter;
     app.config.globalProperties.logout = logout;
+    app.config.globalProperties.formatDate = formatDate;
     app.config.globalProperties.$validateRefs = function (refs) {
       refs = refs || Object.keys(this.$refs);
       const errors = refs.filter((ref) => this.$refs[ref] && 'validate' in this.$refs[ref] && typeof this.$refs[ref].validate === 'function').map((ref) => this.$refs[ref].validate()).filter((val) => !!val);

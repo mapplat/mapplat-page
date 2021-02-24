@@ -86,7 +86,43 @@ async function getFileHash(file) {
   };
 }
 
+function formatDate(time, type = 'date') {
+  const date = new Date(time);
+  const year = date.getUTCFullYear();
+  let [month, day, hour, minute, second] = [
+    date.getUTCMonth() + 1,
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
+  ];
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (day < 10) {
+    day = `0${day}`;
+  }
+  if (hour < 10) {
+    hour = `0${hour}`;
+  }
+  if (minute < 10) {
+    minute = `0${minute}`;
+  }
+  if (second < 10) {
+    second = `0${second}`;
+  }
+  switch (type) {
+    case 'time':
+      return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+    case 'date':
+    default:
+      return `${year}-${month}-${day}`;
+  }
+}
+
 export {
+  formatDate,
   getRandomStr,
   fixedNum,
   getType,

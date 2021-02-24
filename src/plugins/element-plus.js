@@ -20,6 +20,7 @@ import {
   ElTable,
   ElTableColumn,
   ElPopover,
+  ElPagination,
   ElNotification,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
@@ -48,6 +49,7 @@ const components = [
   ElTable,
   ElTableColumn,
   ElPopover,
+  ElPagination,
   ElNotification,
 ];
 

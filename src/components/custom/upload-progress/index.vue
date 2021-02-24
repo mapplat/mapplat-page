@@ -214,6 +214,7 @@ export default {
                 msg: '上传成功',
               });
               this.importJobUuids.delete(jobUuid);
+              this.$bus.emit('update-user-data-list');
               break;
             case 'exception':
             default:
