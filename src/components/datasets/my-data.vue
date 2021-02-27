@@ -5,15 +5,21 @@
         <el-button :size="$size" type="primary" @click="openUploadDialog">上传</el-button>
       </div>
       <div class="component-options-right">
-        <KInput placeholder="搜索" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
+        <KInput placeholder="搜索" :size="$size" @blur="reGetDataList" @keyupEnter="reGetDataList" v-model="dataname">
           <template #suffix>
             <k-icon @click="reGetDataList" class="icon-primary" icon="icon--search" :size="20"></k-icon>
           </template>
         </KInput>
       </div>
     </div>
-    <div class="component-options-content">
-      <UserData :datalist="datalist"></UserData>
+    <div class="component-options-content" v-loading="loading">
+      <UserData v-if="datalist.length" :datalist="datalist"></UserData>
+      <div v-else class="emptydata-wrapper">
+        <k-icon icon="icon-kong" :size="40"></k-icon>
+        <div class="emptydata-msg">
+          无数据
+        </div>
+      </div>
       <el-pagination
         background
         :hide-on-single-page="true"
@@ -45,9 +51,11 @@ export default {
       count: 0,
       limit: 10,
       page: 1,
+      loading: false,
     };
   },
   created() {
+    this.getDataList();
     this.$bus.off('update-user-data-list');
     this.$bus.on('update-user-data-list', () => {
       this.getDataList();
@@ -67,12 +75,15 @@ export default {
         page: this.page,
         name: this.dataname,
       };
+      this.loading = true;
       const result = await userDataAPI.list(params);
+      this.loading = false;
+
       if (result && result.data && result.data.code === 0) {
         this.datalist = result.data.data.rows;
         this.count = result.data.data.count;
       } else {
-        this.$error('注册失败', result);
+        this.$error('获取失败', result);
       }
     },
   },

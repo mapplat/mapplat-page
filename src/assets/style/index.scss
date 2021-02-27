@@ -46,6 +46,13 @@ body {
   box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px 0px
 }
 
+.hover-shadow {
+  &:hover{
+    cursor: pointer;
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px 0px
+  }
+}
+
 .sx-m-padding {
   padding: 12px 0;
 }
@@ -57,6 +64,53 @@ body {
   color: $gray !important;
   &:hover {
     color: $primary !important;
+  }
+}
+
+@keyframes turn{
+  0%{-webkit-transform:rotate(0deg);}
+  25%{-webkit-transform:rotate(90deg);}
+  50%{-webkit-transform:rotate(180deg);}
+  75%{-webkit-transform:rotate(270deg);}
+  100%{-webkit-transform:rotate(360deg);}
+}
+
+.mapplat-loading {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+  z-index: 999999;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  color: $deep-gray;
+  .k-icon {
+    animation:turn 1s linear infinite; 
+  }
+}
+
+.emptydata-wrapper {
+  position: absolute;
+  display: flex;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  font-size: 60px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: $deep-gray;
+  .emptydata-msg {
+    padding: 12px 0;
+    font-size: 18px;
   }
 }
 

@@ -11,6 +11,7 @@
     v-model="input"
     :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
+    @blur="$emit('blur')"
     @input="validate">
     <template #suffix>
       <slot name="suffix"></slot>
