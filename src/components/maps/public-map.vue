@@ -1,5 +1,5 @@
 <template>
   <div>
-    my map
+    public map
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
   <div class="left-nav" :class="{'left-nav-collapse': collapse}">
-    <div class="k-logo">
+    <!-- <div class="k-logo">
       <k-icon icon="icon-logo" :size="42"></k-icon>
       <span v-show="!collapse" class="title">{{$title}}</span>
-    </div>
+    </div> -->
     <div class="left-nav-content">
       <LeftMenu :collapse="collapse"></LeftMenu>
     </div>

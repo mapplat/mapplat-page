@@ -60,20 +60,6 @@ export default {
       },
     },
   },
-  methods: {
-    handleSelect(index) {
-      if (this.$route.path === index) return;
-      this.$router.push({
-        path: index,
-      });
-    },
-    handleClose() {
-      this.isLogoCollapse = false;
-    },
-    handleOpen() {
-      this.isLogoCollapse = true;
-    },
-  },
 };
 </script>
 <style lang="scss" scoped>

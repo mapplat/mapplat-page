@@ -29,18 +29,14 @@
         :total="count">
       </el-pagination>
     </div>
-    <!-- dialog -->
-    <UploadDialog></UploadDialog>
   </div>
 </template>
 <script>
-import UploadDialog from '@/components/dialogs/upload';
 import UserData from '@/components/custom/user-data';
 import userDataAPI from '@/apis/userData';
 
 export default {
   components: {
-    UploadDialog,
     UserData,
   },
   data() {
@@ -65,9 +61,6 @@ export default {
     reGetDataList() {
       this.page = 1;
       this.getDataList();
-    },
-    openUploadDialog() {
-      this.$bus.emit('open-upload-dialog');
     },
     async getDataList() {
       const params = {

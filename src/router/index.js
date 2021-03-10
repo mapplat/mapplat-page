@@ -2,28 +2,41 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { logout } from '@/utils/utils';
 import Desktop from '@/components/desktop';
 import Datasets from '@/components/datasets';
+import MyData from '@/components/datasets/my-data';
+import PublicData from '@/components/datasets/public-data';
 import Maps from '@/components/maps';
+import MyMap from '@/components/maps/my-map';
+import PublicMap from '@/components/maps/public-map';
 import Profile from '@/components/profile';
 
 const breadcrumbsConf = {
-  datasets: [{
+  'my-data': [{
     name: '数据',
-    path: '/datasets',
-  },
-  {
+    path: '/datasets/my-data',
+  }, {
     name: '我的数据',
     path: '/datasets/my-data',
+  }],
+  'public-data': [{
+    name: '数据',
+    path: '/datasets/public-data',
   }, {
     name: '公共数据',
     path: '/datasets/public-data',
   }],
   'my-map': [{
     name: '地图',
-    path: '/maps',
-  },
-  {
+    path: '/maps/my-map',
+  }, {
     name: '我的地图',
     path: '/maps/my-map',
+  }],
+  'public-map': [{
+    name: '地图',
+    path: '/maps/public-map',
+  }, {
+    name: '公共地图',
+    path: '/maps/public-map',
   }],
   profile: [{
     name: '个人中心',
@@ -33,52 +46,55 @@ const breadcrumbsConf = {
 
 const routes = [
   {
-    path: '/',
+    path: '',
     redirect: () => ({ path: '/datasets' }),
-  },
-  {
-    path: '/datasets',
-    name: 'datasets',
+  }, {
+    path: '/',
+    name: 'desktop',
     component: Desktop,
     children: [{
-      path: '/datasets/my-data',
-      name: 'my-data',
+      path: '/datasets',
+      name: 'datasets',
       component: Datasets,
-      meta: { breadcrumbs: breadcrumbsConf.datasets, activePath: '/datasets' },
+      children: [{
+        path: '',
+        redirect: () => ({ path: '/datasets/my-data' }),
+      }, {
+        path: 'my-data',
+        name: 'my-data',
+        component: MyData,
+        meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
+      }, {
+        path: 'public-data',
+        name: 'public-data',
+        component: PublicData,
+        meta: { breadcrumbs: breadcrumbsConf['public-data'], activePath: '/datasets' },
+      }],
     }, {
-      path: '/datasets/public-data',
-      name: 'public-data',
-      component: Datasets,
-      meta: { breadcrumbs: breadcrumbsConf.datasets, activePath: '/datasets' },
-    },
-    {
-      path: '/datasets/:others*',
-      redirect: () => ({ name: 'my-data' }),
-    }],
-  },
-  {
-    path: '/maps',
-    name: 'maps',
-    component: Desktop,
-    children: [{
-      path: '/maps/my-map',
-      name: 'my-map',
+      path: '/maps',
+      name: 'maps',
       component: Maps,
-      meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
-    },
-    {
-      path: '/maps/:others*',
-      redirect: () => ({ name: 'my-map' }),
-    }],
-  },
-  {
-    path: '/profile',
-    component: Desktop,
-    children: [{
-      path: '',
-      name: 'profile',
+      children: [{
+        path: '',
+        redirect: () => ({ path: '/maps/my-map' }),
+      }, {
+        path: 'my-map',
+        name: 'my-map',
+        component: MyMap,
+        meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
+      }, {
+        path: 'public-map',
+        name: 'public-map',
+        component: PublicMap,
+        meta: { breadcrumbs: breadcrumbsConf['public-map'], activePath: '/maps' },
+      }],
+    }, {
+      path: '/profile',
       component: Profile,
       meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
+    }, {
+      path: '/:pathMatch(.*)*',
+      redirect: () => ({ path: '/datasets' }),
     }],
   },
 ];

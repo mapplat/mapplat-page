@@ -14,40 +14,37 @@
       >
     </el-menu>
     <div class="component-content">
-      <keep-alive>
-        <component
-          v-bind:is="activeIndex"
-        ></component>
-      </keep-alive>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
   </div>
 </template>
 <script>
-import MyMap from './my-map';
 
 const TAB_MENT = [
   {
     value: 'my-map',
     title: '我的地图',
   },
+  {
+    value: 'public-map',
+    title: '公共地图',
+  },
 ];
 export default {
-  components: {
-    MyMap,
-  },
   data() {
-    let activeIndex = null;
-    if (TAB_MENT.find((tab) => tab.value === this.$route.name)) {
-      activeIndex = this.$route.name;
-    }
     return {
-      activeIndex,
+      activeIndex: this.$route.name,
       TAB_MENT,
     };
   },
   methods: {
     handleSelect(key) {
       this.activeIndex = key;
+      this.$router.push({ name: key });
     },
   },
 };

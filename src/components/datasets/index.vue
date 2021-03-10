@@ -14,16 +14,15 @@
       >
     </el-menu>
     <div class="component-content">
-      <keep-alive>
-        <!-- <component :is="activeIndex"></component> -->
-        <router-view></router-view>
-      </keep-alive>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
   </div>
 </template>
 <script>
-// import MyData from './my-data';
-// import PublicData from './public-data';
 
 const TAB_MENT = [
   {
@@ -33,27 +32,19 @@ const TAB_MENT = [
   {
     value: 'public-data',
     title: '公共数据',
-    disabled: false,
   },
 ];
 export default {
-  // components: {
-  //   MyData,
-  //   PublicData,
-  // },
   data() {
-    let activeIndex = null;
-    if (TAB_MENT.find((tab) => tab.value === this.$route.name)) {
-      activeIndex = this.$route.name;
-    }
     return {
-      activeIndex,
+      activeIndex: this.$route.name,
       TAB_MENT,
     };
   },
   methods: {
     handleSelect(key) {
       this.activeIndex = key;
+      this.$router.push({ name: key });
     },
   },
 };
