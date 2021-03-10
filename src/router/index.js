@@ -44,60 +44,58 @@ const breadcrumbsConf = {
   }],
 };
 
-const routes = [
-  {
+const routes = [{
+  path: '/',
+  name: 'desktop',
+  component: Desktop,
+  children: [{
     path: '',
     redirect: () => ({ path: '/datasets' }),
   }, {
-    path: '/',
-    name: 'desktop',
-    component: Desktop,
+    path: '/datasets',
+    name: 'datasets',
+    component: Datasets,
     children: [{
-      path: '/datasets',
-      name: 'datasets',
-      component: Datasets,
-      children: [{
-        path: '',
-        redirect: () => ({ path: '/datasets/my-data' }),
-      }, {
-        path: 'my-data',
-        name: 'my-data',
-        component: MyData,
-        meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
-      }, {
-        path: 'public-data',
-        name: 'public-data',
-        component: PublicData,
-        meta: { breadcrumbs: breadcrumbsConf['public-data'], activePath: '/datasets' },
-      }],
+      path: '',
+      redirect: () => ({ path: '/datasets/my-data' }),
     }, {
-      path: '/maps',
-      name: 'maps',
-      component: Maps,
-      children: [{
-        path: '',
-        redirect: () => ({ path: '/maps/my-map' }),
-      }, {
-        path: 'my-map',
-        name: 'my-map',
-        component: MyMap,
-        meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
-      }, {
-        path: 'public-map',
-        name: 'public-map',
-        component: PublicMap,
-        meta: { breadcrumbs: breadcrumbsConf['public-map'], activePath: '/maps' },
-      }],
+      path: 'my-data',
+      name: 'my-data',
+      component: MyData,
+      meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
     }, {
-      path: '/profile',
-      component: Profile,
-      meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
-    }, {
-      path: '/:pathMatch(.*)*',
-      redirect: () => ({ path: '/datasets' }),
+      path: 'public-data',
+      name: 'public-data',
+      component: PublicData,
+      meta: { breadcrumbs: breadcrumbsConf['public-data'], activePath: '/datasets' },
     }],
-  },
-];
+  }, {
+    path: '/maps',
+    name: 'maps',
+    component: Maps,
+    children: [{
+      path: '',
+      redirect: () => ({ path: '/maps/my-map' }),
+    }, {
+      path: 'my-map',
+      name: 'my-map',
+      component: MyMap,
+      meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
+    }, {
+      path: 'public-map',
+      name: 'public-map',
+      component: PublicMap,
+      meta: { breadcrumbs: breadcrumbsConf['public-map'], activePath: '/maps' },
+    }],
+  }, {
+    path: '/profile',
+    component: Profile,
+    meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
+  }, {
+    path: '/:pathMatch(.*)*',
+    redirect: () => ({ path: '/datasets' }),
+  }],
+}];
 
 const router = createRouter({
   history: createWebHistory(),

@@ -1,7 +1,7 @@
 <template>
   <div class="mapplat-breadcrumb no-user-select">
     <el-breadcrumb>
-      <el-breadcrumb-item :to="{ path: '/datasets/my-data' }">
+      <el-breadcrumb-item :to="{ path: '/' }">
         <k-icon icon="icon-home" :size="20"></k-icon>
       </el-breadcrumb-item>
       <el-breadcrumb-item

@@ -41,6 +41,9 @@ export default {
       TAB_MENT,
     };
   },
+  activated() {
+    this.activeIndex = this.$route.name;
+  },
   methods: {
     handleSelect(key) {
       this.activeIndex = key;
