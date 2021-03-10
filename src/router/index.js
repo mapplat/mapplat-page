@@ -6,13 +6,16 @@ import Maps from '@/components/maps';
 import Profile from '@/components/profile';
 
 const breadcrumbsConf = {
-  'my-data': [{
+  datasets: [{
     name: '数据',
     path: '/datasets',
   },
   {
     name: '我的数据',
     path: '/datasets/my-data',
+  }, {
+    name: '公共数据',
+    path: '/datasets/public-data',
   }],
   'my-map': [{
     name: '地图',
@@ -41,7 +44,12 @@ const routes = [
       path: '/datasets/my-data',
       name: 'my-data',
       component: Datasets,
-      meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
+      meta: { breadcrumbs: breadcrumbsConf.datasets, activePath: '/datasets' },
+    }, {
+      path: '/datasets/public-data',
+      name: 'public-data',
+      component: Datasets,
+      meta: { breadcrumbs: breadcrumbsConf.datasets, activePath: '/datasets' },
     },
     {
       path: '/datasets/:others*',

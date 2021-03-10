@@ -22,6 +22,7 @@ import {
   ElPopover,
   ElPagination,
   ElNotification,
+  ElImage,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import '@/assets/style/reset-element.scss';
@@ -51,6 +52,7 @@ const components = [
   ElPopover,
   ElPagination,
   ElNotification,
+  ElImage,
 ];
 
 export default {

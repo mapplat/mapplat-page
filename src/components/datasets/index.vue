@@ -15,13 +15,15 @@
     </el-menu>
     <div class="component-content">
       <keep-alive>
-        <component :is="activeIndex"></component>
+        <!-- <component :is="activeIndex"></component> -->
+        <router-view></router-view>
       </keep-alive>
     </div>
   </div>
 </template>
 <script>
-import MyData from './my-data';
+// import MyData from './my-data';
+// import PublicData from './public-data';
 
 const TAB_MENT = [
   {
@@ -35,9 +37,10 @@ const TAB_MENT = [
   },
 ];
 export default {
-  components: {
-    MyData,
-  },
+  // components: {
+  //   MyData,
+  //   PublicData,
+  // },
   data() {
     let activeIndex = null;
     if (TAB_MENT.find((tab) => tab.value === this.$route.name)) {

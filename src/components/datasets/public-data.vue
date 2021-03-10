@@ -2,7 +2,6 @@
   <div class="my-data">
     <div class="component-options-wrapper">
       <div class="component-options-left">
-        <el-button :size="$size" type="primary" @click="openUploadDialog">上传</el-button>
       </div>
       <div class="component-options-right">
         <KInput placeholder="搜索" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
@@ -46,20 +45,19 @@ export default {
   },
   data() {
     return {
-      isPrivate: true,
+      isPrivate: false,
       datalist: [],
       dataname: '',
       count: 0,
       limit: 60,
       page: 1,
       loading: false,
-      dataType: this.dataType,
     };
   },
   created() {
     this.getDataList();
-    this.$bus.off('update-user-data-list');
-    this.$bus.on('update-user-data-list', () => {
+    this.$bus.off('update-public-data-list');
+    this.$bus.on('update-public-data-list', () => {
       this.getDataList();
     });
   },
@@ -79,7 +77,7 @@ export default {
         isPrivate: this.isPrivate,
       };
       this.loading = true;
-      const result = await userDataAPI.myData(params);
+      const result = await userDataAPI.publicData(params);
       this.loading = false;
 
       if (result && result.data && result.data.code === 0) {

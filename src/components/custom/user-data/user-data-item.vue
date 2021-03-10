@@ -1,7 +1,35 @@
 <template>
   <div class="user-data-item hover-shadow">
-    <div class="user-data-item-thump">
-      <k-icon :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" color="#eaecef" :size="16" margin="4px"></k-icon>
+    <div class="user-data-item-thump" >
+      <div class="user-data-top">
+        <k-icon :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="18" margin="4px"></k-icon>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <k-icon class="data-actions" icon="icon-gengduo" :size="18" margin="4px"></k-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>编辑数据</el-dropdown-item>
+              <el-dropdown-item v-if="item.private" @click="updatePrivate(false)">分享数据</el-dropdown-item>
+              <el-dropdown-item v-else  @click="updatePrivate(true)">取消分享</el-dropdown-item>
+              <el-dropdown-item>删除</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+
+      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `http://mapplat.localhost/api/data/${item.dataUuid}/thumb` : ''">
+        <template #placeholder>
+          <div class="image-placeholder">
+            <k-icon icon="icon-datasets" :size="132"></k-icon>
+          </div>
+        </template>
+        <template #error>
+          <div class="image-slot">
+            <k-icon icon="icon-datasets" :size="132"></k-icon>
+          </div>
+        </template>
+      </el-image>
     </div>
     <div class="user-data-item-defail">
       <div class="user-data-item-content user-data-item-info">
@@ -13,11 +41,27 @@
   </div>
 </template>
 <script>
+import userDataAPI from '@/apis/userData';
+
 export default {
   props: {
     item: {
       type: Object,
       default: () => {},
+    },
+  },
+  methods: {
+    async updatePrivate(isPrivate) {
+      const params = {
+        isPrivate,
+      };
+      const updateRes = await userDataAPI.update(this.item.dataUuid, params);
+      if (this.checkRes(updateRes)) {
+        this.$bus.emit('update-user-data-list');
+        this.$bus.emit('update-public-data-list');
+      } else {
+        this.$error('修改失败', updateRes);
+      }
     },
   },
 };
@@ -26,10 +70,22 @@ export default {
 .user-data-item {
   width: 250px;
   // height: 220px;
+  &:hover {
+      .data-actions {
+        cursor: pointer;
+        color: $primary;
+      }
+  }
   .user-data-item-thump {
     border-radius: 4px 4px 0 0;
     height: 150px;
     background-color: $deep-gray;
+    color: $light-gray;
+    .user-data-top {
+      display: flex;
+      justify-content: space-between;
+    }
+
   }
 
   .user-data-item-defail {
@@ -52,6 +108,25 @@ export default {
     .user-data-item-time {
       padding: 0 4px 6px 4px;
       color: $gray;
+    }
+  }
+  .el-image {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: -24px;
+    padding: 12px;
+    .image-slot,.image-placeholder {
+      text-align: center;
+      color: $gray;
+    }
+  }
+
+  .el-dropdown {
+    z-index: 999;
+    margin: 4px;
+    &:hover {
+      background-color: $light-gray;
     }
   }
 }

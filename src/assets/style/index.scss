@@ -43,13 +43,13 @@ body {
 }
 
 .shadow {
-  box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px 0px
+  box-shadow: rgb(0 0 0 / 25%) 2px 8px 12px 2px
 }
 
 .hover-shadow {
   &:hover{
     cursor: pointer;
-    box-shadow: rgb(0 0 0 / 15%) 0px 2px 8px 0px
+    box-shadow: rgb(0 0 0 / 25%) 2px 8px 12px 2px
   }
 }
 
@@ -87,7 +87,7 @@ body {
   z-index: 999999;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.6);
+  // background-color: rgba(255, 255, 255, 0.6);
   color: $deep-gray;
   .k-icon {
     animation:turn 1s linear infinite; 

@@ -1,10 +1,12 @@
 import mitt from 'mitt';
 import Parameter from '@c_kai/parameter';
 import { logout, formatDate } from '@/utils/utils';
+import customUtils from '@/utils/customUtils';
 
 const parameter = new Parameter();
 export default {
   install(app) {
+    app.config.globalProperties.checkRes = customUtils.checkRes;
     app.config.globalProperties.$title = 'mapplat';
     app.config.globalProperties.$size = 'medium';
     app.config.globalProperties.$bus = mitt();

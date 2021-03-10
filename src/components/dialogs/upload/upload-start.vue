@@ -13,7 +13,7 @@
           <el-collapse-item title="选择要上传的文件" name="support">
             <FilesTable :files="formatFiles.support" :selectable="true" @updateSelectFiles="updateSelectFiles"></FilesTable>
           </el-collapse-item>
-          <el-collapse-item title="不支持上传的文件" name="not-support">
+          <el-collapse-item title="不支持上传的文件" name="not-support" v-if="formatFiles.notSupport && formatFiles.notSupport.length" >
             <FilesTable :files="formatFiles.notSupport"></FilesTable>
           </el-collapse-item>
         </el-collapse>
