@@ -50,6 +50,11 @@ export default {
       loading: false,
     };
   },
+  provide() {
+    return {
+      isPrivate: this.isPrivate,
+    };
+  },
   created() {
     this.getDataList();
     this.$bus.off('update-public-data-list');

@@ -14,6 +14,7 @@
 
     <!-- dialog -->
     <UploadProgress></UploadProgress>
+    <DataView></DataView>
   </div>
 </template>
 
@@ -21,12 +22,14 @@
 import LeftNav from '@/components/desktop/left-nav';
 import TopBar from '@/components/desktop/top-bar';
 import UploadProgress from '@/components/custom/upload-progress';
+import DataView from '@/components/dialogs/data-view';
 
 export default {
   components: {
     LeftNav,
     TopBar,
     UploadProgress,
+    DataView,
   },
 };
 </script>

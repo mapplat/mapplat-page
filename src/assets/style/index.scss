@@ -43,13 +43,13 @@ body {
 }
 
 .shadow {
-  box-shadow: rgb(0 0 0 / 25%) 2px 8px 12px 2px
+  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 10%), 0 4px 6px 0 rgb(170 182 206 / 36%);
 }
 
 .hover-shadow {
   &:hover{
     cursor: pointer;
-    box-shadow: rgb(0 0 0 / 25%) 2px 8px 12px 2px
+    box-shadow: rgb(0 0 0 / 25%) 2px 8px 12px 2px;
   }
 }
 

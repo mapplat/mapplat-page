@@ -56,6 +56,11 @@ export default {
       dataType: this.dataType,
     };
   },
+  provide() {
+    return {
+      isPrivate: this.isPrivate,
+    };
+  },
   created() {
     this.getDataList();
     this.$bus.off('update-user-data-list');

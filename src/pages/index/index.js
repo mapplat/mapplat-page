@@ -6,7 +6,7 @@ import directivesPlugins from '@/plugins/directives';
 import globalProperties from '@/plugins/global-properties';
 import userAPI from '@/apis/user';
 import { logout } from '@/utils/utils';
-
+import 'ol/ol.css';
 import '@/assets/style/index.scss';
 import App from './index.vue';
 

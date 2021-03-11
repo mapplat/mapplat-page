@@ -2,17 +2,17 @@
   <div class="user-data-item hover-shadow">
     <div class="user-data-item-thump" >
       <div class="user-data-top">
-        <k-icon :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="18" margin="4px"></k-icon>
-        <el-dropdown>
-          <span class="el-dropdown-link">
+        <k-icon v-if="isPrivate" @click.stop="updatePrivate(!item.private)" :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="20" margin="4px"></k-icon>
+        <div v-else></div>
+        <el-dropdown trigger="click">
+          <span class="el-dropdown-link" @click.stop>
             <k-icon class="data-actions" icon="icon-gengduo" :size="18" margin="4px"></k-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>编辑数据</el-dropdown-item>
-              <el-dropdown-item v-if="item.private" @click="updatePrivate(false)">分享数据</el-dropdown-item>
-              <el-dropdown-item v-else  @click="updatePrivate(true)">取消分享</el-dropdown-item>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <el-dropdown-item>创建地图</el-dropdown-item>
+              <el-dropdown-item>下载数据</el-dropdown-item>
+              <el-dropdown-item v-if="isPrivate">删除</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -50,6 +50,7 @@ export default {
       default: () => {},
     },
   },
+  inject: ['isPrivate'],
   methods: {
     async updatePrivate(isPrivate) {
       const params = {
@@ -71,10 +72,13 @@ export default {
   width: 250px;
   // height: 220px;
   &:hover {
-      .data-actions {
-        cursor: pointer;
-        color: $primary;
-      }
+    .data-actions {
+      cursor: pointer;
+      color: $primary;
+    }
+    .el-dropdown {
+      background-color: $light-gray;
+    }
   }
   .user-data-item-thump {
     border-radius: 4px 4px 0 0;
@@ -84,6 +88,9 @@ export default {
     .user-data-top {
       display: flex;
       justify-content: space-between;
+      .k-icon {
+        z-index: 999;
+      }
     }
 
   }
@@ -125,9 +132,6 @@ export default {
   .el-dropdown {
     z-index: 999;
     margin: 4px;
-    &:hover {
-      background-color: $light-gray;
-    }
   }
 }
 </style>

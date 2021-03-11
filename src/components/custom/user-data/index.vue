@@ -1,6 +1,6 @@
 <template>
   <div class="user-data">
-    <DataItem v-for="item in datalist" :key="item.id" :item="item"></DataItem>
+    <DataItem @click="openData(item)" v-for="item in datalist" :key="item.id" :item="item"></DataItem>
     <div class="data-item-temp" v-for="i in 6" :key="i"></div>
   </div>
 </template>
@@ -16,6 +16,14 @@ export default {
   },
   components: {
     DataItem,
+  },
+  methods: {
+    openData(item) {
+      this.$bus.emit('dialog-user-data-view', {
+        visible: true,
+        dataInfo: item,
+      });
+    },
   },
 };
 </script>
