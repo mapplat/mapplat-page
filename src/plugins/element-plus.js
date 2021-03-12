@@ -23,6 +23,7 @@ import {
   ElPagination,
   ElNotification,
   ElImage,
+  ElMessageBox,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import '@/assets/style/reset-element.scss';
@@ -53,6 +54,7 @@ const components = [
   ElPagination,
   ElNotification,
   ElImage,
+  ElMessageBox,
 ];
 
 export default {

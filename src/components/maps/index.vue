@@ -16,7 +16,7 @@
     <div class="component-content">
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <component :is="Component" />
+          <component :is="Component" @changeActiveIndex="changeActiveIndex"/>
         </keep-alive>
       </router-view>
     </div>
@@ -41,10 +41,10 @@ export default {
       TAB_MENT,
     };
   },
-  activated() {
-    this.activeIndex = this.$route.name;
-  },
   methods: {
+    changeActiveIndex(val) {
+      this.activeIndex = val;
+    },
     handleSelect(key) {
       this.activeIndex = key;
       this.$router.push({ name: key });

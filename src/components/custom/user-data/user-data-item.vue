@@ -2,7 +2,7 @@
   <div class="user-data-item hover-shadow">
     <div class="user-data-item-thump" >
       <div class="user-data-top">
-        <k-icon v-if="isPrivate" @click.stop="updatePrivate(!item.private)" :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="20" margin="4px"></k-icon>
+        <k-icon class="icon-hover-color" v-if="isPrivate" @click.stop="updatePrivate(!item.private)" :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="20" margin="4px"></k-icon>
         <div v-else></div>
         <el-dropdown trigger="click">
           <span class="el-dropdown-link" @click.stop>
@@ -10,15 +10,16 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>创建地图</el-dropdown-item>
-              <el-dropdown-item>下载数据</el-dropdown-item>
-              <el-dropdown-item v-if="isPrivate">删除</el-dropdown-item>
+              <el-dropdown-item @click="openInMap">创建地图</el-dropdown-item>
+              <el-dropdown-item @click="copyData">复制数据</el-dropdown-item>
+              <el-dropdown-item @click="download">下载数据</el-dropdown-item>
+              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">删除</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
 
-      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `http://mapplat.localhost/api/data/${item.dataUuid}/thumb` : ''">
+      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `http://mapplat.localhost/api/data/thumb/${item.dataUuid}.png?time=${new Date()}` : ''">
         <template #placeholder>
           <div class="image-placeholder">
             <k-icon icon="icon-datasets" :size="132"></k-icon>
@@ -53,6 +54,7 @@ export default {
   inject: ['isPrivate'],
   methods: {
     async updatePrivate(isPrivate) {
+      const msg = `${isPrivate ? '取消' : ''}分享`;
       const params = {
         isPrivate,
       };
@@ -60,9 +62,42 @@ export default {
       if (this.checkRes(updateRes)) {
         this.$bus.emit('update-user-data-list');
         this.$bus.emit('update-public-data-list');
+        this.$success(`${msg}成功`);
       } else {
-        this.$error('修改失败', updateRes);
+        this.$error(`${msg}失败`, updateRes);
       }
+    },
+    async deleteData() {
+      this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).then(async () => {
+        const deleteRes = await userDataAPI.delete(this.item.dataUuid);
+        if (this.checkRes(deleteRes)) {
+          this.$bus.emit('update-user-data-list');
+          this.$bus.emit('update-public-data-list');
+          this.$success('删除成功');
+        } else {
+          this.$error('删除失败', deleteRes);
+        }
+      }).catch();
+    },
+    async copyData() {
+      const copyRes = await userDataAPI.copy(this.item.dataUuid);
+      if (this.checkRes(copyRes)) {
+        this.$bus.emit('update-user-data-list');
+        this.$success('复制成功');
+        this.$router.push({ name: 'my-data' });
+      } else {
+        this.$error('复制成功', copyRes);
+      }
+    },
+    async download() {
+      await userDataAPI.download(this.item.dataUuid, 'csv');
+    },
+    openInMap() {
+      this.$info('TODO');
     },
   },
 };

@@ -68,6 +68,9 @@ export default {
       this.getDataList();
     });
   },
+  activated() {
+    this.$emit('changeActiveIndex', 'my-data');
+  },
   methods: {
     reGetDataList() {
       this.page = 1;

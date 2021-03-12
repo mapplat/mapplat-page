@@ -66,6 +66,11 @@ body {
     color: $primary !important;
   }
 }
+.icon-hover-color {
+  &:hover {
+    color: $primary !important;
+  }
+}
 
 @keyframes turn{
   0%{-webkit-transform:rotate(0deg);}
@@ -111,6 +116,15 @@ body {
   .emptydata-msg {
     padding: 12px 0;
     font-size: 18px;
+  }
+}
+
+.color-danger {
+  color: $red !important;
+}
+.hover-color-danger {
+  &:hover {
+    color: $red !important;
   }
 }
 

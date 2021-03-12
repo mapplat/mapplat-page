@@ -5,7 +5,6 @@
 
 <script>
 import Map from 'ol/Map';
-import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import { transformExtent } from 'ol/proj';
@@ -31,24 +30,28 @@ export default {
       const { dataUuid, extent } = this.dataInfo;
       const viewConf = {
         center: [0, 0],
-        zoom: 2,
+        zoom: 1,
       };
       if (extent) {
         viewConf.extent = this.transform(extent.split(','));
       }
 
-      // eslint-disable-next-line no-new
-      new Map({
+      const olMap = new Map({
         target: 'map-wrapper',
         layers: [
+          new TileLayer({
+            source: new XYZ({
+              url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            }),
+          }),
           new TileLayer({
             source: new XYZ({
               url: `http://mapplat.localhost/api/data/${dataUuid}/tile/{z}/{x}/{y}@2x.png?token=${token}`,
             }),
           }),
         ],
-        view: new View(viewConf),
       });
+      olMap.getView().fit(this.transform(extent.split(',')));
     },
   },
 };

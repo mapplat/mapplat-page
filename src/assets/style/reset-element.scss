@@ -33,10 +33,15 @@
   min-width: 90px;
 }
 
+.el-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .el-dialog {
   min-width: 600px;
-
+  margin: 0 !important;
   .el-dialog__close {
     font-size: 24px;
   }

@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    custom-class="data-view-dialog"
     class="data-view"
     :title="dataInfo.name"
     destroy-on-close
@@ -63,11 +64,15 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.el-dialog {
+<style lang="scss">
+.data-view-dialog {
   height: 80%;
+  .el-dialog__body {
+    padding: 0 20px !important;
+    height: calc(100% - 118px);
+  }
   .data-view-content {
-    height: 400px;
+    height: 100%;
     .data-view-wrapper {
       height: 100%;
     }
