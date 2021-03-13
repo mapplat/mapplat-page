@@ -1,7 +1,6 @@
 <template>
   <el-dialog
-    custom-class="data-view-dialog"
-    class="data-view"
+    custom-class="data-view data-view-dialog"
     :title="dataInfo.name"
     destroy-on-close
     :append-to-body="true"
@@ -43,7 +42,9 @@ export default {
     return {
       component: components['data-map'],
       visible: false,
-      dataInfo: {},
+      dataInfo: {
+        name: '',
+      },
     };
   },
   created() {

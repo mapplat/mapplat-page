@@ -13,6 +13,9 @@ const job = {
   update(dataUuid, params) {
     return instance.put(`/data/${dataUuid}`, params);
   },
+  updateColumn(dataUuid, params) {
+    return instance.put(`/data/${dataUuid}/column`, params);
+  },
   delete(dataUuid) {
     return instance.delete(`/data/${dataUuid}`);
   },

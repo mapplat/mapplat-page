@@ -23,10 +23,9 @@ export default {
     };
   },
   watch: {
-    $route: {
+    '$route.meta': {
       immediate: true,
-      handler(to) {
-        const { meta } = to;
+      handler(meta) {
         this.breadcrumbs = meta.breadcrumbs;
       },
     },

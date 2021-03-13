@@ -21,7 +21,7 @@
 </template>
 <script>
 
-import Scheduler from '@c_kai/scheduler';
+import Scheduler from '@ckpack/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress';
 import { getFileHash, fixedNum, getRandomStr } from '@/utils/utils';
 import filesAPI from '@/apis/files';

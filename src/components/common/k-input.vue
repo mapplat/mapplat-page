@@ -4,11 +4,11 @@
       {{label}}
     </div>
     <el-input
+    v-model="input"
     :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
     :placeholder="placeholder"
     :type="type"
     :size="size"
-    v-model="input"
     :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
     @blur="$emit('blur')"
@@ -33,7 +33,7 @@ export default {
       default: null,
     },
     modelValue: {
-      type: String,
+      type: [String, Number, Object, Array],
       default: null,
     },
     rule: {

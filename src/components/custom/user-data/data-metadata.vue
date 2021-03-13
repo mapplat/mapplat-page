@@ -1,11 +1,12 @@
 <template>
-  <div>
-    {{dataInfo}}
+  <div class="data-metadata">
+    <div>
+      {{dataInfo.dataUuid}}
+    </div>
   </div>
 </template>
 
 <script>
-
 export default {
   props: {
     dataInfo: {

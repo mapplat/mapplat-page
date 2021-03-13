@@ -1,5 +1,5 @@
 import mitt from 'mitt';
-import Parameter from '@c_kai/parameter';
+import Parameter from '@ckpack/parameter';
 import { logout, formatDate } from '@/utils/utils';
 import customUtils from '@/utils/customUtils';
 
@@ -23,6 +23,14 @@ export default {
       this.$notify({
         duration,
         type: 'success',
+        message,
+      });
+    };
+    app.config.globalProperties.$warning = function (message, options = {}) {
+      const duration = options.duration || 2500;
+      this.$notify({
+        duration,
+        type: 'warning',
         message,
       });
     };

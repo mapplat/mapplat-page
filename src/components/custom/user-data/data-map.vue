@@ -9,7 +9,6 @@ import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import { transformExtent } from 'ol/proj';
 
-const token = localStorage.getItem('token');
 export default {
   props: {
     dataInfo: {
@@ -46,7 +45,7 @@ export default {
           }),
           new TileLayer({
             source: new XYZ({
-              url: `http://mapplat.localhost/api/data/${dataUuid}/tile/{z}/{x}/{y}@2x.png?token=${token}`,
+              url: `http://mapplat.localhost/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png`,
             }),
           }),
         ],

@@ -19,7 +19,7 @@
         </el-dropdown>
       </div>
 
-      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `http://mapplat.localhost/api/data/thumb/${item.dataUuid}.png?time=${new Date()}` : ''">
+      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `http://mapplat.localhost/api/data/thumb/${item.dataUuid}.png` : ''">
         <template #placeholder>
           <div class="image-placeholder">
             <k-icon icon="icon-datasets" :size="132"></k-icon>

@@ -51,12 +51,11 @@ export default {
     };
   },
   watch: {
-    $route: {
+    '$route.meta': {
       deep: true,
       immediate: true,
-      handler(val) {
-        const { meta } = val;
-        this.activePath = meta.activePath || val.path;
+      handler(meta) {
+        this.activePath = meta.activePath;
       },
     },
   },
