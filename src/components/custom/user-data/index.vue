@@ -8,6 +8,7 @@
 import DataItem from './user-data-item';
 
 export default {
+  inject: ['isPrivate'],
   props: {
     datalist: {
       type: Array,
@@ -20,6 +21,7 @@ export default {
   methods: {
     openData(item) {
       this.$bus.emit('dialog-user-data-view', {
+        isPrivate: this.isPrivate,
         visible: true,
         dataInfo: item,
       });

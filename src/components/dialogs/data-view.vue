@@ -4,12 +4,13 @@
     :title="dataInfo.name"
     destroy-on-close
     :append-to-body="true"
+    :close-on-click-modal="false"
     v-model="visible"
     width="60%"
     :before-close="handleClose">
     <div class="data-view-content">
       <keep-alive>
-        <component class="data-view-wrapper" :dataInfo="dataInfo" :is="component" />
+        <component class="data-view-wrapper" :dataInfo="dataInfo" :is="component" :isPrivate="isPrivate"/>
       </keep-alive>
     </div>
     <template #footer>
@@ -40,6 +41,7 @@ export default {
   },
   data() {
     return {
+      isPrivate: false,
       component: components['data-map'],
       visible: false,
       dataInfo: {
@@ -47,11 +49,12 @@ export default {
       },
     };
   },
-  created() {
+  mounted() {
     this.$bus.off('dialog-user-data-view');
     this.$bus.on('dialog-user-data-view', (params = {}) => {
       this.visible = params.visible;
       this.dataInfo = params.dataInfo;
+      this.isPrivate = params.isPrivate;
     });
   },
   methods: {
