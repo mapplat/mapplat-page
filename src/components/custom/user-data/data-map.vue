@@ -31,9 +31,8 @@ export default {
         center: [0, 0],
         zoom: 1,
       };
-      if (extent) {
-        viewConf.extent = this.transform(extent.split(','));
-      }
+      if (!extent) return;
+      viewConf.extent = this.transform(extent.split(','));
 
       const olMap = new Map({
         target: 'map-wrapper',

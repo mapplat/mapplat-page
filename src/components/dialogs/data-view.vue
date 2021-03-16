@@ -15,9 +15,9 @@
     </div>
     <template #footer>
       <div class="data-view-operate shadow">
-        <div @click="component = 'data-metadata'" :class="{'icon-active' : component === 'data-metadata'}" class="icon-wrapper"><k-icon icon="icon-metadata" :size="20"></k-icon></div>
-        <div @click="component = 'data-table'" :class="{'icon-active' : component === 'data-table'}" class="icon-wrapper"><k-icon icon="icon-datasets" :size="20"></k-icon></div>
-        <div @click="component = 'data-map'" :class="{'icon-active' : component === 'data-map'}" class="icon-wrapper"><k-icon icon="icon-map" :size="20"></k-icon></div>
+        <div @click="switchComponent('data-metadata')" :class="{'icon-active' : component === 'data-metadata'}" class="icon-wrapper"><k-icon icon="icon-metadata" :size="20"></k-icon></div>
+        <div @click="switchComponent('data-table')" :class="{'icon-active' : component === 'data-table'}" class="icon-wrapper"><k-icon icon="icon-datasets" :size="20"></k-icon></div>
+        <div v-if="dataInfo.spatialization" @click="switchComponent('data-map')" :class="{'icon-active' : component === 'data-map'}" class="icon-wrapper"><k-icon icon="icon-map" :size="20"></k-icon></div>
       </div>
     </template>
   </el-dialog>
@@ -44,9 +44,7 @@ export default {
       isPrivate: false,
       component: components['data-map'],
       visible: false,
-      dataInfo: {
-        name: '',
-      },
+      dataInfo: {},
     };
   },
   mounted() {
@@ -55,14 +53,15 @@ export default {
       this.visible = params.visible;
       this.dataInfo = params.dataInfo;
       this.isPrivate = params.isPrivate;
+      this.component = params.dataInfo.spatialization ? components['data-map'] : components['data-table'];
     });
   },
   methods: {
     handleClose() {
       this.visible = false;
     },
-    preview() {
-
+    switchComponent(name) {
+      this.component = name;
     },
   },
 };

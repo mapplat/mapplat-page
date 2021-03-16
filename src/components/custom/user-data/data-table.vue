@@ -51,7 +51,7 @@
           </div>
         </template>
         <template #default="scope">
-          <div :key="key" class="data-table-cell hover-pointer">
+          <div :key="key" class="data-table-cell">
             <div class="cell-value-content text-ellipsis">{{scope.row[key]}}</div>
             <k-icon class="cell-value-content-option" v-if="isPrivate && key !== idColumn" @click="(event)=>{cellEdit(event,scope.row[this.idColumn], key, scope.row[key])}" icon="icon-bianji" :size="20"></k-icon>
           </div>
@@ -65,7 +65,7 @@
         v-model:current-page="page"
         @current-change="getDataList"
         layout="prev, pager, next, jumper"
-        :page-size="10"
+        :page-size="limit"
         :total="dataTable.count">
       </el-pagination>
     </div>
@@ -97,7 +97,7 @@ export default {
   data() {
     return {
       page: 1,
-      limit: 15,
+      limit: 20,
       curentHeader: {},
       isShowHeaderEditInput: false,
       curentCell: {},
@@ -223,13 +223,6 @@ export default {
     color: #606266;
     display: flex;
     justify-content: space-between;
-    &:hover {
-      color: $primary;
-      .cell-value-content-option {
-        display: inline-block;
-      }
-    }
-
     .cell-value-content-option {
       display: none;
     }
@@ -257,6 +250,7 @@ export default {
 }
 .data-table-private {
   td {
+    cursor: pointer;
     user-select: none !important;
     .cell-value-content-option {
       display: none;
@@ -272,6 +266,16 @@ export default {
     cursor: none;
     &:hover {
       color: $gray !important;
+    }
+  }
+
+  .table-header-cell-name {
+    cursor: pointer;
+    &:hover {
+      color: $primary;
+      .cell-value-content-option {
+        display: inline-block;
+      }
     }
   }
 }
