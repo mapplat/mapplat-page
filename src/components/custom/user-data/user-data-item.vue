@@ -10,10 +10,10 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="openInMap">创建地图</el-dropdown-item>
-              <el-dropdown-item @click="copyData">复制数据</el-dropdown-item>
-              <el-dropdown-item @click="download">下载数据</el-dropdown-item>
-              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">删除</el-dropdown-item>
+              <el-dropdown-item @click="openInMap">{{_$t('message.create_map')}}</el-dropdown-item>
+              <el-dropdown-item @click="copyData">{{_$t('message.copy_data')}}</el-dropdown-item>
+              <el-dropdown-item @click="download">{{_$t('message.download_data')}}</el-dropdown-item>
+              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">{{_$t('message.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>

@@ -2,10 +2,10 @@
   <div class="my-data">
     <div class="component-options-wrapper">
       <div class="component-options-left">
-        <el-button :size="$size" type="primary" @click="openUploadDialog">上传</el-button>
+        <el-button :size="$size" type="primary" @click="openUploadDialog">{{_$t("message.upload")}}</el-button>
       </div>
       <div class="component-options-right">
-        <KInput placeholder="搜索" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
+        <KInput :placeholder="_$t('message.search')" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
           <template #suffix>
             <k-icon @click="reGetDataList" class="icon-primary" icon="icon--search" :size="20"></k-icon>
           </template>

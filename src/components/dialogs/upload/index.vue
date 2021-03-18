@@ -17,7 +17,7 @@ import UploadStart from './upload-start';
 
 const steps = {
   startUpload: {
-    title: '上传数据',
+    title: _$t('message.upload_data'),
     value: 'startUpload',
   },
   selectFiels: {

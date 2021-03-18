@@ -13,19 +13,19 @@
           <el-dropdown-item command="toProfile">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-user" :size="20" margin="0 6px"></k-icon>
-              个人中心
+              {{_$t('message.profile')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="accountManage">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-xiugaimima" :size="20" margin="0 6px"></k-icon>
-              修改密码
+              {{_$t('message.update_password')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="logout">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-tuichu" :size="20" margin="0 6px"></k-icon>
-              退出
+              {{_$t('message.logout')}}
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>

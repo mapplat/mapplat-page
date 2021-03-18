@@ -3,7 +3,7 @@
     <el-popover
       placement="top"
       :width="540"
-      title="上传数据"
+      :title="_$t('message.upload_data')"
       :show-arrow="true"
       popper-class="upload-progress-wrapper"
       trigger="click">
@@ -48,7 +48,7 @@ export default {
         size: file.size,
         percentage: 0,
         status: 'progress',
-        msg: '开始上传',
+        msg: _$t('message.start_upload'),
       })));
       this.handlerFiles(files);
       this.uploadProgressTriger();
@@ -88,7 +88,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: '上传失败',
+          msg: _$t('message.upload_failed'),
         });
         return;
       }

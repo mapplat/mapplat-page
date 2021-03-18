@@ -1,3 +1,4 @@
+import i18n from '@/plugins/i18n';
 import { createApp } from 'vue';
 import router from '@/router';
 import elementPlusPlugins from '@/plugins/element-plus';
@@ -23,6 +24,7 @@ import App from './index.vue';
   }
 
   app.config.productionTip = false;
+  app.use(i18n);
   app.use(router);
   app.use(elementPlusPlugins);
   app.use(componentPlugins);

@@ -27,11 +27,11 @@
 const TAB_MENT = [
   {
     value: 'my-data',
-    title: '我的数据',
+    title: _$t('message.my_data'),
   },
   {
     value: 'public-data',
-    title: '公共数据',
+    title: _$t('message.public_data'),
   },
 ];
 export default {

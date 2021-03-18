@@ -27,11 +27,11 @@
 const TAB_MENT = [
   {
     value: 'my-map',
-    title: '我的地图',
+    title: _$t('message.my_map'),
   },
   {
     value: 'public-map',
-    title: '公共地图',
+    title: _$t('message.public_map'),
   },
 ];
 export default {

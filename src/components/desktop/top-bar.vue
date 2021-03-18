@@ -8,18 +8,21 @@
         <k-icon icon="icon-notice" :size="20"></k-icon>
       </el-badge>
       <MapplatUser class="zy-m-margin"></MapplatUser>
+      <KI18n></KI18n>
     </div>
   </div>
 </template>
 
 <script>
 import MapplatUser from '@/components/custom/mapplat-user';
+import KI18n from '@/components/common/k-i18n';
 import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb';
 
 export default {
   components: {
     MapplatUser,
     MapplatBreadcrumb,
+    KI18n,
   },
   data() {
     return {

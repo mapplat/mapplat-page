@@ -25,12 +25,12 @@
 
 const menuConfs = [{
   icon: 'icon-datasets',
-  title: '数据',
+  title: _$t('message.data'),
   path: '/datasets',
 },
 {
   icon: 'icon-maps',
-  title: '地图',
+  title: _$t('message.map'),
   path: '/maps',
 }];
 export default {

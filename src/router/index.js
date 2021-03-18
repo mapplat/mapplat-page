@@ -11,35 +11,35 @@ import Profile from '@/components/profile';
 
 const breadcrumbsConf = {
   'my-data': [{
-    name: '数据',
+    name: _$t('message.data'),
     path: '/datasets/my-data',
   }, {
-    name: '我的数据',
+    name: _$t('message.my_data'),
     path: '/datasets/my-data',
   }],
   'public-data': [{
-    name: '数据',
+    name: _$t('message.data'),
     path: '/datasets/public-data',
   }, {
-    name: '公共数据',
+    name: _$t('message.public_data'),
     path: '/datasets/public-data',
   }],
   'my-map': [{
-    name: '地图',
+    name: _$t('message.map'),
     path: '/maps/my-map',
   }, {
-    name: '我的地图',
+    name: _$t('message.my_map'),
     path: '/maps/my-map',
   }],
   'public-map': [{
-    name: '地图',
+    name: _$t('message.map'),
     path: '/maps/public-map',
   }, {
-    name: '公共地图',
+    name: _$t('message.public_map'),
     path: '/maps/public-map',
   }],
   profile: [{
-    name: '个人中心',
+    name: _$t('message.profile'),
     path: '/profile',
   }],
 };
