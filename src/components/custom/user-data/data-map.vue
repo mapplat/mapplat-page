@@ -44,7 +44,7 @@ export default {
           }),
           new TileLayer({
             source: new XYZ({
-              url: `http://mapplat.localhost/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png`,
+              url: `/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png`,
             }),
           }),
         ],
