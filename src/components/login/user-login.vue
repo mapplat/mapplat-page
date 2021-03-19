@@ -83,7 +83,7 @@
       :rule="rules.password"
       ref="password"
       type="password"
-      @keyupEnter="updatePassworld"
+      @keyupEnter="forgetPassworld"
       v-model="password">
       </KInput>
     </div>
@@ -96,7 +96,7 @@
       <el-button plain @click="type = 'signin'">{{_t('message.return_login')}}</el-button>
     </div>
     <div class="user-option-wrapper" v-if="type === 'password'">
-      <el-button type="primary" @click="updatePassworld">{{_t('message.update_password')}}</el-button>
+      <el-button type="primary" @click="forgetPassworld">{{_t('message.update_password')}}</el-button>
       <el-button plain @click="type = 'signin'">{{_t('message.return_login')}}</el-button>
     </div>
   </div>
@@ -187,7 +187,7 @@ export default {
       this.verifycode = null;
       this.type = 'password';
     },
-    async updatePassworld() {
+    async forgetPassworld() {
       const params = {
         email: this.email,
         verifycode: this.verifycode,
@@ -198,7 +198,7 @@ export default {
         return;
       }
 
-      const result = await userAPI.updatePassworld(params);
+      const result = await userAPI.forgetPassworld(params);
       if (result && result.data && result.data.code === 0) {
         this.$success(_t('tip.update_password_success'));
 

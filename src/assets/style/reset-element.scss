@@ -48,6 +48,10 @@
   .el-dialog__body{
     padding: 20px;
   }
+  .el-dialog-options {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .el-popover {

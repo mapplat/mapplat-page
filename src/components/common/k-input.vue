@@ -1,6 +1,6 @@
 <template>
-  <div class="k-input">
-    <div class="k-input-label" v-if="label">
+  <div class="k-input" :class="inputClass">
+    <div class="k-input-label" v-if="label" :style="{width: labelWidth}">
       {{label}}
     </div>
     <el-input
@@ -56,11 +56,37 @@ export default {
       type: Boolean,
       default: false,
     },
+    position: {
+      type: String,
+      default: 'top',
+    },
+    labelWidth: {
+      type: String,
+      default: '100%',
+    },
   },
   setup(props) {
     const showPassword = props.type === 'password';
+
+    let inputPositionClass = 'k-input-label-left';
+    switch (props.position) {
+      case 'top':
+        inputPositionClass = 'k-input-label-top';
+        break;
+      case 'left':
+        inputPositionClass = 'k-input-label-left';
+        break;
+      case 'right':
+        inputPositionClass = 'k-input-label-right';
+        break;
+      default:
+        break;
+    }
     return {
       showPassword,
+      inputClass: {
+        [inputPositionClass]: true,
+      },
     };
   },
   data() {
@@ -122,5 +148,13 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+.k-input-label-left {
+  display: flex;
+  justify-content: space-between;
+}
+.k-input-label-left {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

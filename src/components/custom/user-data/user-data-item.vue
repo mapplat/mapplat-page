@@ -4,7 +4,7 @@
       <div class="user-data-top">
         <k-icon class="icon-hover-color" v-if="isPrivate" @click.stop="updatePrivate(!item.private)" :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="20" margin="4px"></k-icon>
         <div v-else></div>
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="hover">
           <span class="el-dropdown-link" @click.stop>
             <k-icon class="data-actions" icon="icon-gengduo" :size="18" margin="4px"></k-icon>
           </span>

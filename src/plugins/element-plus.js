@@ -24,7 +24,6 @@ import {
   ElNotification,
   ElImage,
   ElMessageBox,
-  ElDatePicker,
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
 import '@/assets/style/reset-element.scss';
@@ -56,7 +55,6 @@ const components = [
   ElNotification,
   ElImage,
   ElMessageBox,
-  ElDatePicker,
 ];
 
 export default {

@@ -10,6 +10,9 @@ const user = {
   signup(params) {
     return instance.post('/user/signup', params);
   },
+  forgetPassworld(params) {
+    return instance.put('/user/passworld/forget', params);
+  },
   updatePassworld(params) {
     return instance.put('/user/passworld', params);
   },

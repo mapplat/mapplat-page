@@ -13,6 +13,7 @@
     </div>
 
     <!-- dialog -->
+    <UpdatePassword></UpdatePassword>
     <UploadProgress></UploadProgress>
     <DataView></DataView>
   </div>
@@ -23,6 +24,7 @@ import LeftNav from '@/components/desktop/left-nav';
 import TopBar from '@/components/desktop/top-bar';
 import UploadProgress from '@/components/custom/upload-progress';
 import DataView from '@/components/dialogs/data-view';
+import UpdatePassword from '@/components/dialogs/update-password';
 
 export default {
   components: {
@@ -30,6 +32,7 @@ export default {
     TopBar,
     UploadProgress,
     DataView,
+    UpdatePassword,
   },
 };
 </script>

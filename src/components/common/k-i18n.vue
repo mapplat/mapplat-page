@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     handleCommand(command) {
+      if (this.value === command) return;
       this.value = command;
       this.$i18n.locale = command;
       localStorage.setItem('default_locale', command);

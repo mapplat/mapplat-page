@@ -16,7 +16,7 @@
               {{_t('message.profile')}}
             </div>
           </el-dropdown-item>
-          <el-dropdown-item command="accountManage">
+          <el-dropdown-item command="updatePassword">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-xiugaimima" :size="20" margin="0 6px"></k-icon>
               {{_t('message.update_password')}}
@@ -49,8 +49,8 @@ export default {
         case 'logout':
           logout();
           break;
-        case 'accountManage':
-          this.accountManage();
+        case 'updatePassword':
+          this.updatePassword();
           break;
         case 'toProfile':
           this.$router.push({
@@ -61,7 +61,7 @@ export default {
           break;
       }
     },
-    accountManage() {
+    updatePassword() {
       this.$bus.emit('open-password-dialog');
     },
   },
