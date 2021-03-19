@@ -1,17 +1,17 @@
 <template>
   <div class="data-metadata">
-    <DataMetadataItem title="名称" :value="dataInfo.name"></DataMetadataItem>
-    <DataMetadataItem title="uuid" :value="dataInfo.dataUuid"></DataMetadataItem>
-    <DataMetadataItem title="所有人" :value="dataInfo.username"></DataMetadataItem>
-    <DataMetadataItem title="数量" :value="dataInfo.counts"></DataMetadataItem>
-    <DataMetadataItem title="私有数据" :value="dataInfo.private"></DataMetadataItem>
-    <DataMetadataItem title="创建时间" :value="formatDate(dataInfo.createdAt, 'time')"></DataMetadataItem>
-    <DataMetadataItem title="更新时间" :value="formatDate(dataInfo.updatedAt, 'time')"></DataMetadataItem>
-    <DataMetadataItem title="空间化" :value="dataInfo.spatialization"></DataMetadataItem>
-    <DataMetadataItem title="空间类型" :value="dataInfo.dataType"></DataMetadataItem>
-    <DataMetadataItem title="地理范围" :value="dataInfo.extent"></DataMetadataItem>
-    <DataMetadataItem title="标签" :value="dataInfo.tags"></DataMetadataItem>
-    <DataMetadataItem title="描述" :value="dataInfo.description"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.name')" :value="dataInfo.name"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.uuid')" :value="dataInfo.dataUuid"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.holder')" :value="dataInfo.username"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.counts')" :value="dataInfo.counts"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.is_private')" :value="dataInfo.private"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.created_at')" :value="formatDate(dataInfo.createdAt, 'time')"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.updated_at')" :value="formatDate(dataInfo.updatedAt, 'time')"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.spatialization')" :value="dataInfo.spatialization"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.geomerty_type')" :value="dataInfo.dataType"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.extent')" :value="dataInfo.extent"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.tags')" :value="dataInfo.tags"></DataMetadataItem>
+    <DataMetadataItem :title="_$t('message.description')" :value="dataInfo.description"></DataMetadataItem>
   </div>
 </template>
 

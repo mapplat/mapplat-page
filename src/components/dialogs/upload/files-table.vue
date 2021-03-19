@@ -14,12 +14,12 @@
       <el-table-column
         prop="name"
         sortable
-        label="文件名称">
+        :label="_$t('message.file_name')">
       </el-table-column>
       <el-table-column
         prop="size"
         sortable
-        label="文件大小">
+        :label="_$t('message.file_size')">
         <template #default="scope">
           {{ formatFileSize(scope.row.size) }}
         </template>

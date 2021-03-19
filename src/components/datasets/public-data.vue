@@ -16,7 +16,7 @@
       <div v-else class="emptydata-wrapper">
         <k-icon icon="icon-kong" :size="40"></k-icon>
         <div class="emptydata-msg">
-          无数据
+          {{_$t('message.no_data')}}
         </div>
       </div>
       <el-pagination
@@ -85,7 +85,7 @@ export default {
         this.datalist = result.data.data.rows;
         this.count = result.data.data.count;
       } else {
-        this.$error('获取失败', result);
+        this.$error(_$t('message.query_failed'), result);
       }
     },
   },

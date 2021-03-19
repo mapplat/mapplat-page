@@ -110,7 +110,7 @@ export default {
             name: file.name,
             size: file.size,
             status: 'exception',
-            msg: '上传失败',
+            msg: _$t('message.upload_failed'),
           });
           return;
         }
@@ -130,7 +130,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: '上传失败',
+          msg: _$t('message.upload_failed'),
         });
         return;
       }
@@ -140,7 +140,7 @@ export default {
         name: file.name,
         size: file.size,
         status: 'success',
-        msg: '开始入库',
+        msg: _$t('message.start_import'),
       });
 
       const jobRes = await jobAPI.create({
@@ -159,7 +159,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: '入库失败',
+          msg: _$t('message.import_failed'),
         });
       }
 
@@ -202,7 +202,7 @@ export default {
                 size: params.size,
                 status: 'progress',
                 percentage,
-                msg: '正在入库',
+                msg: _$t('message.start_import'),
               });
               break;
             case 'success':
@@ -211,7 +211,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'success',
-                msg: '上传成功',
+                msg: _$t('message.import_success'),
               });
               this.importJobUuids.delete(jobUuid);
               this.$bus.emit('update-user-data-list');
@@ -223,7 +223,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'exception',
-                msg: '上传失败',
+                msg: _$t('message.import_failed'),
               });
               this.importJobUuids.delete(jobUuid);
               break;

@@ -35,7 +35,7 @@
     <div class="user-data-item-defail">
       <div class="user-data-item-content user-data-item-info">
         <div class="user-data-item-name text-ellipsis">{{item.name}}</div>
-        <div class="user-data-item-counts text-ellipsis">{{item.counts}}条记录</div>
+        <div class="user-data-item-counts text-ellipsis">{{item.counts}} {{_$t('message.records')}}</div>
       </div>
       <div class="user-data-item-content user-data-item-time text-ellipsis">{{formatDate(item.updatedAt, 'time')}}</div>
     </div>
@@ -54,7 +54,7 @@ export default {
   inject: ['isPrivate'],
   methods: {
     async updatePrivate(isPrivate) {
-      const msg = `${isPrivate ? '取消' : ''}分享`;
+      const msg = `${isPrivate ? _$t('message.cancel') : ''}${_$t('message.share')}`;
       const params = {
         isPrivate,
       };
@@ -62,24 +62,24 @@ export default {
       if (this.checkRes(updateRes)) {
         this.$bus.emit('update-user-data-list');
         this.$bus.emit('update-public-data-list');
-        this.$success(`${msg}成功`);
+        this.$success(`${msg}, ${_$t('tip.success')}`);
       } else {
-        this.$error(`${msg}失败`, updateRes);
+        this.$error(`${msg}, ${_$t('tip.failed')}`, updateRes);
       }
     },
     async deleteData() {
-      this.$confirm('此操作将删除该文件, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(_$t('message.this_operation_will_delete_the_file_do_you_want_to_continue'), _$t('tip.tip'), {
+        confirmButtonText: _$t('message.confirm'),
+        cancelButtonText: _$t('message.cancel'),
         type: 'warning',
       }).then(async () => {
         const deleteRes = await userDataAPI.delete(this.item.dataUuid);
         if (this.checkRes(deleteRes)) {
           this.$bus.emit('update-user-data-list');
           this.$bus.emit('update-public-data-list');
-          this.$success('删除成功');
+          this.$success(_$t('tip.deleted_success'));
         } else {
-          this.$error('删除失败', deleteRes);
+          this.$error(_$t('tip.deleted_failed'), deleteRes);
         }
       }).catch();
     },
@@ -87,10 +87,10 @@ export default {
       const copyRes = await userDataAPI.copy(this.item.dataUuid);
       if (this.checkRes(copyRes)) {
         this.$bus.emit('update-user-data-list');
-        this.$success('复制成功');
+        this.$success(_$t('message.cancel'));
         this.$router.push({ name: 'my-data' });
       } else {
-        this.$error('复制成功', copyRes);
+        this.$error(_$t('message.copy_success'), copyRes);
       }
     },
     async download() {

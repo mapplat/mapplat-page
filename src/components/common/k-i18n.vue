@@ -61,7 +61,6 @@ export default {
 
 <style lang="scss">
 .gc-i18n {
-  margin-right: 24px;
   user-select: none;
   display: flex;
   align-items: center;
