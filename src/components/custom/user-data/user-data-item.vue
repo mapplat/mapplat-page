@@ -10,10 +10,10 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="openInMap">{{_$t('message.create_map')}}</el-dropdown-item>
-              <el-dropdown-item @click="copyData">{{_$t('message.copy_data')}}</el-dropdown-item>
-              <el-dropdown-item @click="download">{{_$t('message.download_data')}}</el-dropdown-item>
-              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">{{_$t('message.delete')}}</el-dropdown-item>
+              <el-dropdown-item @click="openInMap">{{_t('message.create_map')}}</el-dropdown-item>
+              <el-dropdown-item @click="copyData">{{_t('message.copy_data')}}</el-dropdown-item>
+              <el-dropdown-item @click="download">{{_t('message.download_data')}}</el-dropdown-item>
+              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">{{_t('message.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -35,7 +35,7 @@
     <div class="user-data-item-defail">
       <div class="user-data-item-content user-data-item-info">
         <div class="user-data-item-name text-ellipsis">{{item.name}}</div>
-        <div class="user-data-item-counts text-ellipsis">{{item.counts}} {{_$t('message.records')}}</div>
+        <div class="user-data-item-counts text-ellipsis">{{item.counts}} {{_t('message.records')}}</div>
       </div>
       <div class="user-data-item-content user-data-item-time text-ellipsis">{{formatDate(item.updatedAt, 'time')}}</div>
     </div>
@@ -54,7 +54,7 @@ export default {
   inject: ['isPrivate'],
   methods: {
     async updatePrivate(isPrivate) {
-      const msg = `${isPrivate ? _$t('message.cancel') : ''}${_$t('message.share')}`;
+      const msg = `${isPrivate ? _t('message.cancel') : ''}${_t('message.share')}`;
       const params = {
         isPrivate,
       };
@@ -62,24 +62,24 @@ export default {
       if (this.checkRes(updateRes)) {
         this.$bus.emit('update-user-data-list');
         this.$bus.emit('update-public-data-list');
-        this.$success(`${msg}, ${_$t('tip.success')}`);
+        this.$success(`${msg}, ${_t('tip.success')}`);
       } else {
-        this.$error(`${msg}, ${_$t('tip.failed')}`, updateRes);
+        this.$error(`${msg}, ${_t('tip.failed')}`, updateRes);
       }
     },
     async deleteData() {
-      this.$confirm(_$t('message.this_operation_will_delete_the_file_do_you_want_to_continue'), _$t('tip.tip'), {
-        confirmButtonText: _$t('message.confirm'),
-        cancelButtonText: _$t('message.cancel'),
+      this.$confirm(_t('message.this_operation_will_delete_the_file_do_you_want_to_continue'), _t('tip.tip'), {
+        confirmButtonText: _t('message.confirm'),
+        cancelButtonText: _t('message.cancel'),
         type: 'warning',
       }).then(async () => {
         const deleteRes = await userDataAPI.delete(this.item.dataUuid);
         if (this.checkRes(deleteRes)) {
           this.$bus.emit('update-user-data-list');
           this.$bus.emit('update-public-data-list');
-          this.$success(_$t('tip.deleted_success'));
+          this.$success(_t('tip.deleted_success'));
         } else {
-          this.$error(_$t('tip.deleted_failed'), deleteRes);
+          this.$error(_t('tip.deleted_failed'), deleteRes);
         }
       }).catch();
     },
@@ -87,10 +87,10 @@ export default {
       const copyRes = await userDataAPI.copy(this.item.dataUuid);
       if (this.checkRes(copyRes)) {
         this.$bus.emit('update-user-data-list');
-        this.$success(_$t('message.cancel'));
+        this.$success(_t('message.cancel'));
         this.$router.push({ name: 'my-data' });
       } else {
-        this.$error(_$t('message.copy_success'), copyRes);
+        this.$error(_t('message.copy_success'), copyRes);
       }
     },
     async download() {

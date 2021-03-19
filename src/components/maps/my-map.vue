@@ -1,6 +1,8 @@
 <template>
   <div>
     my map
-    {{_$t('message.confirm')}}
+    {{_t('message.confirm')}}
+    <el-date-picker type="date">
+    </el-date-picker>
   </div>
 </template>

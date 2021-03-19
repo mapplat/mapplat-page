@@ -9,16 +9,16 @@ export default {
   password: {
     type: 'string',
     format: REG_EXP.password,
-    msg: '密码长度不能小于六位',
+    msg: _t('reg_tip.password'),
   },
   email: {
     type: 'string',
     format: REG_EXP.email,
-    msg: '邮箱不合法',
+    msg: _t('reg_tip.email'),
   },
   verifycode: {
     type: 'string',
     format: REG_EXP.verifycode,
-    msg: '验证码长度错误',
+    msg: _t('reg_tip.verifycode'),
   },
 };

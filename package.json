@@ -42,7 +42,7 @@
       "node": true
     },
     "globals": {
-      "_$t": true
+      "_t": true
     },
     "extends": [
       "plugin:vue/vue3-essential",

@@ -4,7 +4,7 @@
       <div class="component-options-left">
       </div>
       <div class="component-options-right">
-        <KInput :placeholder="_$t('message.search')" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
+        <KInput :placeholder="_t('message.search')" :size="$size" @keyupEnter="reGetDataList" v-model="dataname">
           <template #suffix>
             <k-icon @click="reGetDataList" class="icon-primary" icon="icon--search" :size="20"></k-icon>
           </template>
@@ -16,7 +16,7 @@
       <div v-else class="emptydata-wrapper">
         <k-icon icon="icon-kong" :size="40"></k-icon>
         <div class="emptydata-msg">
-          {{_$t('message.no_data')}}
+          {{_t('message.no_data')}}
         </div>
       </div>
       <el-pagination
@@ -85,7 +85,7 @@ export default {
         this.datalist = result.data.data.rows;
         this.count = result.data.data.count;
       } else {
-        this.$error(_$t('message.query_failed'), result);
+        this.$error(_t('message.query_failed'), result);
       }
     },
   },

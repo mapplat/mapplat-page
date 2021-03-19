@@ -3,7 +3,7 @@
     <el-popover
       placement="top"
       :width="540"
-      :title="_$t('message.upload_data')"
+      :title="_t('message.upload_data')"
       :show-arrow="true"
       popper-class="upload-progress-wrapper"
       trigger="click">
@@ -48,7 +48,7 @@ export default {
         size: file.size,
         percentage: 0,
         status: 'progress',
-        msg: _$t('message.start_upload'),
+        msg: _t('message.start_upload'),
       })));
       this.handlerFiles(files);
       this.uploadProgressTriger();
@@ -88,7 +88,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _$t('message.upload_failed'),
+          msg: _t('message.upload_failed'),
         });
         return;
       }
@@ -110,7 +110,7 @@ export default {
             name: file.name,
             size: file.size,
             status: 'exception',
-            msg: _$t('message.upload_failed'),
+            msg: _t('message.upload_failed'),
           });
           return;
         }
@@ -130,7 +130,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _$t('message.upload_failed'),
+          msg: _t('message.upload_failed'),
         });
         return;
       }
@@ -140,7 +140,7 @@ export default {
         name: file.name,
         size: file.size,
         status: 'success',
-        msg: _$t('message.start_import'),
+        msg: _t('message.start_import'),
       });
 
       const jobRes = await jobAPI.create({
@@ -159,7 +159,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _$t('message.import_failed'),
+          msg: _t('message.import_failed'),
         });
       }
 
@@ -202,7 +202,7 @@ export default {
                 size: params.size,
                 status: 'progress',
                 percentage,
-                msg: _$t('message.start_import'),
+                msg: _t('message.start_import'),
               });
               break;
             case 'success':
@@ -211,7 +211,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'success',
-                msg: _$t('message.import_success'),
+                msg: _t('message.import_success'),
               });
               this.importJobUuids.delete(jobUuid);
               this.$bus.emit('update-user-data-list');
@@ -223,7 +223,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'exception',
-                msg: _$t('message.import_failed'),
+                msg: _t('message.import_failed'),
               });
               this.importJobUuids.delete(jobUuid);
               break;

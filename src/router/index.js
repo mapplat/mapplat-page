@@ -11,35 +11,35 @@ import Profile from '@/components/profile';
 
 const breadcrumbsConf = {
   'my-data': [{
-    name: _$t('message.data'),
+    name: _t('message.data'),
     path: '/datasets/my-data',
   }, {
-    name: _$t('message.my_data'),
+    name: _t('message.my_data'),
     path: '/datasets/my-data',
   }],
   'public-data': [{
-    name: _$t('message.data'),
+    name: _t('message.data'),
     path: '/datasets/public-data',
   }, {
-    name: _$t('message.public_data'),
+    name: _t('message.public_data'),
     path: '/datasets/public-data',
   }],
   'my-map': [{
-    name: _$t('message.map'),
+    name: _t('message.map'),
     path: '/maps/my-map',
   }, {
-    name: _$t('message.my_map'),
+    name: _t('message.my_map'),
     path: '/maps/my-map',
   }],
   'public-map': [{
-    name: _$t('message.map'),
+    name: _t('message.map'),
     path: '/maps/public-map',
   }, {
-    name: _$t('message.public_map'),
+    name: _t('message.public_map'),
     path: '/maps/public-map',
   }],
   profile: [{
-    name: _$t('message.profile'),
+    name: _t('message.profile'),
     path: '/profile',
   }],
 };

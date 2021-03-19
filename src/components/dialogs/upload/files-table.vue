@@ -14,12 +14,12 @@
       <el-table-column
         prop="name"
         sortable
-        :label="_$t('message.file_name')">
+        :label="_t('message.file_name')">
       </el-table-column>
       <el-table-column
         prop="size"
         sortable
-        :label="_$t('message.file_size')">
+        :label="_t('message.file_size')">
         <template #default="scope">
           {{ formatFileSize(scope.row.size) }}
         </template>

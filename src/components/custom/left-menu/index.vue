@@ -25,12 +25,12 @@
 
 const menuConfs = [{
   icon: 'icon-datasets',
-  title: _$t('message.data'),
+  title: _t('message.data'),
   path: '/datasets',
 },
 {
   icon: 'icon-maps',
-  title: _$t('message.map'),
+  title: _t('message.map'),
   path: '/maps',
 }];
 export default {
