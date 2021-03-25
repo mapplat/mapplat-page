@@ -8,6 +8,7 @@ import Maps from '@/components/maps';
 import MyMap from '@/components/maps/my-map';
 import PublicMap from '@/components/maps/public-map';
 import Profile from '@/components/profile';
+import Mapviz from '@/components/mapviz';
 
 const breadcrumbsConf = {
   'my-data': [{
@@ -92,10 +93,14 @@ const routes = [{
     name: 'profile',
     component: Profile,
     meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
-  }, {
-    path: '/:pathMatch(.*)*',
-    redirect: () => ({ path: '/datasets' }),
   }],
+}, {
+  path: '/mapviz/:mapid',
+  name: 'mapviz',
+  component: Mapviz,
+}, {
+  path: '/:pathMatch(.*)*',
+  redirect: () => ({ path: '/datasets' }),
 }];
 
 const router = createRouter({

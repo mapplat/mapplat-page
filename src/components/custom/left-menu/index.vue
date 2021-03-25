@@ -14,7 +14,7 @@
         :key="menu.path"
         :index="menu.path">
         <div class="nav-title-wrapper">
-          <k-icon :icon="menu.icon" :size="20"/>
+          <k-icon :icon="menu.icon" :size="20" margin="0 0 0 4px"/>
           <span class="nav-title">{{menu.title}}</span>
         </div>
       </el-menu-item>

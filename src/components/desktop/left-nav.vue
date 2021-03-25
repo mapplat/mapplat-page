@@ -33,10 +33,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .left-nav-collapse {
   .k-logo {
     padding: 0 !important;
+    width: $top-bar-height;
   }
 }
 .left-nav{
@@ -66,11 +67,10 @@ export default {
     position: absolute;
     bottom: 0;
     height: 48px;
-    width: 100%;
     cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    margin-left: 12px;
     color: $white;
     &:hover {
       color: $primary !important;
