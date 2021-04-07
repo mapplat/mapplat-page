@@ -1,13 +1,15 @@
+import i18n from '@/plugins/i18n';
 import { createApp } from 'vue';
 import router from '@/router';
 import elementPlusPlugins from '@/plugins/element-plus';
 import componentPlugins from '@/plugins/component';
+import directivesPlugins from '@/plugins/directives';
 import globalProperties from '@/plugins/global-properties';
 import userAPI from '@/apis/user';
 import { logout } from '@/utils/utils';
-
+import 'ol/ol.css';
 import '@/assets/style/index.scss';
-import App from './Index.vue';
+import App from './index.vue';
 
 (async () => {
   const app = createApp(App);
@@ -22,9 +24,11 @@ import App from './Index.vue';
   }
 
   app.config.productionTip = false;
+  app.use(i18n);
   app.use(router);
   app.use(elementPlusPlugins);
   app.use(componentPlugins);
+  app.use(directivesPlugins);
   app.use(globalProperties);
   app.mount('#app');
 })();

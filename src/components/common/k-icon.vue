@@ -1,5 +1,5 @@
 <template>
-  <svg class="icon" aria-hidden="true" :style="svgStyle">
+  <svg class="k-icon icon" aria-hidden="true" :style="svgStyle">
     <use :xlink:href="`#${icon}`"></use>
   </svg>
 </template>
@@ -21,6 +21,11 @@ export default {
     },
     color: {
       type: String,
+      default: null,
+    },
+    margin: {
+      type: String,
+      default: null,
     },
   },
   computed: {
@@ -28,8 +33,9 @@ export default {
       return {
         width: `${this.width || this.size}px`,
         height: `${this.height || this.size}px`,
-        color: this.color || null,
+        color: this.color,
         fontSize: `${this.size}px`,
+        margin: this.margin,
       };
     },
   },

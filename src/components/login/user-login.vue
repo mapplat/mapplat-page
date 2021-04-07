@@ -2,23 +2,23 @@
   <div class="user-login shadow">
     <div class="user-login-title">
       <k-icon icon="icon-logo" :size="48"></k-icon>
-      <span class="title">MapPlat</span>
+      <span class="title">{{$title}}</span>
     </div>
     <div class="user-info-wrapper" v-if="type === 'signin'">
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="邮箱"
+      :label="_t('message.email')"
       ref="email"
       :rule="rules.email"
       v-model="email">
       </KInput>
-      <div class="forget-password" @click="forgetPassword">忘记密码?</div>
+      <div class="forget-password" @click="forgetPassword">{{_t('message.forgot_password')}}</div>
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
       :rule="rules.password"
-      label="密码"
+      :label="_t('message.password')"
       ref="password"
       type="password"
       @keyupEnter="signin"
@@ -29,7 +29,7 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="邮箱"
+      :label="_t('message.email')"
       ref="email"
       :rule="rules.email"
       v-model="email">
@@ -37,7 +37,7 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="验证码"
+      :label="_t('message.verification_code')"
       :rule="rules.verifycode"
       ref="verifycode"
       v-model="verifycode">
@@ -48,7 +48,7 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="密码"
+      :label="_t('message.password')"
       :rule="rules.password"
       ref="password"
       type="password"
@@ -60,7 +60,7 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="邮箱"
+      :label="_t('message.email')"
       :rule="rules.email"
       ref="email"
       v-model="email">
@@ -68,7 +68,7 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="验证码"
+      :label="_t('message.verification_code')"
       :rule="rules.verifycode"
       ref="verifycode"
       v-model="verifycode">
@@ -79,38 +79,32 @@
       <KInput
       :isLineBorder="true"
       class="sx-m-padding"
-      label="密码"
+      :label="_t('message.password')"
       :rule="rules.password"
       ref="password"
       type="password"
-      @keyupEnter="updatePassworld"
+      @keyupEnter="forgetPassworld"
       v-model="password">
       </KInput>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signin'">
-      <el-button type="primary" @click="signin">登录</el-button>
-      <el-button plain @click="type = 'signup'">注册账号</el-button>
+      <el-button type="primary" @click="signin">{{_t('message.login')}}</el-button>
+      <el-button plain @click="type = 'signup'">{{_t('message.register')}}</el-button>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signup'">
-      <el-button type="primary" @click="signup">注册账号</el-button>
-      <el-button plain @click="type = 'signin'">返回登录</el-button>
+      <el-button type="primary" @click="signup">{{_t('message.register')}}</el-button>
+      <el-button plain @click="type = 'signin'">{{_t('message.return_login')}}</el-button>
     </div>
     <div class="user-option-wrapper" v-if="type === 'password'">
-      <el-button type="primary" @click="updatePassworld">修改密码</el-button>
-      <el-button plain @click="type = 'signin'">返回登录</el-button>
+      <el-button type="primary" @click="forgetPassworld">{{_t('message.update_password')}}</el-button>
+      <el-button plain @click="type = 'signin'">{{_t('message.return_login')}}</el-button>
     </div>
   </div>
 </template>
 <script>
 
-import KInput from '@/components/common/k-input.vue';
 import userAPI from '@/apis/user';
 import paramsRules from '@/utils/paramsRules';
-
-const verifycodeMsgConfig = {
-  true: '获取验证码',
-  false: '秒后重新发送',
-};
 
 const rules = {
   email: paramsRules.email,
@@ -119,9 +113,6 @@ const rules = {
 };
 
 export default {
-  components: {
-    KInput,
-  },
   setup() {
     const loginUsername = localStorage.getItem('login_username');
     return {
@@ -135,7 +126,7 @@ export default {
       password: null,
       verifycode: null,
       isCanVerifycode: true,
-      verifycodeMsg: '获取验证码',
+      verifycodeMsg: _t('message.get_verification_code'),
       type: 'signin',
     };
   },
@@ -147,17 +138,17 @@ export default {
         password: this.password,
       };
       if (this.$validateRefs()) {
-        this.$error('参数不合法');
+        this.$error(_t('tip.illegal_parameter'));
         return;
       }
 
       const result = await userAPI.signup(params);
       if (result && result.data && result.data.code === 0) {
-        this.$success('注册成功');
+        this.$success(_t('tip.register_success'));
 
         this.toSignin();
       } else {
-        this.$error('注册失败', result);
+        this.$error(_t('tip.register_failed'), result);
       }
     },
     toSignin() {
@@ -173,21 +164,21 @@ export default {
 
       const errors = this.$validateRefs();
       if (errors) {
-        this.$error('参数不合法');
+        this.$error(_t('tip.illegal_parameter'));
         return;
       }
 
       const result = await userAPI.signin(params);
       localStorage.setItem('login_username', this.email);
       if (result && result.data && result.data.code === 0) {
-        this.$success('登录成功');
+        this.$success(_t('tip.login_success'));
         localStorage.setItem('token', result.data.data.token);
 
         setTimeout(() => {
           window.open('/', '_self');
         }, 300);
       } else {
-        this.$error('登录失败', result);
+        this.$error(_t('tip.login_failed'), result);
       }
     },
     forgetPassword() {
@@ -196,24 +187,24 @@ export default {
       this.verifycode = null;
       this.type = 'password';
     },
-    async updatePassworld() {
+    async forgetPassworld() {
       const params = {
         email: this.email,
         verifycode: this.verifycode,
         password: this.password,
       };
       if (this.$validateRefs()) {
-        this.$error('参数不合法');
+        this.$error(_t('tip.illegal_parameter'));
         return;
       }
 
-      const result = await userAPI.updatePassworld(params);
+      const result = await userAPI.forgetPassworld(params);
       if (result && result.data && result.data.code === 0) {
-        this.$success('修改密码成功');
+        this.$success(_t('tip.update_password_success'));
 
         this.toSignin();
       } else {
-        this.$error('修改密码失败', result);
+        this.$error(_t('tip.update_password_failed'), result);
       }
     },
     async getVerifycode() {
@@ -222,29 +213,28 @@ export default {
         email: this.email,
       };
       if (this.$validateRefs(['email'])) {
-        this.$error('参数不合法');
+        this.$error(_t('tip.illegal_parameter'));
         return;
       }
 
       const result = await userAPI.getVerifycode(params);
       if (result && result.data && result.data.code === 0) {
-        this.$success('验证码已发送到邮箱');
+        this.$success(_t('tip.the_verification_code_has_been_sent_to_the_mailbox'));
       } else {
-        this.$error('验证码发送到失败', result);
+        this.$error(_t('tip.verification_code_sent_failed'), result);
         return;
       }
       this.isCanVerifycode = false;
       let times = 60;
-      this.verifycodeMsg = `${times}${verifycodeMsgConfig[this.isCanVerifycode]}`;
       const interval = setInterval(() => {
         if (times <= 0) {
           clearInterval(interval);
           this.isCanVerifycode = true;
-          this.verifycodeMsg = verifycodeMsgConfig[this.isCanVerifycode];
+          this.verifycodeMsg = _t('message.get_verification_code');
           return;
         }
         times -= 1;
-        this.verifycodeMsg = `${times}${verifycodeMsgConfig[this.isCanVerifycode]}`;
+        this.verifycodeMsg = _t('message.resend_in_second', [times]);
       }, 1000);
     },
 

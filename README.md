@@ -28,8 +28,3 @@ mapplat.com
   - docs.mapplat.com 使用文档（todo）
   - blog.mapplat.com 
   - 联系方式发送邮件
-
-# 参考
-shimo.im/welcome
-geohey.com
-wiki.js.org/

@@ -1,3 +1,68 @@
 .el-notification__content {
   margin: 0;
 }
+
+.el-menu {
+  border: 0 !important;
+  width: 100%;
+  .el-submenu {
+    &.is-active {
+      .el-submenu__title {
+        color: $primary !important;
+      }
+    }
+  }
+}
+// 折叠
+.el-menu--collapse {
+  .nav-title-wrapper {
+    justify-content: center;
+  }
+  .el-menu-item {
+    padding: 12px !important;
+  }
+}
+
+
+.el-dropdown-menu{
+  padding: 6px 0;
+  .el-dropdown-menu__item{
+    padding: 0 12px;
+    min-width: 120px;
+  }
+}
+
+.el-button {
+  min-width: 90px;
+}
+
+.el-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-dialog {
+  min-width: 600px;
+  margin: 0 !important;
+  .el-dialog__close {
+    font-size: 24px;
+  }
+  .el-dialog__body{
+    padding: 20px;
+  }
+  .el-dialog-options {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.el-popover {
+  max-width: 100%;
+}
+
+.el-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

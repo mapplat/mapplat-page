@@ -1,15 +1,17 @@
 <template>
-  <div class="k-input">
-    <div class="k-input-label">
+  <div class="k-input" :class="inputClass">
+    <div class="k-input-label" v-if="label" :style="{width: labelWidth}">
       {{label}}
     </div>
     <el-input
+    v-model="input"
     :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
     :placeholder="placeholder"
     :type="type"
-    v-model="input"
+    :size="size"
     :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
+    @blur="$emit('blur')"
     @input="validate">
     <template #suffix>
       <slot name="suffix"></slot>
@@ -31,7 +33,7 @@ export default {
       default: null,
     },
     modelValue: {
-      type: String,
+      type: [String, Number, Object, Array],
       default: null,
     },
     rule: {
@@ -50,11 +52,41 @@ export default {
       type: Boolean,
       default: false,
     },
+    round: {
+      type: Boolean,
+      default: false,
+    },
+    position: {
+      type: String,
+      default: 'top',
+    },
+    labelWidth: {
+      type: String,
+      default: '100%',
+    },
   },
   setup(props) {
     const showPassword = props.type === 'password';
+
+    let inputPositionClass = 'k-input-label-left';
+    switch (props.position) {
+      case 'top':
+        inputPositionClass = 'k-input-label-top';
+        break;
+      case 'left':
+        inputPositionClass = 'k-input-label-left';
+        break;
+      case 'right':
+        inputPositionClass = 'k-input-label-right';
+        break;
+      default:
+        break;
+    }
     return {
       showPassword,
+      inputClass: {
+        [inputPositionClass]: true,
+      },
     };
   },
   data() {
@@ -111,5 +143,18 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .el-input__suffix {
+    display: flex;
+    align-items: center;
+  }
+}
+.k-input-label-left {
+  display: flex;
+  justify-content: space-between;
+}
+.k-input-label-left {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
