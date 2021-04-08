@@ -19,7 +19,7 @@
         </el-dropdown>
       </div>
 
-      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `/api/data/thumb/${item.dataUuid}.png` : ''">
+      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `${ENV.SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''">
         <template #placeholder>
           <div class="image-placeholder">
             <k-icon icon="icon-datasets" :size="132"></k-icon>
@@ -43,6 +43,7 @@
 </template>
 <script>
 import userDataAPI from '@/apis/userData';
+import ENV from '@/assets/env';
 
 export default {
   props: {
@@ -52,6 +53,11 @@ export default {
     },
   },
   inject: ['isPrivate'],
+  setup() {
+    return {
+      ENV,
+    };
+  },
   methods: {
     async updatePrivate(isPrivate) {
       const msg = `${isPrivate ? _t('message.cancel') : ''}${_t('message.share')}`;
