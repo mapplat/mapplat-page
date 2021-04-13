@@ -4,6 +4,9 @@ import zhLang from 'element-plus/lib/locale/lang/zh-cn';
 export default {
   zh: {
     message: {
+      setting: '设置',
+      save: '保存',
+      add_dataset: '添加数据',
       verification_code: '验证码',
       get_verification_code: '获取验证码',
       login: '登录',
@@ -90,11 +93,17 @@ export default {
       password: '密码长度不能小于六位',
       email: '邮箱不合法',
       verifycode: '验证码长度错误',
+      map_id: '地图 id:{0} 不存在',
     },
     ...zhLang,
   },
   en: {
+    page: {
+    },
     message: {
+      add_dataset: 'Add Dataset',
+      save: 'Save',
+      setting: 'Setting',
       verification_code: 'Verification code',
       get_verification_code: 'Get verification code',
       login: 'Sign in',
@@ -181,6 +190,7 @@ export default {
       password: 'Password length cannot be less than six digits',
       email: 'Invalid email',
       verifycode: 'The length of the verification code is wrong',
+      map_id: 'map id:{0} not exist',
     },
     ...enLang,
   },

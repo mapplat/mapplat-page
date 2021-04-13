@@ -32,23 +32,23 @@ import PanelSetting from '@/components/mapviz/left-panel/panel-setting';
 
 const leftOptions = [{
   icon: 'icon-datasets',
-  title: '数据',
+  title: _t('message.data'),
   key: 'datasets',
 }, {
   icon: 'icon-maps',
-  title: '地图',
+  title: _t('message.map'),
   key: 'maps',
 }, {
   icon: 'icon-shezhi',
-  title: '设置',
+  title: _t('message.setting'),
   key: 'setting',
 }, {
   icon: 'icon-baocun',
-  title: '保存',
+  title: _t('message.save'),
   key: 'baocun',
 }, {
   icon: 'icon-shanchu',
-  title: '删除',
+  title: _t('message.delete'),
   key: 'shanchu',
 }];
 

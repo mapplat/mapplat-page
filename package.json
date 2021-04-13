@@ -20,6 +20,7 @@
     "ol": "^6.5.0",
     "qs": "^6.9.6",
     "vue": "^3.0.7",
+    "vue-color": "^2.8.1",
     "vue-router": "^4.0.5"
   },
   "devDependencies": {
