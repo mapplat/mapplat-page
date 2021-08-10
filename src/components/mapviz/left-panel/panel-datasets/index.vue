@@ -1,17 +1,17 @@
 <template>
   <div class="panel-datasets">
-    <div><k-icon icon="icon-add" :size="20"></k-icon>{{_t('message.add_dataset')}}</div>
+    <div><k-icon icon="icon-add" :size="20"></k-icon>{{$t('message.add_dataset')}}</div>
     <div>
-      <Slider v-model="colors"></Slider>
+      <ColorBarPicker></ColorBarPicker>
     </div>
   </div>
 </template>
 <script>
-import { Slider } from 'vue-color';
+import ColorBarPicker from '@/components/common/k-color/color-bar-picker/index.vue';
 
 export default {
   components: {
-    Slider,
+    ColorBarPicker,
   },
   data() {
     return {

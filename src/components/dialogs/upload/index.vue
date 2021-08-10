@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import UploadStart from './upload-start';
+import UploadStart from './upload-start.vue';
 
 const steps = {
   startUpload: {
-    title: _t('message.upload_data'),
+    title: $t('message.upload_data'),
     value: 'startUpload',
   },
   selectFiels: {

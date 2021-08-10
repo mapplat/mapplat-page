@@ -6,8 +6,8 @@
 </template>
 <script>
 import loginBg from '@/assets/imgs/login-bg.png';
-import UserLogin from '@/components/login/user-login';
-import KI18n from '@/components/common/k-i18n';
+import UserLogin from '@/components/login/user-login.vue';
+import KI18n from '@/components/common/k-i18n.vue';
 
 export default {
   components: {

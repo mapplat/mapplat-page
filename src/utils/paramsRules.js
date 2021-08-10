@@ -9,16 +9,16 @@ export default {
   password: {
     type: 'string',
     format: REG_EXP.password,
-    msg: _t('reg_tip.password'),
+    msg: $t('reg_tip.password'),
   },
   email: {
     type: 'string',
     format: REG_EXP.email,
-    msg: _t('reg_tip.email'),
+    msg: $t('reg_tip.email'),
   },
   verifycode: {
     type: 'string',
     format: REG_EXP.verifycode,
-    msg: _t('reg_tip.verifycode'),
+    msg: $t('reg_tip.verifycode'),
   },
 };

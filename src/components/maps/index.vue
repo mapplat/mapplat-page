@@ -27,11 +27,11 @@
 const TAB_MENT = [
   {
     value: 'my-map',
-    title: _t('message.my_map'),
+    title: $t('message.my_map'),
   },
   {
     value: 'public-map',
-    title: _t('message.public_map'),
+    title: $t('message.public_map'),
   },
 ];
 export default {

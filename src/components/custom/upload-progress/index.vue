@@ -3,7 +3,7 @@
     <el-popover
       placement="top"
       :width="540"
-      :title="_t('message.upload_data')"
+      :title="$t('message.upload_data')"
       :show-arrow="true"
       popper-class="upload-progress-wrapper"
       trigger="click">
@@ -22,8 +22,9 @@
 <script>
 
 import Scheduler from '@ckpack/scheduler';
-import FileProgress from '@/components/custom/upload-progress/file-progress';
+import FileProgress from '@/components/custom/upload-progress/file-progress.vue';
 import { getFileHash, fixedNum, getRandomStr } from '@/utils/utils';
+import { getFilesTypeByName } from '@/utils/customUtils';
 import filesAPI from '@/apis/files';
 import jobAPI from '@/apis/job';
 import FILES from '@/constant/FILES';
@@ -48,7 +49,7 @@ export default {
         size: file.size,
         percentage: 0,
         status: 'progress',
-        msg: _t('message.start_upload'),
+        msg: $t('message.start_upload'),
       })));
       this.handlerFiles(files);
       this.uploadProgressTriger();
@@ -78,7 +79,7 @@ export default {
 
       const preCreate = await filesAPI.precreate(hash, {
         name: file.name,
-        type: file._type,
+        type: getFilesTypeByName(file.name),
         size: file.size,
         blocks,
       });
@@ -88,7 +89,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _t('message.upload_failed'),
+          msg: $t('message.upload_failed'),
         });
         return;
       }
@@ -110,7 +111,7 @@ export default {
             name: file.name,
             size: file.size,
             status: 'exception',
-            msg: _t('message.upload_failed'),
+            msg: $t('message.upload_failed'),
           });
           return;
         }
@@ -130,7 +131,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _t('message.upload_failed'),
+          msg: $t('message.upload_failed'),
         });
         return;
       }
@@ -140,7 +141,7 @@ export default {
         name: file.name,
         size: file.size,
         status: 'success',
-        msg: _t('message.start_import'),
+        msg: $t('message.start_import'),
       });
 
       const jobRes = await jobAPI.create({
@@ -159,7 +160,7 @@ export default {
           name: file.name,
           size: file.size,
           status: 'exception',
-          msg: _t('message.import_failed'),
+          msg: $t('message.import_failed'),
         });
       }
 
@@ -202,7 +203,7 @@ export default {
                 size: params.size,
                 status: 'progress',
                 percentage,
-                msg: _t('message.start_import'),
+                msg: $t('message.start_import'),
               });
               break;
             case 'success':
@@ -211,7 +212,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'success',
-                msg: _t('message.import_success'),
+                msg: $t('message.import_success'),
               });
               this.importJobUuids.delete(jobUuid);
               this.$bus.emit('update-user-data-list');
@@ -223,7 +224,7 @@ export default {
                 name: params.name,
                 size: params.size,
                 status: 'exception',
-                msg: _t('message.import_failed'),
+                msg: $t('message.import_failed'),
               });
               this.importJobUuids.delete(jobUuid);
               break;

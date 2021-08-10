@@ -1,60 +1,60 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { logout } from '@/utils/utils';
-import Desktop from '@/components/desktop';
-import Datasets from '@/components/datasets';
-import MyData from '@/components/datasets/my-data';
-import PublicData from '@/components/datasets/public-data';
-import Maps from '@/components/maps';
-import MyMap from '@/components/maps/my-map';
-import PublicMap from '@/components/maps/public-map';
-import Profile from '@/components/profile';
-import Mapviz from '@/components/mapviz';
+import Desktop from '@/views/Desktop.vue';
+import Sign from '@/views/Sign.vue';
+import Datasets from '@/components/datasets/index.vue';
+import MyData from '@/components/datasets/my-data.vue';
+import PublicData from '@/components/datasets/public-data.vue';
+import Maps from '@/components/maps/index.vue';
+import MyMap from '@/components/maps/my-map.vue';
+import PublicMap from '@/components/maps/public-map.vue';
+import Profile from '@/components/profile/index.vue';
+import Mapviz from '@/components/mapviz/index.vue';
 
 const breadcrumbsConf = {
   'my-data': [{
-    name: _t('message.data'),
+    name: $t('message.data'),
     path: '/datasets/my-data',
   }, {
-    name: _t('message.my_data'),
+    name: $t('message.my_data'),
     path: '/datasets/my-data',
   }],
   'public-data': [{
-    name: _t('message.data'),
+    name: $t('message.data'),
     path: '/datasets/public-data',
   }, {
-    name: _t('message.public_data'),
+    name: $t('message.public_data'),
     path: '/datasets/public-data',
   }],
   'my-map': [{
-    name: _t('message.map'),
+    name: $t('message.map'),
     path: '/maps/my-map',
   }, {
-    name: _t('message.my_map'),
+    name: $t('message.my_map'),
     path: '/maps/my-map',
   }],
   'public-map': [{
-    name: _t('message.map'),
+    name: $t('message.map'),
     path: '/maps/public-map',
   }, {
-    name: _t('message.public_map'),
+    name: $t('message.public_map'),
     path: '/maps/public-map',
   }],
   profile: [{
-    name: _t('message.profile'),
+    name: $t('message.profile'),
     path: '/profile',
   }],
 };
 
 const routes = [{
   path: '/',
-  name: 'desktop',
+  name: 'Desktop',
   component: Desktop,
   children: [{
     path: '',
     redirect: () => ({ path: '/datasets' }),
   }, {
     path: '/datasets',
-    name: 'datasets',
+    name: 'data-sets',
     component: Datasets,
     children: [{
       path: '',
@@ -95,6 +95,10 @@ const routes = [{
     meta: { breadcrumbs: breadcrumbsConf.profile, activePath: '/profile' },
   }],
 }, {
+  path: '/sign',
+  name: 'sign',
+  component: Sign,
+}, {
   path: '/mapviz/:mapid',
   name: 'mapviz',
   component: Mapviz,
@@ -109,10 +113,13 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  if (router.$user) {
-    return next();
+  const userInfo = router.$user;
+  if (to.name !== 'sign' && !userInfo) {
+    next({
+      name: 'sign',
+    });
   }
-  return logout();
+  next();
 });
 
 export default router;

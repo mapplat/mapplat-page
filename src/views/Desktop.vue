@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import LeftNav from '@/components/desktop/left-nav';
-import TopBar from '@/components/desktop/top-bar';
-import UploadProgress from '@/components/custom/upload-progress';
-import DataView from '@/components/dialogs/data-view';
-import UpdatePassword from '@/components/dialogs/update-password';
+import LeftNav from '@/components/desktop/left-nav.vue';
+import TopBar from '@/components/desktop/top-bar.vue';
+import UploadProgress from '@/components/custom/upload-progress/index.vue';
+import DataView from '@/components/dialogs/data-view.vue';
+import UpdatePassword from '@/components/dialogs/update-password/index.vue';
 
 export default {
   components: {

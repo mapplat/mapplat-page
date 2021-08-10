@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ENV from '@/assets/env';
 import instance from './instance';
 
 const formDataHeaders = {
@@ -11,7 +12,7 @@ const files = {
     return instance.post(`/file/${fileHash}/precreate`, params);
   },
   block(blockHash, chunkFile) {
-    const url = `/api/file/${blockHash}/block`;
+    const url = `${ENV.SERVER_HOST}/api/file/${blockHash}/block`;
     const formData = new FormData();
     formData.append('file', chunkFile);
     return axios.post(url, formData, {

@@ -1,11 +1,9 @@
-import KIcon from '@/components/common/k-icon';
-import KInput from '@/components/common/k-input';
-import KLoading from '@/components/common/k-loading';
+import KIcon from '@/components/common/k-icon.vue';
+import KInput from '@/components/common/k-input.vue';
 
 const components = {
   KIcon,
   KInput,
-  KLoading,
 };
 export default {
   install(Vue) {

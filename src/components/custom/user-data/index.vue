@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import DataItem from './user-data-item';
+import DataItem from '@/components/custom/user-data/user-data-item.vue';
 
 export default {
   inject: ['isPrivate'],

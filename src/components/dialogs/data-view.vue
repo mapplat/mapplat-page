@@ -23,9 +23,9 @@
   </el-dialog>
 </template>
 <script>
-import DataMap from '@/components/custom/user-data/data-map';
-import DataTable from '@/components/custom/user-data/data-table';
-import DataMetadata from '@/components/custom/user-data/data-metadata';
+import DataMap from '@/components/custom/user-data/data-map.vue';
+import DataTable from '@/components/custom/user-data/data-table.vue';
+import DataMetadata from '@/components/custom/user-data/data-metadata.vue';
 
 const components = {
   'data-map': 'data-map',

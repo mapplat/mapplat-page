@@ -8,7 +8,6 @@
     :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
     :placeholder="placeholder"
     :type="type"
-    :size="size"
     :show-password="showPassword"
     @keyup.enter="$emit('keyupEnter')"
     @blur="$emit('blur')"
@@ -39,10 +38,6 @@ export default {
     rule: {
       type: Object,
       default: () => {},
-    },
-    size: {
-      type: String,
-      default: 'small',
     },
     type: {
       type: String,

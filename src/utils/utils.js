@@ -1,5 +1,4 @@
 import sha256 from 'fast-sha256';
-import userAPI from '@/apis/user';
 import FILES from '@/constant/FILES';
 
 function getRandom(max, min = 0, digits = 4) {
@@ -30,12 +29,6 @@ function fixedNum(num, digits = 4) {
 
 function getType(data) {
   return Object.prototype.toString.call(data).slice(8, -1).toLowerCase();
-}
-
-async function logout(to = '') {
-  localStorage.removeItem('token');
-  await userAPI.signout();
-  window.open(`/login.html?to=${to}`, '_self');
 }
 
 function formatFileSize(size) {
@@ -126,7 +119,6 @@ export {
   getRandomStr,
   fixedNum,
   getType,
-  logout,
   formatFileSize,
   getFileHash,
 };

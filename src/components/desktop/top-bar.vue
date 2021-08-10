@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import MapplatUser from '@/components/custom/mapplat-user';
-import KI18n from '@/components/common/k-i18n';
-import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb';
+import MapplatUser from '@/components/custom/mapplat-user.vue';
+import KI18n from '@/components/common/k-i18n.vue';
+import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb.vue';
 
 export default {
   components: {

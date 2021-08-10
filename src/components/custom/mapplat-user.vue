@@ -13,19 +13,19 @@
           <el-dropdown-item command="toProfile">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-user" :size="20" margin="0 6px"></k-icon>
-              {{_t('message.profile')}}
+              {{$t('message.profile')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="updatePassword">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-xiugaimima" :size="20" margin="0 6px"></k-icon>
-              {{_t('message.update_password')}}
+              {{$t('message.update_password')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="logout">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-tuichu" :size="20" margin="0 6px"></k-icon>
-              {{_t('message.logout')}}
+              {{$t('message.logout')}}
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { logout } from '@/utils/utils';
+import { logout } from '@/utils/customUtils';
 
 export default {
   computed: {

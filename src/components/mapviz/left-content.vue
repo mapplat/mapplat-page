@@ -27,28 +27,28 @@
 
 <script>
 
-import PanelDatasets from '@/components/mapviz/left-panel/panel-datasets';
-import PanelSetting from '@/components/mapviz/left-panel/panel-setting';
+import PanelDatasets from '@/components/mapviz/left-panel/panel-datasets/index.vue';
+import PanelSetting from '@/components/mapviz/left-panel/panel-setting.vue';
 
 const leftOptions = [{
   icon: 'icon-datasets',
-  title: _t('message.data'),
+  title: $t('message.data'),
   key: 'datasets',
 }, {
   icon: 'icon-maps',
-  title: _t('message.map'),
+  title: $t('message.map'),
   key: 'maps',
 }, {
   icon: 'icon-shezhi',
-  title: _t('message.setting'),
+  title: $t('message.setting'),
   key: 'setting',
 }, {
   icon: 'icon-baocun',
-  title: _t('message.save'),
+  title: $t('message.save'),
   key: 'baocun',
 }, {
   icon: 'icon-shanchu',
-  title: _t('message.delete'),
+  title: $t('message.delete'),
   key: 'shanchu',
 }];
 

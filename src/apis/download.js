@@ -1,7 +1,10 @@
+import ENV from '@/assets/env';
+
 function download(url) {
   const link = document.createElement('a');
-  link.href = url;
-  link.setAttribute('download', url);
+  const href = `${ENV.SERVER_HOST}/${url}?token=${localStorage.getItem('token')}`;
+  link.href = href;
+  link.setAttribute('download', href);
   link.click();
 }
 

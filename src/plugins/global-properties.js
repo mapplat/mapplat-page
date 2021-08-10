@@ -1,69 +1,19 @@
 import mitt from 'mitt';
 import Parameter from '@ckpack/parameter';
-import { logout, formatDate } from '@/utils/utils';
-import customUtils from '@/utils/customUtils';
+import { checkRes } from '@/utils/customUtils';
 
 const parameter = new Parameter();
 export default {
   install(app) {
-    app.config.globalProperties.checkRes = customUtils.checkRes;
+    app.config.globalProperties.checkRes = checkRes;
     app.config.globalProperties.$title = 'mapplat';
     app.config.globalProperties.$size = 'medium';
     app.config.globalProperties.$bus = mitt();
     app.config.globalProperties.parameter = parameter;
-    app.config.globalProperties.logout = logout;
-    app.config.globalProperties.formatDate = formatDate;
     app.config.globalProperties.$validateRefs = function (refs) {
       refs = refs || Object.keys(this.$refs);
       const errors = refs.filter((ref) => this.$refs[ref] && 'validate' in this.$refs[ref] && typeof this.$refs[ref].validate === 'function').map((ref) => this.$refs[ref].validate()).filter((val) => !!val);
       return errors.length ? errors : null;
-    };
-    app.config.globalProperties.$success = function (message, options = {}) {
-      const duration = options.duration || 2500;
-      this.$notify({
-        duration,
-        type: 'success',
-        message,
-      });
-    };
-    app.config.globalProperties.$warning = function (message, options = {}) {
-      const duration = options.duration || 2500;
-      this.$notify({
-        duration,
-        type: 'warning',
-        message,
-      });
-    };
-    app.config.globalProperties.$error = function (message, result, options = {}) {
-      const duration = options.duration || 2500;
-
-      if (result && result.data) {
-        switch (result.data.code) {
-          case 102: {
-            setTimeout(() => {
-              this.logout();
-            }, 1500);
-            break;
-          }
-          case 105: {
-            const errorData = result.data.msg;
-            if (Array.isArray(errorData)) {
-              message = `${errorData.map((val) => val.field)} is not correct`;
-            } else {
-              message = errorData;
-            }
-            break;
-          }
-          default:
-            message = result.data.msg || message;
-            break;
-        }
-      }
-      this.$notify({
-        duration,
-        type: 'error',
-        message,
-      });
     };
   },
 };

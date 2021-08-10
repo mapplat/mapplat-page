@@ -6,8 +6,8 @@
 </template>
 <script>
 import REG_EXP from '@/constant/REG_EXP';
-import LeftContent from './left-content';
-import Dashboard from './dashboard';
+import LeftContent from '@/components/mapviz/left-content.vue';
+import Dashboard from '@/components/mapviz/dashboard.vue';
 
 export default {
   components: {
@@ -16,7 +16,7 @@ export default {
   },
   created() {
     if (!REG_EXP.uuid.test(this.mapid)) {
-      this.$error(_t('reg_tip.map_id', [this.mapid]));
+      this.$error($t('reg_tip.map_id', [this.mapid]));
       // return;
     }
 

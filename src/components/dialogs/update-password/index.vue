@@ -1,14 +1,14 @@
 <template>
   <div class="upload-passworl">
     <el-dialog
-      :title="_t('message.update_password')"
+      :title="$t('message.update_password')"
       v-model="dialogVisible"
       width="30%"
       :before-close="handleClose">
       <div class="upload-wrapper">
         <KInput
         class="sx-m-padding"
-        :label="_t('message.old_password')"
+        :label="$t('message.old_password')"
         :rule="rules.password"
         ref="oldPassword"
         type="password"
@@ -17,7 +17,7 @@
         </KInput>
         <KInput
         class="sx-m-padding"
-        :label="_t('message.new_password')"
+        :label="$t('message.new_password')"
         :rule="rules.password"
         ref="newPassword"
         type="password"
@@ -26,7 +26,7 @@
         </KInput>
         <KInput
         class="sx-m-padding"
-        :label="_t('message.confirm_new_password')"
+        :label="$t('message.confirm_new_password')"
         :rule="rules.password"
         ref="confirmNewPassword"
         type="password"
@@ -36,8 +36,8 @@
         </KInput>
       </div>
       <template #footer>
-        <el-button @click="handleClose">{{_t('message.cancel')}}</el-button>
-        <el-button type="primary" @click="updatePassworld">{{_t('message.confirm')}}</el-button>
+        <el-button @click="handleClose">{{$t('message.cancel')}}</el-button>
+        <el-button type="primary" @click="updatePassworld">{{$t('message.confirm')}}</el-button>
       </template>
     </el-dialog>
   </div>
@@ -52,7 +52,7 @@ const rules = {
 };
 const steps = {
   startUpload: {
-    title: _t('message.upload_data'),
+    title: $t('message.upload_data'),
     value: 'startUpload',
   },
   selectFiels: {
@@ -90,11 +90,11 @@ export default {
     },
     async updatePassworld() {
       if (this.$validateRefs()) {
-        this.$error(_t('tip.illegal_parameter'));
+        this.$error($t('tip.illegal_parameter'));
         return;
       }
       if (this.newPassword !== this.confirmNewPassword) {
-        this.$error(_t('tip.illegal_confirm_password'));
+        this.$error($t('tip.illegal_confirm_password'));
         return;
       }
 
@@ -104,10 +104,10 @@ export default {
       };
       const result = await userAPI.updatePassworld(params);
       if (result && result.data && result.data.code === 0) {
-        this.$success(_t('tip.update_password_success'));
+        this.$success($t('tip.update_password_success'));
         this.handleClose();
       } else {
-        this.$error(_t('tip.update_password_failed'));
+        this.$error($t('tip.update_password_failed'));
       }
     },
   },

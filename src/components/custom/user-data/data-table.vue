@@ -27,7 +27,6 @@
     <el-table
       ref="data-table"
       :data="dataTable.rows"
-      size="mini"
       :fit="true"
       :border="true"
       height="calc(100% - 60px)"
@@ -130,14 +129,14 @@ export default {
           if (dataTable) dataTable.doLayout();
         });
       } else {
-        this.$error(_t('message.query_failed'), result);
+        this.$error($t('message.query_failed'), result);
       }
     },
     async cellDblclick(row, column, cell, event) {
       if (!this.isPrivate) return;
       const columnKey = column.property;
       if (columnKey === this.idColumn) {
-        this.$warning(`${this.idColumn} ${_t('message.column_is_not_allowed_to_be_edited')}`);
+        this.$warning(`${this.idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
         return;
       }
       const [columnValue, columnId] = [row[columnKey], row[this.idColumn]];
@@ -146,7 +145,7 @@ export default {
     async cellEdit(event, columnId, columnKey, columnValue) {
       if (!this.isPrivate) return;
       if (columnKey === this.idColumn) {
-        this.$warning(`${this.idColumn} ${_t('message.column_is_not_allowed_to_be_edited')}`);
+        this.$warning(`${this.idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
         return;
       }
       const { x, y } = event;
@@ -177,7 +176,7 @@ export default {
           this.dataTable.rows[dataIndex][columnKey] = columnValue;
         }
       } else {
-        this.$error(_t('message.update_failed'));
+        this.$error($t('message.update_failed'));
       }
     },
     async headerEdit(event, columnName) {
@@ -204,7 +203,7 @@ export default {
       if (this.checkRes(result)) {
         this.getDataList();
       } else {
-        this.$error(_t('message.update_failed'));
+        this.$error($t('message.update_failed'));
       }
     },
     blurCellValue() {

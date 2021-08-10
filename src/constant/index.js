@@ -1,5 +1,5 @@
-import REG_EXP from './REG_EXP';
-import FILES from './FILES';
+import REG_EXP from '@/constant/REG_EXP';
+import FILES from '@/constant/FILES';
 
 export default {
   FILES,
