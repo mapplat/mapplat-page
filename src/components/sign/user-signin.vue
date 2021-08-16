@@ -1,6 +1,6 @@
 <template>
-  <div class="user-login shadow">
-    <div class="user-login-title">
+  <div class="user-signin shadow">
+    <div class="user-signin-title">
       <k-icon icon="icon-logo" :size="48"></k-icon>
       <span class="title">{{$title}}</span>
     </div>
@@ -88,16 +88,16 @@
       </KInput>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signin'">
-      <el-button type="primary" @click="signin">{{$t('message.login')}}</el-button>
+      <el-button type="primary" @click="signin">{{$t('message.signin')}}</el-button>
       <el-button plain @click="type = 'signup'">{{$t('message.register')}}</el-button>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signup'">
       <el-button type="primary" @click="signup">{{$t('message.register')}}</el-button>
-      <el-button plain @click="type = 'signin'">{{$t('message.return_login')}}</el-button>
+      <el-button plain @click="type = 'signin'">{{$t('message.return_signin')}}</el-button>
     </div>
     <div class="user-option-wrapper" v-if="type === 'password'">
       <el-button type="primary" @click="forgetPassworld">{{$t('message.update_password')}}</el-button>
-      <el-button plain @click="type = 'signin'">{{$t('message.return_login')}}</el-button>
+      <el-button plain @click="type = 'signin'">{{$t('message.return_signin')}}</el-button>
     </div>
   </div>
 </template>
@@ -114,15 +114,15 @@ const rules = {
 
 export default {
   setup() {
-    const loginUsername = localStorage.getItem('login_username');
+    const signinUsername = localStorage.getItem('signin_username');
     return {
-      loginUsername,
+      signinUsername,
       rules,
     };
   },
   data() {
     return {
-      email: this.loginUsername,
+      email: this.signinUsername,
       password: null,
       verifycode: null,
       isCanVerifycode: true,
@@ -169,16 +169,16 @@ export default {
       }
 
       const result = await userAPI.signin(params);
-      localStorage.setItem('login_username', this.email);
+      localStorage.setItem('signin_username', this.email);
       if (result && result.data && result.data.code === 0) {
-        this.$success($t('tip.login_success'));
+        this.$success($t('tip.signin_success'));
         localStorage.setItem('token', result.data.data.token);
 
         setTimeout(() => {
           window.open('/', '_self');
         }, 300);
       } else {
-        this.$error($t('tip.login_failed'), result);
+        this.$error($t('tip.signin_failed'), result);
       }
     },
     forgetPassword() {
@@ -242,13 +242,13 @@ export default {
 };
 </script>
 <style lang="scss">
-.user-login {
+.user-signin {
   position: relative;
   padding: 2rem 4rem;
   width: 500px;
   background-color: $white;
   border-radius: 12px;
-  .user-login-title {
+  .user-signin-title {
     display: flex;
     justify-content: center;
     align-items: center;

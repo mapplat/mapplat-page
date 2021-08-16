@@ -2,7 +2,7 @@ function checkRes(res) {
   return (res && res.data && res.data.code === 0);
 }
 
-async function logout(href = '') {
+async function signout(href = '') {
   window.localStorage.removeItem('token');
   window.location.href = href;
 }
@@ -14,6 +14,6 @@ function getFilesTypeByName(name) {
 
 export {
   checkRes,
-  logout,
+  signout,
   getFilesTypeByName,
 };

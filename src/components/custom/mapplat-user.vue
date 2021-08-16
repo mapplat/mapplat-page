@@ -22,10 +22,10 @@
               {{$t('message.update_password')}}
             </div>
           </el-dropdown-item>
-          <el-dropdown-item command="logout">
+          <el-dropdown-item command="signout">
             <div class="justify-flex-start align-center">
               <k-icon icon="icon-tuichu" :size="20" margin="0 6px"></k-icon>
-              {{$t('message.logout')}}
+              {{$t('message.signout')}}
             </div>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { logout } from '@/utils/customUtils';
+import { signout } from '@/utils/customUtils';
 
 export default {
   computed: {
@@ -46,8 +46,8 @@ export default {
   methods: {
     handleCommand(command) {
       switch (command) {
-        case 'logout':
-          logout();
+        case 'signout':
+          signout();
           break;
         case 'updatePassword':
           this.updatePassword();

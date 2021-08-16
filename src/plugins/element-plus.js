@@ -21,10 +21,11 @@ import {
   ElPagination,
   ElNotification,
   ElImage,
+  ElDatePicker,
 } from 'element-plus';
 import 'element-plus/packages/theme-chalk/src/base.scss';
 import '@/assets/style/reset-element.scss';
-import { logout } from '@/utils/customUtils';
+import { signout } from '@/utils/customUtils';
 
 const components = [
   ElButton,
@@ -49,6 +50,7 @@ const components = [
   ElPagination,
   ElImage,
   ElNotification,
+  ElDatePicker,
 ];
 
 function notify(type, message, options) {
@@ -86,7 +88,7 @@ export default {
         switch (result.data.code) {
           case 102: {
             setTimeout(() => {
-              logout();
+              signout();
             }, 1500);
             break;
           }

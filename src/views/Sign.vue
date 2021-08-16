@@ -1,33 +1,33 @@
 <template>
-  <div class="login" :style="{ background: `url(${loginBg})` }">
-    <KI18n class="login-ki18n"></KI18n>
-    <UserLogin/>
+  <div class="signin" :style="{ background: `url(${signinBg})` }">
+    <KI18n class="signin-ki18n"></KI18n>
+    <UserSign/>
   </div>
 </template>
 <script>
-import loginBg from '@/assets/imgs/login-bg.png';
-import UserLogin from '@/components/login/user-login.vue';
+import signinBg from '@/assets/imgs/sign-bg.png';
+import UserSign from '@/components/sign/user-signin.vue';
 import KI18n from '@/components/common/k-i18n.vue';
 
 export default {
   components: {
-    UserLogin,
+    UserSign,
     KI18n,
   },
   setup() {
     return {
-      loginBg,
+      signinBg,
     };
   },
 };
 </script>
 <style lang="scss">
-.login {
+.signin {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  .login-ki18n {
+  .signin-ki18n {
     position: fixed;
     top: 0;
     right: 0;
