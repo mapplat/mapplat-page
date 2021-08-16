@@ -11,12 +11,11 @@ const i18n = new I18n({
 });
 
 const $t = i18n.t.bind(i18n);
-
 window.$t = $t;
+
 export default {
   install(app) {
     app.config.globalProperties.$t = $t;
     app.config.globalProperties.defaultLocale = defaultLocale;
-    app.use(i18n);
   },
 };
