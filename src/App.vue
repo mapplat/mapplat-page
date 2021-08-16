@@ -1,16 +1,3 @@
 <template>
-  <el-config-provider :locale="locale">
-    <router-view/>
-  </el-config-provider>
+  <router-view/>
 </template>
-
-<script>
-
-export default {
-  computed: {
-    locale() {
-      return this.$ELEMENT_LOCALE[this.defaultLocale];
-    },
-  },
-};
-</script>

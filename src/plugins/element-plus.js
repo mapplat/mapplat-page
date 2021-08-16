@@ -22,13 +22,9 @@ import {
   ElNotification,
   ElImage,
   ElDatePicker,
-  ElConfigProvider,
 } from 'element-plus';
 import 'element-plus/packages/theme-chalk/src/base.scss';
 import '@/assets/style/reset-element.scss';
-import enLocale from 'element-plus/lib/locale/lang/en';
-import zhLocale from 'element-plus/lib/locale/lang/zh-cn';
-
 import { signout } from '@/utils/customUtils';
 
 const components = [
@@ -55,7 +51,6 @@ const components = [
   ElImage,
   ElNotification,
   ElDatePicker,
-  ElConfigProvider,
 ];
 
 function notify(type, message, options) {
@@ -83,10 +78,6 @@ function resetForm(form = 'form') {
 
 export default {
   install(app) {
-    app.config.globalProperties.$ELEMENT_LOCALE = {
-      en: enLocale,
-      zh: zhLocale,
-    };
     app.config.globalProperties.$ELEMENT = {
       size: 'small',
     };

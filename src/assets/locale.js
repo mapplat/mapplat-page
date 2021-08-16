@@ -1,3 +1,6 @@
+import enLang from 'element-plus/lib/locale/lang/en';
+import zhLang from 'element-plus/lib/locale/lang/zh-cn';
+
 export default {
   zh: {
     message: {
@@ -92,6 +95,7 @@ export default {
       verifycode: '验证码长度错误',
       map_id: '地图 id:{0} 不存在',
     },
+    ...zhLang,
   },
   en: {
     page: {
@@ -188,5 +192,6 @@ export default {
       verifycode: 'The length of the verification code is wrong',
       map_id: 'map id:{0} not exist',
     },
+    ...enLang,
   },
 };
