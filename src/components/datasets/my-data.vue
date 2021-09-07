@@ -37,7 +37,7 @@
 <script>
 import UploadDialog from '@/components/dialogs/upload/index.vue';
 import UserData from '@/components/custom/user-data/index.vue';
-import userDataAPI from '@/apis/userData';
+import { checkRes, userDataAPI } from '@/apis';
 
 export default {
   components: {
@@ -90,7 +90,7 @@ export default {
       const result = await userDataAPI.myData(params);
       this.loading = false;
 
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.datalist = result.data.data.rows;
         this.count = result.data.data.count;
       } else {

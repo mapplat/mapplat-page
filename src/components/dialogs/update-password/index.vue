@@ -45,7 +45,7 @@
 
 <script>
 import paramsRules from '@/utils/paramsRules';
-import userAPI from '@/apis/user';
+import { checkRes, userAPI } from '@/apis';
 
 const rules = {
   password: paramsRules.password,
@@ -103,7 +103,7 @@ export default {
         newPassword: this.newPassword,
       };
       const result = await userAPI.updatePassworld(params);
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.$success($t('tip.update_password_success'));
         this.handleClose();
       } else {

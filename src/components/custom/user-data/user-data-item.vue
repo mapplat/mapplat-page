@@ -43,7 +43,7 @@
 </template>
 <script>
 import { formatDate } from '@/utils/utils';
-import userDataAPI from '@/apis/userData';
+import { checkRes, userDataAPI } from '@/apis';
 import ENV from '@/assets/env';
 
 export default {
@@ -67,7 +67,7 @@ export default {
         isPrivate,
       };
       const updateRes = await userDataAPI.update(this.item.dataUuid, params);
-      if (this.checkRes(updateRes)) {
+      if (checkRes(updateRes)) {
         this.$bus.emit('update-user-data-list');
         this.$bus.emit('update-public-data-list');
         this.$success(`${msg}, ${$t('tip.success')}`);
@@ -82,7 +82,7 @@ export default {
         type: 'warning',
       }).then(async () => {
         const deleteRes = await userDataAPI.delete(this.item.dataUuid);
-        if (this.checkRes(deleteRes)) {
+        if (checkRes(deleteRes)) {
           this.$bus.emit('update-user-data-list');
           this.$bus.emit('update-public-data-list');
           this.$success($t('tip.deleted_success'));
@@ -93,7 +93,7 @@ export default {
     },
     async copyData() {
       const copyRes = await userDataAPI.copy(this.item.dataUuid);
-      if (this.checkRes(copyRes)) {
+      if (checkRes(copyRes)) {
         this.$bus.emit('update-user-data-list');
         this.$success($t('message.cancel'));
         this.$router.push({ name: 'my-data' });

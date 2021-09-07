@@ -3,9 +3,7 @@ import { createApp } from 'vue';
 import plugins from '@/plugins';
 import App from '@/App.vue';
 import router from '@/router';
-import userAPI from '@/apis/user';
-
-import { checkRes } from '@/utils/customUtils';
+import { checkRes, userAPI } from '@/apis';
 
 import 'ol/ol.css';
 import '@/assets/icon/iconfont';

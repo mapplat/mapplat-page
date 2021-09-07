@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import userDataAPI from '@/apis/userData';
+import { checkRes, userDataAPI } from '@/apis';
 
 const idColumn = 'mapplat_id';
 export default {
@@ -121,7 +121,7 @@ export default {
       this.loading = true;
       const result = await userDataAPI.tableList(this.dataInfo.dataUuid, params);
       this.loading = false;
-      if (this.checkRes(result)) {
+      if (checkRes(result)) {
         this.dataTable = result.data.data;
 
         this.$nextTick(() => {
@@ -170,7 +170,7 @@ export default {
         columnValue,
       };
       const result = await userDataAPI.updateColumnValue(this.dataInfo.dataUuid, params);
-      if (this.checkRes(result)) {
+      if (checkRes(result)) {
         const dataIndex = this.dataTable.rows.findIndex((val) => val[this.idColumn] === columnId);
         if (dataIndex !== -1) {
           this.dataTable.rows[dataIndex][columnKey] = columnValue;
@@ -200,7 +200,7 @@ export default {
         reColumnName: columnValue,
       };
       const result = await userDataAPI.updateColumn(this.dataInfo.dataUuid, params);
-      if (this.checkRes(result)) {
+      if (checkRes(result)) {
         this.getDataList();
       } else {
         this.$error($t('message.update_failed'));

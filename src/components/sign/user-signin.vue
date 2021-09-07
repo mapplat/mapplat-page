@@ -102,8 +102,7 @@
   </div>
 </template>
 <script>
-
-import userAPI from '@/apis/user';
+import { checkRes, userAPI } from '@/apis';
 import paramsRules from '@/utils/paramsRules';
 
 const rules = {
@@ -143,7 +142,7 @@ export default {
       }
 
       const result = await userAPI.signup(params);
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.$success($t('tip.register_success'));
 
         this.toSignin();
@@ -170,7 +169,7 @@ export default {
 
       const result = await userAPI.signin(params);
       localStorage.setItem('signin_username', this.email);
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.$success($t('tip.signin_success'));
         localStorage.setItem('token', result.data.data.token);
 
@@ -199,7 +198,7 @@ export default {
       }
 
       const result = await userAPI.forgetPassworld(params);
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.$success($t('tip.update_password_success'));
 
         this.toSignin();
@@ -218,7 +217,7 @@ export default {
       }
 
       const result = await userAPI.getVerifycode(params);
-      if (result && result.data && result.data.code === 0) {
+      if (checkRes(result)) {
         this.$success($t('tip.the_verification_code_has_been_sent_to_the_mailbox'));
       } else {
         this.$error($t('tip.verification_code_sent_failed'), result);

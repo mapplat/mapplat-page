@@ -25,8 +25,7 @@ import Scheduler from '@ckpack/scheduler';
 import FileProgress from '@/components/custom/upload-progress/file-progress.vue';
 import { getFileHash, fixedNum, getRandomStr } from '@/utils/utils';
 import { getFilesTypeByName } from '@/utils/customUtils';
-import filesAPI from '@/apis/files';
-import jobAPI from '@/apis/job';
+import { checkRes, filesAPI, jobAPI } from '@/apis';
 import FILES from '@/constant/FILES';
 
 const scheduler = new Scheduler(FILES.concurrentCount);
@@ -83,7 +82,7 @@ export default {
         size: file.size,
         blocks,
       });
-      if (!preCreate || !preCreate.data || preCreate.data.code !== 0) {
+      if (!checkRes(preCreate)) {
         this.updateByKey(file.key, {
           key: file.key,
           name: file.name,
@@ -105,7 +104,7 @@ export default {
       for (let index = 0; index < filterBlocksLength; index += 1) {
         const { hash: blockHash, start, end } = filterBlocks[index];
         const blockRes = await filesAPI.block(blockHash, file.slice(start, end));
-        if (!blockRes || !blockRes.data || blockRes.data.code !== 0) {
+        if (!checkRes(blockRes)) {
           this.updateByKey(file.key, {
             key: file.key,
             name: file.name,
@@ -125,7 +124,7 @@ export default {
       }
 
       const mergeRes = await filesAPI.merge(fileId);
-      if (!mergeRes || !mergeRes.data || mergeRes.data.code !== 0) {
+      if (!checkRes(mergeRes)) {
         this.updateByKey(file.key, {
           key: file.key,
           name: file.name,
@@ -154,7 +153,7 @@ export default {
         },
       });
 
-      if (!jobRes || !jobRes.data || jobRes.data.code !== 0) {
+      if (!checkRes(jobRes)) {
         this.updateByKey(file.key, {
           key: file.key,
           name: file.name,
@@ -189,7 +188,7 @@ export default {
       const jobListRes = await jobAPI.list({
         jobUuids: Array.from(this.importJobUuids),
       });
-      if (jobListRes && jobListRes.data && jobListRes.data.code === 0) {
+      if (checkRes(jobListRes)) {
         jobListRes.data.data.forEach((jobInfo) => {
           const {
             jobUuid, status, percentage, params,
