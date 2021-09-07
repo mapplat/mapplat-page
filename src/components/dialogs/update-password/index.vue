@@ -46,6 +46,7 @@
 <script>
 import paramsRules from '@/utils/paramsRules';
 import { checkRes, userAPI } from '@/apis';
+import { validateRefs } from '@/utils/helpers';
 
 const rules = {
   password: paramsRules.password,
@@ -89,7 +90,7 @@ export default {
       this.dialogVisible = false;
     },
     async updatePassworld() {
-      if (this.$validateRefs()) {
+      if (validateRefs()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }

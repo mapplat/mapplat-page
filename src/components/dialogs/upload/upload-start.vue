@@ -27,7 +27,7 @@
 
 <script>
 import FILES from '@/constant/FILES';
-import { getFilesTypeByName } from '@/utils/customUtils';
+import { getFilesTypeByName } from '@/utils/helpers';
 import FilesTable from './files-table.vue';
 
 const stepTypes = {

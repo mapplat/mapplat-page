@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { signout } from '@/utils/customUtils';
+import { signout } from '@/utils/helpers';
 
 export default {
   computed: {

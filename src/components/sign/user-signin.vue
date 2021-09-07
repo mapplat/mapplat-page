@@ -103,6 +103,7 @@
 </template>
 <script>
 import { checkRes, userAPI } from '@/apis';
+import { validateRefs } from '@/utils/helpers';
 import paramsRules from '@/utils/paramsRules';
 
 const rules = {
@@ -136,7 +137,7 @@ export default {
         verifycode: this.verifycode,
         password: this.password,
       };
-      if (this.$validateRefs()) {
+      if (validateRefs()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }
@@ -161,7 +162,7 @@ export default {
         password: this.password,
       };
 
-      const errors = this.$validateRefs();
+      const errors = validateRefs();
       if (errors) {
         this.$error($t('tip.illegal_parameter'));
         return;
@@ -192,7 +193,7 @@ export default {
         verifycode: this.verifycode,
         password: this.password,
       };
-      if (this.$validateRefs()) {
+      if (validateRefs()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }

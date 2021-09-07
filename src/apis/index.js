@@ -3,7 +3,7 @@ import files from '@/apis/files';
 import job from '@/apis/job';
 import user from '@/apis/user';
 import userData from '@/apis/userData';
-import { checkRes } from '@/utils/customUtils';
+import { checkRes } from '@/utils/helpers';
 
 export {
   checkRes,

@@ -29,7 +29,7 @@ import '@/assets/style/reset-element.scss';
 import enLocale from 'element-plus/lib/locale/lang/en';
 import zhLocale from 'element-plus/lib/locale/lang/zh-cn';
 
-import { signout } from '@/utils/customUtils';
+import { signout } from '@/utils/helpers';
 
 const components = [
   ElButton,
