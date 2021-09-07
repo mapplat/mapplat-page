@@ -6,7 +6,7 @@
       width="30%"
       :before-close="handleClose">
       <div class="upload-wrapper">
-        <KInput
+        <k-input
         class="sx-m-padding"
         :label="$t('message.old_password')"
         :rule="rules.password"
@@ -14,8 +14,8 @@
         type="password"
         :is-line-border="true"
         v-model="oldPassword">
-        </KInput>
-        <KInput
+        </k-input>
+        <k-input
         class="sx-m-padding"
         :label="$t('message.new_password')"
         :rule="rules.password"
@@ -23,8 +23,8 @@
         type="password"
         :is-line-border="true"
         v-model="newPassword">
-        </KInput>
-        <KInput
+        </k-input>
+        <k-input
         class="sx-m-padding"
         :label="$t('message.confirm_new_password')"
         :rule="rules.password"
@@ -33,7 +33,7 @@
         :is-line-border="true"
         @keyupEnter="updatePassworld"
         v-model="confirmNewPassword">
-        </KInput>
+        </k-input>
       </div>
       <template #footer>
         <el-button @click="handleClose">{{$t('message.cancel')}}</el-button>

@@ -53,11 +53,6 @@
   resolved "https://registry.yarnpkg.com/@ckpack/i18n/-/i18n-0.0.8.tgz#259628d1e63a2a0d3eb14d8b5480d6b14c571eb8"
   integrity sha512-Ux2xHx1Gat/UDZ2FlXIxdfIcNZBn4ZWXbpYJgUPsahJmREJijpV46yV7iKN3kQw+06kSjEf2iDrNWwbbB7tesA==
 
-"@ckpack/parameter@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ckpack/parameter/-/parameter-2.0.0.tgz#ebc037537a804bcc67c67dd997fd1c53bb4798af"
-  integrity sha512-KjOsEvmK+jEtfL8NiSj9+K0p8w9KBddKghtDEvOb+fm+nzfHP28+182zo4Sz4gzrk6IChRNAHHEkKzZuhkcyUw==
-
 "@ckpack/scheduler@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@ckpack/scheduler/-/scheduler-2.0.0.tgz#5791d8e94b529a9644c1f3bc7bcd4944b336819a"

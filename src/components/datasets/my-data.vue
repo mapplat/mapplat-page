@@ -5,11 +5,11 @@
         <el-button type="primary" @click="openUploadDialog">{{$t("message.upload")}}</el-button>
       </div>
       <div class="component-options-right">
-        <KInput :placeholder="$t('message.search')" @keyupEnter="reGetDataList" v-model="dataname">
+        <k-input :placeholder="$t('message.search')" @keyupEnter="reGetDataList" v-model="dataname">
           <template #suffix>
             <k-icon @click="reGetDataList" class="icon-primary" icon="icon--search" :size="20"></k-icon>
           </template>
-        </KInput>
+        </k-input>
       </div>
     </div>
     <div class="component-options-content" v-loading="loading">

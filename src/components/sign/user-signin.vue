@@ -5,16 +5,16 @@
       <span class="title">{{$title}}</span>
     </div>
     <div class="user-info-wrapper" v-if="type === 'signin'">
-      <KInput
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.email')"
       ref="email"
       :rule="rules.email"
       v-model="email">
-      </KInput>
+      </k-input>
       <div class="forget-password" @click="forgetPassword">{{$t('message.forgot_password')}}</div>
-      <KInput
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :rule="rules.password"
@@ -23,18 +23,18 @@
       type="password"
       @keyupEnter="signin"
       v-model="password">
-      </KInput>
+      </k-input>
     </div>
     <div class="user-info-wrapper" v-if="type === 'signup'">
-      <KInput
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.email')"
       ref="email"
       :rule="rules.email"
       v-model="email">
-      </KInput>
-      <KInput
+      </k-input>
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.verification_code')"
@@ -44,8 +44,8 @@
       <template #suffix>
         <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
       </template>
-      </KInput>
-      <KInput
+      </k-input>
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.password')"
@@ -54,18 +54,18 @@
       type="password"
       @keyupEnter="signup"
       v-model="password">
-      </KInput>
+      </k-input>
     </div>
     <div class="user-info-wrapper" v-if="type === 'password'">
-      <KInput
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.email')"
       :rule="rules.email"
       ref="email"
       v-model="email">
-      </KInput>
-      <KInput
+      </k-input>
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.verification_code')"
@@ -75,8 +75,8 @@
       <template #suffix>
         <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
       </template>
-      </KInput>
-      <KInput
+      </k-input>
+      <k-input
       :isLineBorder="true"
       class="sx-m-padding"
       :label="$t('message.password')"
@@ -85,7 +85,7 @@
       type="password"
       @keyupEnter="forgetPassworld"
       v-model="password">
-      </KInput>
+      </k-input>
     </div>
     <div class="user-option-wrapper" v-if="type === 'signin'">
       <el-button type="primary" @click="signin">{{$t('message.signin')}}</el-button>
