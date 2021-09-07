@@ -5,10 +5,9 @@ import { checkRes } from '@/utils/customUtils';
 const parameter = new Parameter();
 export default {
   install(app) {
-    app.config.globalProperties.checkRes = checkRes;
     app.config.globalProperties.$title = 'mapplat';
-    app.config.globalProperties.$size = 'medium';
     app.config.globalProperties.$bus = mitt();
+    app.config.globalProperties.checkRes = checkRes;
     app.config.globalProperties.parameter = parameter;
     app.config.globalProperties.$validateRefs = function (refs) {
       refs = refs || Object.keys(this.$refs);
