@@ -23,7 +23,6 @@
   </div>
 </template>
 <script>
-
 const TAB_MENT = [
   {
     value: 'my-data',

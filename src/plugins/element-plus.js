@@ -26,9 +26,6 @@ import {
 } from 'element-plus';
 import 'element-plus/packages/theme-chalk/src/base.scss';
 import '@/assets/style/reset-element.scss';
-import enLocale from 'element-plus/lib/locale/lang/en';
-import zhLocale from 'element-plus/lib/locale/lang/zh-cn';
-
 import { signout } from '@/utils/helpers';
 
 const components = [
@@ -66,31 +63,11 @@ function notify(type, message, options) {
   });
 }
 
-// form check
-async function checkForm(form = 'form') {
-  return new Promise((res) => {
-    this.$refs[form].validate((valid) => {
-      res(valid);
-    });
-  });
-}
-
-function resetForm(form = 'form') {
-  this.$nextTick(() => {
-    this.$refs[form].resetFields();
-  });
-}
-
 export default {
   install(app) {
-    app.config.globalProperties.$ELEMENT_LOCALE = {
-      en: enLocale,
-      zh: zhLocale,
-    };
     app.config.globalProperties.$ELEMENT = {
       size: 'small',
     };
-    app.config.globalProperties.$notify = ElNotification;
     app.config.globalProperties.$success = (message, options) => notify('success', message, options);
     app.config.globalProperties.$error = (message, result, options) => {
       if (result && result.data) {
@@ -118,8 +95,6 @@ export default {
       notify('error', message, options);
     };
     app.config.globalProperties.$warning = (message, options) => notify('warning', message, options);
-    app.config.globalProperties.checkForm = checkForm;
-    app.config.globalProperties.resetForm = resetForm;
     components.forEach((component) => {
       app.use(component);
     });

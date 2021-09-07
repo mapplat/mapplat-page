@@ -2,8 +2,8 @@ import KIcon from '@/components/common/k-icon.vue';
 import KInput from '@/components/common/k-input.vue';
 
 const components = {
-  KIcon,
-  KInput,
+  'k-icon': KIcon,
+  'k-input': KInput,
 };
 export default {
   install(Vue) {

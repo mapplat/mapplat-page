@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-
 const menuConfs = [{
   icon: 'icon-datasets',
   title: $t('message.data'),

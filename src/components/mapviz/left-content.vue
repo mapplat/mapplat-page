@@ -26,7 +26,6 @@
 </template>
 
 <script>
-
 import PanelDatasets from '@/components/mapviz/left-panel/panel-datasets/index.vue';
 import PanelSetting from '@/components/mapviz/left-panel/panel-setting.vue';
 
