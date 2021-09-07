@@ -1,12 +1,12 @@
 {
   "name": "mapplat-page",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite",
     "build": "yarn lint && vite build",
     "serve": "yarn lint && vite preview",
     "lint": "eslint --fix ./",
-    "prepare": "yarn && husky install",
+    "prepare": "husky install",
     "release": "standard-version"
   },
   "dependencies": {
