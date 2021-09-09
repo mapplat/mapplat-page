@@ -17,7 +17,7 @@
 mapplat.com
   - 没有登陆跳转到home
   - mapplat.com/home 首页 (登陆、注册)(登录后显示进入)、介绍、体验地图、联系方式
-    - mapplat.com/gallery 分享地图的地方
+  - mapplat.com/gallery 分享地图的地方
   - mapplat.com/data 数据管理 （上传｜ 下载｜ 编辑｜ 预切片）
   - mapplat.com/map 制图结果管理 （选择数据｜可视化配置（todo）（cartocss｜xml））
   - mapplat.com/user/profile 账号设置｜退出登录|修改密码（原始密码｜验证码）｜ 邮箱提醒| 用户名｜｜邮箱｜密码｜头像
