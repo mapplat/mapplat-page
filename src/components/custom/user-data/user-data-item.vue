@@ -19,7 +19,7 @@
         </el-dropdown>
       </div>
 
-      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `${ENV.SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''">
+      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `${SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''">
         <template #placeholder>
           <div class="image-placeholder">
             <k-icon icon="icon-datasets" :size="132"></k-icon>
@@ -44,7 +44,7 @@
 <script>
 import { formatDate } from '@/utils/utils';
 import { checkRes, userDataAPI } from '@/apis';
-import ENV from '@/assets/env';
+import { SERVER_HOST } from '@/assets/env';
 
 export default {
   props: {
@@ -56,7 +56,7 @@ export default {
   inject: ['isPrivate'],
   setup() {
     return {
-      ENV,
+      SERVER_HOST,
     };
   },
   methods: {

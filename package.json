@@ -3,8 +3,8 @@
   "version": "0.0.3",
   "scripts": {
     "dev": "vite",
-    "build": "yarn lint && vite build",
-    "serve": "yarn lint && vite preview",
+    "build": "vite build",
+    "serve": "vite preview",
     "lint": "eslint --fix ./",
     "prepare": "husky install",
     "release": "standard-version"

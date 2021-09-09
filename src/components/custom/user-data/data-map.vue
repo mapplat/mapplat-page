@@ -8,7 +8,7 @@ import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import { transformExtent } from 'ol/proj';
-import ENV from '@/assets/env';
+import { SERVER_HOST } from '@/assets/env';
 
 const token = localStorage.getItem('token');
 export default {
@@ -46,7 +46,7 @@ export default {
           }),
           new TileLayer({
             source: new XYZ({
-              url: `${ENV.SERVER_HOST}/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png?token=${token}`,
+              url: `${SERVER_HOST}/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png?token=${token}`,
             }),
           }),
         ],

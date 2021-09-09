@@ -1,9 +1,9 @@
 import axios from 'axios';
 import qs from 'qs';
-import ENV from '@/assets/env';
+import { SERVER_HOST } from '@/assets/env';
 
 const instance = axios.create({
-  baseURL: `${ENV.SERVER_HOST}/api`,
+  baseURL: `${SERVER_HOST}/api`,
   timeout: 25000,
   headers: {
     token: localStorage.getItem('token'),

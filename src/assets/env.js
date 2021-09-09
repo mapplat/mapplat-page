@@ -1,5 +1,8 @@
-const SERVER_HOST = process.env.NODE_ENV === 'production' ? window.location.origin : 'http://117.50.82.140';
+const SERVER_HOST = import.meta.env.VITE_SERVER_HOST || window.location.origin;
 
-export default {
+const TITLE = import.meta.env.VITE_PAGE_TITLE;
+
+export {
   SERVER_HOST,
+  TITLE,
 };

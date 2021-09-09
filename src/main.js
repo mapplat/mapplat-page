@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 
-import plugins from '@/plugins';
+import plugins from '@/plugin';
 import App from '@/App.vue';
 import router from '@/router';
 import { checkRes, userAPI } from '@/apis';
