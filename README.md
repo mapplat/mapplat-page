@@ -10,7 +10,6 @@
 + 根据ak获取config渲染数据（z,x,y）
 + 形式包括png，geojson,矢量瓦片
 
-
 # router
 
 mapplat.com
