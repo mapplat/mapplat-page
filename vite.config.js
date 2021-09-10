@@ -15,17 +15,20 @@ const elPlugin = styleImport({
   }],
 });
 
-const visualizerPlugin = visualizer({
-  name: `${PACKAGE.name}-report`,
-  template: 'treemap',
-  filename: 'report/report.html',
-  gzipSize: true,
-});
-visualizerPlugin.outputOptions = () => {
-  console.info(`\nReport: file://${__dirname}/report/report.html\n`);
-};
+const plugins = [vue(), elPlugin];
 
-const plugins = [vue(), elPlugin, visualizerPlugin];
+if (process.env.NODE_ENV_REPORT) {
+  const visualizerPlugin = visualizer({
+    name: `${PACKAGE.name}-report`,
+    template: 'treemap',
+    filename: 'report/report.html',
+    gzipSize: true,
+  });
+  visualizerPlugin.outputOptions = () => {
+    console.info(`\nReport: file://${__dirname}/report/report.html\n`);
+  };
+  plugins.push(visualizerPlugin);
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({

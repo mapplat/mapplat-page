@@ -7,7 +7,8 @@
     "serve": "vite preview",
     "lint": "eslint --fix ./",
     "prepare": "husky install",
-    "release": "standard-version"
+    "release": "standard-version",
+    "report": "NODE_ENV_REPORT=true vite build"
   },
   "dependencies": {
     "@ckpack/i18n": "^0.0.8",
