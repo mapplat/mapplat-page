@@ -1,6 +1,6 @@
 {
   "name": "mapplat-page",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -43,6 +43,8 @@
     "lint-staged": "^11.2.3"
   },
   "lint-staged": {
-    "*.{js,jsx,vue}":[ "eslint --fix"]
+    "*.{js,jsx,vue}": [
+      "eslint --fix"
+    ]
   }
 }

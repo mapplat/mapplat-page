@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/mapplat/mapplat-page/compare/v0.0.3...v0.0.4) (2021-10-18)
+
+
+### Features
+
+* add lint-staged ([641d15a](https://github.com/mapplat/mapplat-page/commit/641d15aa1d3104aec06e36dddb54959ab6e1cc03))
+* add report script ([2c3a241](https://github.com/mapplat/mapplat-page/commit/2c3a241c9ee79f5b4214d62ca548e42a4f508bce))
+* update favicon ([d5dda8e](https://github.com/mapplat/mapplat-page/commit/d5dda8e054db03069d7c07d618dc50c4c1689510))
+
 ### [0.0.3](https://github.com/mapplat/mapplat-page/compare/v0.0.2...v0.0.3) (2021-09-07)
 
 ### 0.0.2 (2021-09-07)
