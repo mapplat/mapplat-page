@@ -33,7 +33,7 @@ if (process.env.NODE_ENV_REPORT) {
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    port: 8000,
+    port: 9999,
   },
   css: {
     preprocessorOptions: {
