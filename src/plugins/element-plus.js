@@ -3,7 +3,6 @@ import {
   ElInput,
   ElSelect,
   ElMenu,
-  ElSubmenu,
   ElMenuItem,
   ElMenuItemGroup,
   ElDropdown,
@@ -24,7 +23,7 @@ import {
   ElDatePicker,
   ElConfigProvider,
 } from 'element-plus';
-import 'element-plus/packages/theme-chalk/src/base.scss';
+import 'element-plus/theme-chalk/src/base.scss';
 import '@/assets/style/reset-element.scss';
 import { signout } from '@/utils/helpers';
 
@@ -33,7 +32,6 @@ const components = [
   ElInput,
   ElSelect,
   ElMenu,
-  ElSubmenu,
   ElMenuItem,
   ElMenuItemGroup,
   ElDropdown,
