@@ -1,10 +1,12 @@
 module.exports = {
-  extends: ['plugin:vue/vue3-essential', 'airbnb-base'],
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
+  root: true,
+  env: {
+    node: true,
   },
-  plugins: ['vue'],
+  extends: [
+    'plugin:vue/vue3-recommended',
+    'airbnb-base',
+  ],
   rules: {
     'func-names': 0,
     'no-continue': 0,
@@ -18,12 +20,8 @@ module.exports = {
     'no-param-reassign': 0,
     'vue/multi-word-component-names': 0,
     'vue/script-setup-uses-vars': 0,
+    'vue/html-self-closing': 0,
   },
-  overrides: [
-    {
-      files: ['*.js', '*.vue'],
-    },
-  ],
   globals: {
     $t: true,
   },
