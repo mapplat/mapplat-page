@@ -5,21 +5,25 @@
       :data="files"
       style="width: 100%"
       max-height="400"
-      @selection-change="handleSelectionChange">
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column
         type="selection"
-        :selectable='()=> selectable'
-        width="55">
+        :selectable="()=> selectable"
+        width="55"
+      >
       </el-table-column>
       <el-table-column
         prop="name"
         sortable
-        :label="$t('message.file_name')">
+        :label="$t('message.file_name')"
+      >
       </el-table-column>
       <el-table-column
         prop="size"
         sortable
-        :label="$t('message.file_size')">
+        :label="$t('message.file_size')"
+      >
         <template #default="scope">
           {{ formatFileSize(scope.row.size) }}
         </template>

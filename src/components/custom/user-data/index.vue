@@ -1,22 +1,31 @@
 <template>
   <div class="user-data">
-    <DataItem @click="openData(item)" v-for="item in datalist" :key="item.id" :item="item"></DataItem>
-    <div class="data-item-temp" v-for="i in 6" :key="i"></div>
+    <DataItem
+      v-for="item in datalist"
+      :key="item.id"
+      :item="item"
+      @click="openData(item)"
+    ></DataItem>
+    <div
+      v-for="i in 6"
+      :key="i"
+      class="data-item-temp"
+    ></div>
   </div>
 </template>
 <script>
 import DataItem from '@/components/custom/user-data/user-data-item.vue';
 
 export default {
+  components: {
+    DataItem,
+  },
   inject: ['isPrivate'],
   props: {
     datalist: {
       type: Array,
       default: () => [],
     },
-  },
-  components: {
-    DataItem,
   },
   methods: {
     openData(item) {

@@ -4,29 +4,51 @@
       <div class="component-options-left">
       </div>
       <div class="component-options-right">
-        <k-input :placeholder="$t('message.search')" @keyupEnter="reGetDataList" v-model="dataname">
+        <k-input
+          v-model="dataname"
+          :placeholder="$t('message.search')"
+          @keyupEnter="reGetDataList"
+        >
           <template #suffix>
-            <k-icon @click="reGetDataList" class="icon-primary" icon="icon--search" :size="20"></k-icon>
+            <k-icon
+              class="icon-primary"
+              icon="icon--search"
+              :size="20"
+              @click="reGetDataList"
+            ></k-icon>
           </template>
         </k-input>
       </div>
     </div>
-    <div class="component-options-content" v-loading="loading">
-      <UserData v-if="datalist.length" :datalist="datalist"></UserData>
-      <div v-else class="emptydata-wrapper">
-        <k-icon icon="icon-kong" :size="40"></k-icon>
+    <div
+      v-loading="loading"
+      class="component-options-content"
+    >
+      <UserData
+        v-if="datalist.length"
+        :datalist="datalist"
+      ></UserData>
+      <div
+        v-else
+        class="emptydata-wrapper"
+      >
+        <k-icon
+          icon="icon-kong"
+          :size="40"
+        ></k-icon>
         <div class="emptydata-msg">
-          {{$t('message.no_data')}}
+          {{ $t('message.no_data') }}
         </div>
       </div>
       <el-pagination
+        v-model:current-page="page"
         background
         :hide-on-single-page="true"
         :page-size="limit"
-        v-model:current-page="page"
-        @current-change="getDataList"
         layout="prev, pager, next, jumper"
-        :total="count">
+        :total="count"
+        @current-change="getDataList"
+      >
       </el-pagination>
     </div>
   </div>
@@ -39,6 +61,11 @@ export default {
   components: {
     UserData,
   },
+  provide() {
+    return {
+      isPrivate: this.isPrivate,
+    };
+  },
   data() {
     return {
       isPrivate: false,
@@ -48,11 +75,6 @@ export default {
       limit: 60,
       page: 1,
       loading: false,
-    };
-  },
-  provide() {
-    return {
-      isPrivate: this.isPrivate,
     };
   },
   created() {

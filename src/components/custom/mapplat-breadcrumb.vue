@@ -2,12 +2,16 @@
   <div class="mapplat-breadcrumb no-user-select">
     <el-breadcrumb>
       <el-breadcrumb-item :to="{ path: '/' }">
-        <k-icon icon="icon-home" :size="20"></k-icon>
+        <k-icon
+          icon="icon-home"
+          :size="20"
+        ></k-icon>
       </el-breadcrumb-item>
       <el-breadcrumb-item
         v-for="breadcrumb in breadcrumbs"
+        :key="breadcrumb.name"
         :to="{ path: breadcrumb.path }"
-        :key="breadcrumb.name">
+      >
         {{ breadcrumb.name }}
       </el-breadcrumb-item>
     </el-breadcrumb>

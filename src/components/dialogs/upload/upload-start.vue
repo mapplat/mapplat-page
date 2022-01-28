@@ -1,26 +1,68 @@
 <template>
-  <div class="upload-start" >
-    <div class="upload-start-wrapper" @dragenter.prevent="dragenter" @dragover.prevent="dragover"
-      @drop.prevent="drop" v-loading="loading">
+  <div class="upload-start">
+    <div
+      v-loading="loading"
+      class="upload-start-wrapper"
+      @dragenter.prevent="dragenter"
+      @dragover.prevent="dragover"
+      @drop.prevent="drop"
+    >
       <div v-if="type === 'input-file'">
-        <input ref="uploadFile" style="display:none;" type="file" id="select-file"
-          :accept="acceptTyles" multiple @change="onFileSelected">
-        <label for="select-file" class="upload-start-content"><k-icon class="zy-m-margin" icon="icon-shangchuan" :size="24"></k-icon>{{$t('message.drag_and_drop_files_here_or_click_to_upload_files')}}</label>
+        <input
+          id="select-file"
+          ref="uploadFile"
+          style="display:none;"
+          type="file"
+          :accept="acceptTyles"
+          multiple
+          @change="onFileSelected"
+        >
+        <label
+          for="select-file"
+          class="upload-start-content"
+        ><k-icon
+          class="zy-m-margin"
+          icon="icon-shangchuan"
+          :size="24"
+        ></k-icon>{{ $t('message.drag_and_drop_files_here_or_click_to_upload_files') }}</label>
       </div>
       <div v-if="type === 'confirm-file'">
         <el-collapse v-model="activeCollapse">
-          <el-collapse-item :title="$t('message.select_the_file_to_upload')" name="support">
-            <FilesTable :files="formatFiles.support" :selectable="true" @updateSelectFiles="updateSelectFiles"></FilesTable>
+          <el-collapse-item
+            :title="$t('message.select_the_file_to_upload')"
+            name="support"
+          >
+            <FilesTable
+              :files="formatFiles.support"
+              :selectable="true"
+              @updateSelectFiles="updateSelectFiles"
+            ></FilesTable>
           </el-collapse-item>
-          <el-collapse-item :title="$t('message.files_not_supported_for_upload')" name="not-support" v-if="formatFiles.notSupport && formatFiles.notSupport.length" >
+          <el-collapse-item
+            v-if="formatFiles.notSupport && formatFiles.notSupport.length"
+            :title="$t('message.files_not_supported_for_upload')"
+            name="not-support"
+          >
             <FilesTable :files="formatFiles.notSupport"></FilesTable>
           </el-collapse-item>
         </el-collapse>
       </div>
     </div>
     <div class="upload-dialog-options">
-      <el-button v-if="type === 'confirm-file'" @click="reSelected">{{$t('message.reselect')}}</el-button>
-      <el-button v-if="type === 'confirm-file'" :disabled="loading" type="primary" @click="handerNext">{{$t('message.start_upload')}}</el-button>
+      <el-button
+        v-if="type === 'confirm-file'"
+        @click="reSelected"
+      >
+        {{ $t('message.reselect') }}
+      </el-button>
+      <el-button
+        v-if="type === 'confirm-file'"
+        :disabled="loading"
+        type="primary"
+        @click="handerNext"
+      >
+        {{ $t('message.start_upload') }}
+      </el-button>
     </div>
   </div>
 </template>

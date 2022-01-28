@@ -1,7 +1,10 @@
 <template>
   <div class="k-logo">
-    <k-icon icon="icon-logo" :size="42"></k-icon>
-    <span class="title">{{$title}}</span>
+    <k-icon
+      icon="icon-logo"
+      :size="42"
+    ></k-icon>
+    <span class="title">{{ $title }}</span>
   </div>
 </template>
 <style lang="scss">

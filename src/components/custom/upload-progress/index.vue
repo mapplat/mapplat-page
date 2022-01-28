@@ -6,15 +6,22 @@
       :title="$t('message.upload_data')"
       :show-arrow="true"
       popper-class="upload-progress-wrapper"
-      trigger="click">
+      trigger="click"
+    >
       <div class="upload-progress-content">
-        <FileProgress :key="index" v-for="(file, index) in formatFiles"
+        <FileProgress
+          v-for="(file, index) in formatFiles"
+          :key="index"
           :index="index"
           :file="file"
-          ></FileProgress>
+        ></FileProgress>
       </div>
       <template #reference>
-        <k-icon id="uploadProgressTriger" icon="icon-shangchuan" :size="24"></k-icon>
+        <k-icon
+          id="uploadProgressTriger"
+          icon="icon-shangchuan"
+          :size="24"
+        ></k-icon>
       </template>
     </el-popover>
   </div>
@@ -32,6 +39,14 @@ let timeInterval;
 export default {
   components: {
     FileProgress,
+  },
+  data() {
+    return {
+      visible: true,
+      files: [],
+      formatFiles: [],
+      importJobUuids: new Set(),
+    };
   },
   mounted() {
     this.$bus.off('push-upload-files');
@@ -52,14 +67,6 @@ export default {
       this.handlerFiles(files);
       this.uploadProgressTriger();
     });
-  },
-  data() {
-    return {
-      visible: true,
-      files: [],
-      formatFiles: [],
-      importJobUuids: new Set(),
-    };
   },
   methods: {
     uploadProgressTriger() {

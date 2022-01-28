@@ -1,7 +1,7 @@
 <template>
   <div class="mapviz">
-    <LeftContent/>
-    <Dashboard/>
+    <LeftContent />
+    <Dashboard />
   </div>
 </template>
 <script>
@@ -14,6 +14,11 @@ export default {
     LeftContent,
     Dashboard,
   },
+  data() {
+    return {
+      mapid: this.$route.params.mapid,
+    };
+  },
   created() {
     if (!REG_EXP.uuid.test(this.mapid)) {
       this.$error($t('reg_tip.map_id', [this.mapid]));
@@ -21,11 +26,6 @@ export default {
     }
 
     // 回去mapconfig
-  },
-  data() {
-    return {
-      mapid: this.$route.params.mapid,
-    };
   },
   methods: {
     initVizConfig() {

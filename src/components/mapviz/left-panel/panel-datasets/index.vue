@@ -1,6 +1,11 @@
 <template>
   <div class="panel-datasets">
-    <div><k-icon icon="icon-add" :size="20"></k-icon>{{$t('message.add_dataset')}}</div>
+    <div>
+      <k-icon
+        icon="icon-add"
+        :size="20"
+      ></k-icon>{{ $t('message.add_dataset') }}
+    </div>
     <div>
       <ColorBarPicker></ColorBarPicker>
     </div>

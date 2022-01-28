@@ -1,12 +1,16 @@
 <template>
   <div class="upload-dialog">
     <el-dialog
-      :title="dialogTitle"
       v-model="dialogVisible"
+      :title="dialogTitle"
       width="30%"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <div class="upload-wrapper">
-        <UploadStart v-if="curentStep === steps.startUpload.value" @close="handleClose"></UploadStart>
+        <UploadStart
+          v-if="curentStep === steps.startUpload.value"
+          @close="handleClose"
+        ></UploadStart>
       </div>
     </el-dialog>
   </div>

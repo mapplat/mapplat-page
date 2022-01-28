@@ -2,13 +2,16 @@
   <div class="gc-i18n">
     <el-dropdown
       placement="bottom"
-      @command="handleCommand"
       :hide-timeout="500"
+      @command="handleCommand"
     >
       <span class="gc-i18n-content">
-        <k-icon icon="icon-language" :size="20"></k-icon>
+        <k-icon
+          icon="icon-language"
+          :size="20"
+        ></k-icon>
       </span>
-      <template  #dropdown>
+      <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item
             v-for="lang in options"

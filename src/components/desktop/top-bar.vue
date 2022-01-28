@@ -4,8 +4,14 @@
       <MapplatBreadcrumb></MapplatBreadcrumb>
     </div>
     <div class="right-wrapper align-center">
-      <el-badge class="notice-wrapper zy-m-margin" :value="12">
-        <k-icon icon="icon-notice" :size="20"></k-icon>
+      <el-badge
+        class="notice-wrapper zy-m-margin"
+        :value="12"
+      >
+        <k-icon
+          icon="icon-notice"
+          :size="20"
+        ></k-icon>
       </el-badge>
       <MapplatUser class="zy-m-margin"></MapplatUser>
       <KI18n></KI18n>

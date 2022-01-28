@@ -1,43 +1,86 @@
 <template>
   <div class="user-data-item hover-shadow">
-    <div class="user-data-item-thump" >
+    <div class="user-data-item-thump">
       <div class="user-data-top">
-        <k-icon class="icon-hover-color" v-if="isPrivate" @click.stop="updatePrivate(!item.private)" :icon="item.private ? 'icon-suo' : 'icon-kaisuo'" :size="20" margin="4px"></k-icon>
+        <k-icon
+          v-if="isPrivate"
+          class="icon-hover-color"
+          :icon="item.private ? 'icon-suo' : 'icon-kaisuo'"
+          :size="20"
+          margin="4px"
+          @click.stop="updatePrivate(!item.private)"
+        ></k-icon>
         <div v-else></div>
         <el-dropdown trigger="hover">
-          <span class="el-dropdown-link" @click.stop>
-            <k-icon class="data-actions" icon="icon-gengduo" :size="18" margin="4px"></k-icon>
+          <span
+            class="el-dropdown-link"
+            @click.stop
+          >
+            <k-icon
+              class="data-actions"
+              icon="icon-gengduo"
+              :size="18"
+              margin="4px"
+            ></k-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="openInMap">{{$t('message.create_map')}}</el-dropdown-item>
-              <el-dropdown-item @click="copyData">{{$t('message.copy_data')}}</el-dropdown-item>
-              <el-dropdown-item @click="download">{{$t('message.download_data')}}</el-dropdown-item>
-              <el-dropdown-item class="color-danger" v-if="isPrivate" @click="deleteData">{{$t('message.delete')}}</el-dropdown-item>
+              <el-dropdown-item @click="openInMap">
+                {{ $t('message.create_map') }}
+              </el-dropdown-item>
+              <el-dropdown-item @click="copyData">
+                {{ $t('message.copy_data') }}
+              </el-dropdown-item>
+              <el-dropdown-item @click="download">
+                {{ $t('message.download_data') }}
+              </el-dropdown-item>
+              <el-dropdown-item
+                v-if="isPrivate"
+                class="color-danger"
+                @click="deleteData"
+              >
+                {{ $t('message.delete') }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
 
-      <el-image :lazy="true" fit='contain' :src="item.spatialization ? `${SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''">
+      <el-image
+        :lazy="true"
+        fit="contain"
+        :src="item.spatialization ? `${SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''"
+      >
         <template #placeholder>
           <div class="image-placeholder">
-            <k-icon icon="icon-datasets" :size="132"></k-icon>
+            <k-icon
+              icon="icon-datasets"
+              :size="132"
+            ></k-icon>
           </div>
         </template>
         <template #error>
           <div class="image-slot">
-            <k-icon icon="icon-datasets" :size="132"></k-icon>
+            <k-icon
+              icon="icon-datasets"
+              :size="132"
+            ></k-icon>
           </div>
         </template>
       </el-image>
     </div>
     <div class="user-data-item-defail">
       <div class="user-data-item-content user-data-item-info">
-        <div class="user-data-item-name text-ellipsis">{{item.name}}</div>
-        <div class="user-data-item-counts text-ellipsis">{{item.counts}} {{$t('message.records')}}</div>
+        <div class="user-data-item-name text-ellipsis">
+          {{ item.name }}
+        </div>
+        <div class="user-data-item-counts text-ellipsis">
+          {{ item.counts }} {{ $t('message.records') }}
+        </div>
       </div>
-      <div class="user-data-item-content user-data-item-time text-ellipsis">{{formatDate(item.updatedAt, 'time')}}</div>
+      <div class="user-data-item-content user-data-item-time text-ellipsis">
+        {{ formatDate(item.updatedAt, 'time') }}
+      </div>
     </div>
   </div>
 </template>
@@ -47,13 +90,13 @@ import { checkRes, userDataAPI } from '@/apis';
 import { SERVER_HOST } from '@/assets/env';
 
 export default {
+  inject: ['isPrivate'],
   props: {
     item: {
       type: Object,
       default: () => {},
     },
   },
-  inject: ['isPrivate'],
   setup() {
     return {
       SERVER_HOST,

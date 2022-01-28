@@ -1,7 +1,10 @@
 <template>
-  <div class="signin" :style="{ background: `url(${signinBg})` }">
+  <div
+    class="signin"
+    :style="{ background: `url(${signinBg})` }"
+  >
     <KI18n class="signin-ki18n"></KI18n>
-    <UserSign/>
+    <UserSign />
   </div>
 </template>
 <script>

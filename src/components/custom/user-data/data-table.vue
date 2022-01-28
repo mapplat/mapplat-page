@@ -1,8 +1,13 @@
 <template>
-  <div class="data-table" :class="{'data-table-private': isPrivate}" v-loading="loading">
+  <div
+    v-loading="loading"
+    class="data-table"
+    :class="{'data-table-private': isPrivate}"
+  >
     <el-input
       v-show="isShowEditInput"
       ref="data-table-cell-edit"
+      v-model="curentCell.columnValue"
       class="data-table-edit"
       type="textarea"
       :autofocus="true"
@@ -10,11 +15,12 @@
       :rows="2"
       @change="changeCellValue"
       @blur="blurCellValue"
-      v-model="curentCell.columnValue">
+    >
     </el-input>
     <el-input
       v-show="isShowHeaderEditInput"
       ref="data-table-header-edit"
+      v-model="curentHeader.columnValue"
       class="data-table-edit"
       type="textarea"
       :autofocus="true"
@@ -22,7 +28,7 @@
       :rows="2"
       @change="changeColumnName"
       @blur="blurCellValue"
-      v-model="curentHeader.columnValue">
+    >
     </el-input>
     <el-table
       ref="data-table"
@@ -30,45 +36,67 @@
       :fit="true"
       :border="true"
       height="calc(100% - 60px)"
+      style="width: 100%;"
       @cell-dblclick="cellDblclick"
-      style="width: 100%;">
+    >
       <el-table-column
-      v-for="(value, key) in dataTable.columns"
-      :key="key"
-      :fixed="key === idColumn"
-      :min-width="key === idColumn ? '100px' : '180px'"
-      :resizable="false"
-      :prop="key"
+        v-for="(value, key) in dataTable.columns"
+        :key="key"
+        :fixed="key === idColumn"
+        :min-width="key === idColumn ? '100px' : '180px'"
+        :resizable="false"
+        :prop="key"
       >
         <template #header>
           <div class="text-ellipsis table-header-cell-name">
-            <div class="table-header-name">{{key}}</div>
-            <k-icon @click="(event)=>{headerEdit(event,key)}" class="cell-value-content-option" v-if="isPrivate && key !== idColumn" icon="icon-bianji" :size="20"></k-icon>
+            <div class="table-header-name">
+              {{ key }}
+            </div>
+            <k-icon
+              v-if="isPrivate && key !== idColumn"
+              class="cell-value-content-option"
+              icon="icon-bianji"
+              :size="20"
+              @click="(event)=>{headerEdit(event,key)}"
+            ></k-icon>
           </div>
           <div class="text-ellipsis table-header-cell-type">
-            <div class="table-header-type">{{value}}</div>
+            <div class="table-header-type">
+              {{ value }}
+            </div>
           </div>
         </template>
         <template #default="scope">
-          <div :key="key" class="data-table-cell">
-            <div class="cell-value-content text-ellipsis">{{scope.row[key]}}</div>
-            <k-icon class="cell-value-content-option" v-if="isPrivate && key !== idColumn" @click="(event)=>{cellEdit(event,scope.row[this.idColumn], key, scope.row[key])}" icon="icon-bianji" :size="20"></k-icon>
+          <div
+            :key="key"
+            class="data-table-cell"
+          >
+            <div class="cell-value-content text-ellipsis">
+              {{ scope.row[key] }}
+            </div>
+            <k-icon
+              v-if="isPrivate && key !== idColumn"
+              class="cell-value-content-option"
+              icon="icon-bianji"
+              :size="20"
+              @click="(event)=>{cellEdit(event,scope.row[idColumn], key, scope.row[key])}"
+            ></k-icon>
           </div>
         </template>
       </el-table-column>
     </el-table>
     <div class="data-table-pagination">
       <el-pagination
+        v-model:current-page="page"
         background
         :hide-on-single-page="true"
-        v-model:current-page="page"
-        @current-change="getDataList"
         layout="prev, pager, next, jumper"
         :page-size="limit"
-        :total="dataTable.count">
+        :total="dataTable.count"
+        @current-change="getDataList"
+      >
       </el-pagination>
     </div>
-
   </div>
 </template>
 
@@ -78,11 +106,6 @@ import { checkRes, userDataAPI } from '@/apis';
 const idColumn = 'mapplat_id';
 export default {
   inject: ['isPrivate'],
-  setup() {
-    return {
-      idColumn,
-    };
-  },
   props: {
     isPrivate: {
       type: Boolean,
@@ -92,6 +115,11 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  setup() {
+    return {
+      idColumn,
+    };
   },
   data() {
     return {

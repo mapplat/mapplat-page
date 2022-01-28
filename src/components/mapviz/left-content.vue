@@ -2,23 +2,44 @@
   <div class="left-content">
     <div class="left-nav">
       <div class="k-logo">
-        <k-icon icon="icon-logo" :size="42"></k-icon>
+        <k-icon
+          icon="icon-logo"
+          :size="42"
+        ></k-icon>
       </div>
       <div class="left-nav-item-content">
-        <div v-for="item in leftOptions" :key="item.key" @click="handler(item)" class="left-nav-item" :class="{'left-nav-item-active': activeItem.key === item.key}">
-          <k-icon :icon="item.icon" :size="20"></k-icon>
-          <div class="left-nav-item-title">{{item.title}}</div>
+        <div
+          v-for="item in leftOptions"
+          :key="item.key"
+          class="left-nav-item"
+          :class="{'left-nav-item-active': activeItem.key === item.key}"
+          @click="handler(item)"
+        >
+          <k-icon
+            :icon="item.icon"
+            :size="20"
+          ></k-icon>
+          <div class="left-nav-item-title">
+            {{ item.title }}
+          </div>
         </div>
       </div>
     </div>
-    <div class="left-panel" v-show="activeItem && activeItem.key">
+    <div
+      v-show="activeItem && activeItem.key"
+      class="left-panel"
+    >
       <div class="left-panel-top">
-        <div>{{activeItem.title}}</div>
-        <k-icon @click="closePanel" icon="icon-close" :size="12"></k-icon>
+        <div>{{ activeItem.title }}</div>
+        <k-icon
+          icon="icon-close"
+          :size="12"
+          @click="closePanel"
+        ></k-icon>
       </div>
       <div class="left-panel-wrapper">
         <keep-alive>
-          <component :is="`panel-${activeItem.key}`"/>
+          <component :is="`panel-${activeItem.key}`" />
         </keep-alive>
       </div>
     </div>

@@ -1,103 +1,175 @@
 <template>
   <div class="user-signin shadow">
     <div class="user-signin-title">
-      <k-icon icon="icon-logo" :size="48"></k-icon>
-      <span class="title">{{$title}}</span>
+      <k-icon
+        icon="icon-logo"
+        :size="48"
+      ></k-icon>
+      <span class="title">{{ $title }}</span>
     </div>
-    <div class="user-info-wrapper" v-if="type === 'signin'">
+    <div
+      v-if="type === 'signin'"
+      class="user-info-wrapper"
+    >
       <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.email')"
-      ref="email"
-      :rule="rules.email"
-      v-model="email">
+        ref="email"
+        v-model="email"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.email')"
+        :rule="rules.email"
+      >
       </k-input>
-      <div class="forget-password" @click="forgetPassword">{{$t('message.forgot_password')}}</div>
+      <div
+        class="forget-password"
+        @click="forgetPassword"
+      >
+        {{ $t('message.forgot_password') }}
+      </div>
       <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :rule="rules.password"
-      :label="$t('message.password')"
-      ref="password"
-      type="password"
-      @keyupEnter="signin"
-      v-model="password">
-      </k-input>
-    </div>
-    <div class="user-info-wrapper" v-if="type === 'signup'">
-      <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.email')"
-      ref="email"
-      :rule="rules.email"
-      v-model="email">
-      </k-input>
-      <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.verification_code')"
-      :rule="rules.verifycode"
-      ref="verifycode"
-      v-model="verifycode">
-      <template #suffix>
-        <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
-      </template>
-      </k-input>
-      <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.password')"
-      :rule="rules.password"
-      ref="password"
-      type="password"
-      @keyupEnter="signup"
-      v-model="password">
+        ref="password"
+        v-model="password"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :rule="rules.password"
+        :label="$t('message.password')"
+        type="password"
+        @keyupEnter="signin"
+      >
       </k-input>
     </div>
-    <div class="user-info-wrapper" v-if="type === 'password'">
+    <div
+      v-if="type === 'signup'"
+      class="user-info-wrapper"
+    >
       <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.email')"
-      :rule="rules.email"
-      ref="email"
-      v-model="email">
+        ref="email"
+        v-model="email"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.email')"
+        :rule="rules.email"
+      >
       </k-input>
       <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.verification_code')"
-      :rule="rules.verifycode"
-      ref="verifycode"
-      v-model="verifycode">
-      <template #suffix>
-        <span @click="getVerifycode" :class="{'verifycode-content-active': isCanVerifycode}" class="verifycode-content">{{verifycodeMsg}}</span>
-      </template>
+        ref="verifycode"
+        v-model="verifycode"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.verification_code')"
+        :rule="rules.verifycode"
+      >
+        <template #suffix>
+          <span
+            :class="{'verifycode-content-active': isCanVerifycode}"
+            class="verifycode-content"
+            @click="getVerifycode"
+          >{{ verifycodeMsg }}</span>
+        </template>
       </k-input>
       <k-input
-      :isLineBorder="true"
-      class="sx-m-padding"
-      :label="$t('message.password')"
-      :rule="rules.password"
-      ref="password"
-      type="password"
-      @keyupEnter="forgetPassworld"
-      v-model="password">
+        ref="password"
+        v-model="password"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.password')"
+        :rule="rules.password"
+        type="password"
+        @keyupEnter="signup"
+      >
       </k-input>
     </div>
-    <div class="user-option-wrapper" v-if="type === 'signin'">
-      <el-button type="primary" @click="signin">{{$t('message.signin')}}</el-button>
-      <el-button plain @click="type = 'signup'">{{$t('message.register')}}</el-button>
+    <div
+      v-if="type === 'password'"
+      class="user-info-wrapper"
+    >
+      <k-input
+        ref="email"
+        v-model="email"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.email')"
+        :rule="rules.email"
+      >
+      </k-input>
+      <k-input
+        ref="verifycode"
+        v-model="verifycode"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.verification_code')"
+        :rule="rules.verifycode"
+      >
+        <template #suffix>
+          <span
+            :class="{'verifycode-content-active': isCanVerifycode}"
+            class="verifycode-content"
+            @click="getVerifycode"
+          >{{ verifycodeMsg }}</span>
+        </template>
+      </k-input>
+      <k-input
+        ref="password"
+        v-model="password"
+        :is-line-border="true"
+        class="sx-m-padding"
+        :label="$t('message.password')"
+        :rule="rules.password"
+        type="password"
+        @keyupEnter="forgetPassworld"
+      >
+      </k-input>
     </div>
-    <div class="user-option-wrapper" v-if="type === 'signup'">
-      <el-button type="primary" @click="signup">{{$t('message.register')}}</el-button>
-      <el-button plain @click="type = 'signin'">{{$t('message.return_signin')}}</el-button>
+    <div
+      v-if="type === 'signin'"
+      class="user-option-wrapper"
+    >
+      <el-button
+        type="primary"
+        @click="signin"
+      >
+        {{ $t('message.signin') }}
+      </el-button>
+      <el-button
+        plain
+        @click="type = 'signup'"
+      >
+        {{ $t('message.register') }}
+      </el-button>
     </div>
-    <div class="user-option-wrapper" v-if="type === 'password'">
-      <el-button type="primary" @click="forgetPassworld">{{$t('message.update_password')}}</el-button>
-      <el-button plain @click="type = 'signin'">{{$t('message.return_signin')}}</el-button>
+    <div
+      v-if="type === 'signup'"
+      class="user-option-wrapper"
+    >
+      <el-button
+        type="primary"
+        @click="signup"
+      >
+        {{ $t('message.register') }}
+      </el-button>
+      <el-button
+        plain
+        @click="type = 'signin'"
+      >
+        {{ $t('message.return_signin') }}
+      </el-button>
+    </div>
+    <div
+      v-if="type === 'password'"
+      class="user-option-wrapper"
+    >
+      <el-button
+        type="primary"
+        @click="forgetPassworld"
+      >
+        {{ $t('message.update_password') }}
+      </el-button>
+      <el-button
+        plain
+        @click="type = 'signin'"
+      >
+        {{ $t('message.return_signin') }}
+      </el-button>
     </div>
   </div>
 </template>

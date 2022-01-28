@@ -1,9 +1,10 @@
 <template>
   <div class="color-bar-item">
     <div class="color-bar-item-wrapper">
-      <div class="color-bar-item-content"
+      <div
         v-for="(color, index) in colors"
         :key="index"
+        class="color-bar-item-content"
         :style="{width: `${100/colors.length}%`, 'background-color': color}"
       >
       </div>

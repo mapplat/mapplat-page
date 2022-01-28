@@ -1,7 +1,11 @@
 <template>
   <div class="data-metadata-item">
-    <div class="data-metadata-item-title">{{title}}</div>
-    <div class="data-metadata-item-value">{{value}}</div>
+    <div class="data-metadata-item-title">
+      {{ title }}
+    </div>
+    <div class="data-metadata-item-value">
+      {{ value }}
+    </div>
   </div>
 </template>
 

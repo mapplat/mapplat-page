@@ -10,13 +10,17 @@
         :key="tab.value"
         :index="tab.value"
         :disabled="tab.disabled"
-        >{{ tab.title }}</el-menu-item
       >
+        {{ tab.title }}
+      </el-menu-item>
     </el-menu>
     <div class="component-content">
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <component :is="Component" @changeActiveIndex="changeActiveIndex"/>
+          <component
+            :is="Component"
+            @changeActiveIndex="changeActiveIndex"
+          />
         </keep-alive>
       </router-view>
     </div>

@@ -1,23 +1,57 @@
 <template>
   <el-dialog
+    v-model="visible"
     custom-class="data-view data-view-dialog"
     :title="dataInfo.name"
     destroy-on-close
     :append-to-body="true"
     :close-on-click-modal="false"
-    v-model="visible"
     width="60%"
-    :before-close="handleClose">
+    :before-close="handleClose"
+  >
     <div class="data-view-content">
       <keep-alive>
-        <component class="data-view-wrapper" :dataInfo="dataInfo" :is="component" :isPrivate="isPrivate"/>
+        <component
+          :is="component"
+          class="data-view-wrapper"
+          :data-info="dataInfo"
+          :is-private="isPrivate"
+        />
       </keep-alive>
     </div>
     <template #footer>
       <div class="data-view-operate shadow">
-        <div @click="switchComponent('data-metadata')" :class="{'icon-active' : component === 'data-metadata'}" class="icon-wrapper"><k-icon icon="icon-metadata" :size="20"></k-icon></div>
-        <div @click="switchComponent('data-table')" :class="{'icon-active' : component === 'data-table'}" class="icon-wrapper"><k-icon icon="icon-datasets" :size="20"></k-icon></div>
-        <div v-if="dataInfo.spatialization" @click="switchComponent('data-map')" :class="{'icon-active' : component === 'data-map'}" class="icon-wrapper"><k-icon icon="icon-map" :size="20"></k-icon></div>
+        <div
+          :class="{'icon-active' : component === 'data-metadata'}"
+          class="icon-wrapper"
+          @click="switchComponent('data-metadata')"
+        >
+          <k-icon
+            icon="icon-metadata"
+            :size="20"
+          ></k-icon>
+        </div>
+        <div
+          :class="{'icon-active' : component === 'data-table'}"
+          class="icon-wrapper"
+          @click="switchComponent('data-table')"
+        >
+          <k-icon
+            icon="icon-datasets"
+            :size="20"
+          ></k-icon>
+        </div>
+        <div
+          v-if="dataInfo.spatialization"
+          :class="{'icon-active' : component === 'data-map'}"
+          class="icon-wrapper"
+          @click="switchComponent('data-map')"
+        >
+          <k-icon
+            icon="icon-map"
+            :size="20"
+          ></k-icon>
+        </div>
       </div>
     </template>
   </el-dialog>

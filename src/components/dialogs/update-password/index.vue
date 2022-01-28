@@ -1,43 +1,54 @@
 <template>
   <div class="upload-passworl">
     <el-dialog
-      :title="$t('message.update_password')"
       v-model="dialogVisible"
+      :title="$t('message.update_password')"
       width="30%"
-      :before-close="handleClose">
+      :before-close="handleClose"
+    >
       <div class="upload-wrapper">
         <k-input
-        class="sx-m-padding"
-        :label="$t('message.old_password')"
-        :rule="rules.password"
-        ref="oldPassword"
-        type="password"
-        :is-line-border="true"
-        v-model="oldPassword">
+          ref="oldPassword"
+          v-model="oldPassword"
+          class="sx-m-padding"
+          :label="$t('message.old_password')"
+          :rule="rules.password"
+          type="password"
+          :is-line-border="true"
+        >
         </k-input>
         <k-input
-        class="sx-m-padding"
-        :label="$t('message.new_password')"
-        :rule="rules.password"
-        ref="newPassword"
-        type="password"
-        :is-line-border="true"
-        v-model="newPassword">
+          ref="newPassword"
+          v-model="newPassword"
+          class="sx-m-padding"
+          :label="$t('message.new_password')"
+          :rule="rules.password"
+          type="password"
+          :is-line-border="true"
+        >
         </k-input>
         <k-input
-        class="sx-m-padding"
-        :label="$t('message.confirm_new_password')"
-        :rule="rules.password"
-        ref="confirmNewPassword"
-        type="password"
-        :is-line-border="true"
-        @keyupEnter="updatePassworld"
-        v-model="confirmNewPassword">
+          ref="confirmNewPassword"
+          v-model="confirmNewPassword"
+          class="sx-m-padding"
+          :label="$t('message.confirm_new_password')"
+          :rule="rules.password"
+          type="password"
+          :is-line-border="true"
+          @keyupEnter="updatePassworld"
+        >
         </k-input>
       </div>
       <template #footer>
-        <el-button @click="handleClose">{{$t('message.cancel')}}</el-button>
-        <el-button type="primary" @click="updatePassworld">{{$t('message.confirm')}}</el-button>
+        <el-button @click="handleClose">
+          {{ $t('message.cancel') }}
+        </el-button>
+        <el-button
+          type="primary"
+          @click="updatePassworld"
+        >
+          {{ $t('message.confirm') }}
+        </el-button>
       </template>
     </el-dialog>
   </div>

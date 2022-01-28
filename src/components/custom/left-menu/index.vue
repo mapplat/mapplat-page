@@ -2,20 +2,26 @@
   <div class="nav-menu">
     <el-menu
       :router="true"
-      :uniqueOpened="false"
+      :unique-opened="false"
       :collapse-transition="false"
       :collapse="collapse"
       :default-active="activePath"
       background-color="#24292e"
       text-color="#ffffff"
-      active-text-color="#0B8BF4">
+      active-text-color="#0B8BF4"
+    >
       <el-menu-item
         v-for="menu in menuConfs"
         :key="menu.path"
-        :index="menu.path">
+        :index="menu.path"
+      >
         <div class="nav-title-wrapper">
-          <k-icon :icon="menu.icon" :size="20" margin="0 0 0 4px"/>
-          <span class="nav-title">{{menu.title}}</span>
+          <k-icon
+            :icon="menu.icon"
+            :size="20"
+            margin="0 0 0 4px"
+          />
+          <span class="nav-title">{{ menu.title }}</span>
         </div>
       </el-menu-item>
     </el-menu>

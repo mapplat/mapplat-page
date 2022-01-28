@@ -1,22 +1,35 @@
 <template>
-  <div class="k-input" :class="inputClass">
-    <div class="k-input-label" v-if="label" :style="{width: labelWidth}">
-      {{label}}
+  <div
+    class="k-input"
+    :class="inputClass"
+  >
+    <div
+      v-if="label"
+      class="k-input-label"
+      :style="{width: labelWidth}"
+    >
+      {{ label }}
     </div>
     <el-input
-    v-model="input"
-    :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
-    :placeholder="placeholder"
-    :type="type"
-    :show-password="showPassword"
-    @keyup.enter="$emit('keyupEnter')"
-    @blur="$emit('blur')"
-    @input="validate">
-    <template #suffix>
-      <slot name="suffix"></slot>
-    </template>
+      v-model="input"
+      :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
+      :placeholder="placeholder"
+      :type="type"
+      :show-password="showPassword"
+      @keyup.enter="$emit('keyupEnter')"
+      @blur="$emit('blur')"
+      @input="validate"
+    >
+      <template #suffix>
+        <slot name="suffix"></slot>
+      </template>
     </el-input>
-    <div class="k-input-error-tip" v-if="errorTip">{{ errorTip }}</div>
+    <div
+      v-if="errorTip"
+      class="k-input-error-tip"
+    >
+      {{ errorTip }}
+    </div>
   </div>
 </template>
 

@@ -1,11 +1,16 @@
 <template>
   <div class="color-bar-picker">
-    <Sketch v-if="color" v-model="color"/>
+    <Sketch
+      v-if="color"
+      v-model="color"
+    />
 
-    <template v-for="(colors, index) in presetColors" :key="index">
+    <template
+      v-for="(colors, index) in presetColors"
+      :key="index"
+    >
       <ColorBarItem :colors="colors"></ColorBarItem>
     </template>
-
   </div>
 </template>
 

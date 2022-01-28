@@ -4,7 +4,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/vue3-recommended',
+    'plugin:vue/vue3-strongly-recommended',
     'airbnb-base',
   ],
   rules: {
@@ -21,9 +21,15 @@ module.exports = {
     'vue/multi-word-component-names': 0,
     'vue/script-setup-uses-vars': 0,
     'vue/html-self-closing': 0,
+    'vue/require-default-prop': 0,
+    'vue/v-on-event-hyphenation': 0,
+    'vue/require-explicit-emits': 0,
+    'vue/require-prop-types': 0,
   },
   globals: {
-    $t: true,
+    $t: 'readonly',
+    $bus: 'readonly',
+    $title: 'readonly',
   },
   settings: {
     'import/resolver': {
@@ -35,4 +41,9 @@ module.exports = {
       extensions: ['.js', '.less', '.json', '.vue'],
     },
   },
+  overrides: [
+    {
+      files: ['*.js', '*.vue'],
+    },
+  ],
 };
