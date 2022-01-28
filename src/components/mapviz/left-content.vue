@@ -91,6 +91,7 @@ export default {
   .left-nav {
     background-color: $black;
     .k-logo {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;

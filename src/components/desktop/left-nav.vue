@@ -33,9 +33,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .left-nav-collapse {
   .k-logo {
+    width: 100%;
     padding: 0 !important;
     width: $top-bar-height;
   }
@@ -46,6 +47,7 @@ export default {
   height: 100%;
 
   .k-logo {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

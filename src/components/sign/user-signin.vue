@@ -137,7 +137,7 @@ export default {
         verifycode: this.verifycode,
         password: this.password,
       };
-      if (validateRefs()) {
+      if (validateRefs.bind(this)()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }
@@ -162,7 +162,7 @@ export default {
         password: this.password,
       };
 
-      const errors = validateRefs();
+      const errors = validateRefs.bind(this)();
       if (errors) {
         this.$error($t('tip.illegal_parameter'));
         return;
@@ -193,7 +193,7 @@ export default {
         verifycode: this.verifycode,
         password: this.password,
       };
-      if (validateRefs()) {
+      if (validateRefs.bind(this)()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }
@@ -212,7 +212,7 @@ export default {
       const params = {
         email: this.email,
       };
-      if (this.$validateRefs(['email'])) {
+      if (this.$validateRefs.bind(this)(['email'])) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }

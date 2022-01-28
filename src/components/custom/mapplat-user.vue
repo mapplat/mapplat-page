@@ -7,24 +7,21 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item disabled>
-            <div class="mapplat-wrapper-username">{{username}}</div>
-          </el-dropdown-item>
           <el-dropdown-item command="toProfile">
             <div class="justify-flex-start align-center">
-              <k-icon icon="icon-user" :size="20" margin="0 6px"></k-icon>
+              <k-icon icon="icon-user" :size="20" margin="6px 6px"></k-icon>
               {{$t('message.profile')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="updatePassword">
             <div class="justify-flex-start align-center">
-              <k-icon icon="icon-xiugaimima" :size="20" margin="0 6px"></k-icon>
+              <k-icon icon="icon-xiugaimima" :size="20" margin="6px 6px"></k-icon>
               {{$t('message.update_password')}}
             </div>
           </el-dropdown-item>
           <el-dropdown-item command="signout">
             <div class="justify-flex-start align-center">
-              <k-icon icon="icon-tuichu" :size="20" margin="0 6px"></k-icon>
+              <k-icon icon="icon-tuichu" :size="20" margin="6px 6px"></k-icon>
               {{$t('message.signout')}}
             </div>
           </el-dropdown-item>

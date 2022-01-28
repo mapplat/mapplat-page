@@ -1,9 +1,5 @@
 @import "./common.scss";
 
-.el-notification__content {
-  margin: 0;
-}
-
 .el-menu {
   border: 0 !important;
   width: 100%;
@@ -44,27 +40,11 @@
   align-items: center;
 }
 
-.el-dialog {
-  min-width: 600px;
-  margin: 0 !important;
-  .el-dialog__close {
-    font-size: 24px;
-  }
-  .el-dialog__body{
-    padding: 20px;
-  }
-  .el-dialog-options {
-    display: flex;
-    justify-content: flex-end;
-  }
-}
-
 .el-popover {
   max-width: 100%;
 }
 
 .el-pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  overflow: auto;
 }

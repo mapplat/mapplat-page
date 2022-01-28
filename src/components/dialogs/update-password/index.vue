@@ -90,7 +90,7 @@ export default {
       this.dialogVisible = false;
     },
     async updatePassworld() {
-      if (validateRefs()) {
+      if (validateRefs.bind(this)()) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }
