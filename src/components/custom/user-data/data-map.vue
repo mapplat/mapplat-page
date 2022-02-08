@@ -46,7 +46,7 @@ export default {
           }),
           new TileLayer({
             source: new XYZ({
-              url: `${SERVER_HOST}/api/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png?token=${token}`,
+              url: `${SERVER_HOST}/data/${dataUuid}/tile/{z}/{x}/{y}@1x.png?token=${token}`,
             }),
           }),
         ],

@@ -12,7 +12,7 @@ const files = {
     return instance.post(`/file/${fileHash}/precreate`, params);
   },
   block(blockHash, chunkFile) {
-    const url = `${SERVER_HOST}/api/file/${blockHash}/block`;
+    const url = `${SERVER_HOST}/file/${blockHash}/block`;
     const formData = new FormData();
     formData.append('file', chunkFile);
     return axios.post(url, formData, {

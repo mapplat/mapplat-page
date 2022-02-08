@@ -284,7 +284,7 @@ export default {
       const params = {
         email: this.email,
       };
-      if (this.$validateRefs.bind(this)(['email'])) {
+      if (validateRefs.bind(this)(['email'])) {
         this.$error($t('tip.illegal_parameter'));
         return;
       }

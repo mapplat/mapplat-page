@@ -23,7 +23,7 @@ const job = {
     return instance.delete(`/data/${dataUuid}`);
   },
   download(dataUuid, type) {
-    return download(`/api/data/download/${dataUuid}.${type}`);
+    return download(`/data/download/${dataUuid}.${type}`);
   },
   copy(dataUuid) {
     return instance.post(`/data/copy/${dataUuid}`);

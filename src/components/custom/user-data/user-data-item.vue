@@ -49,7 +49,7 @@
       <el-image
         :lazy="true"
         fit="contain"
-        :src="item.spatialization ? `${SERVER_HOST}/api/data/thumb/${item.dataUuid}.png` : ''"
+        :src="item.spatialization ? `${SERVER_HOST}/data/thumb/${item.dataUuid}.png` : ''"
       >
         <template #placeholder>
           <div class="image-placeholder">

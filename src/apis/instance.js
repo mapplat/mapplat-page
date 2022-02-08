@@ -3,7 +3,7 @@ import qs from 'qs';
 import { SERVER_HOST } from '@/assets/env';
 
 const instance = axios.create({
-  baseURL: `${SERVER_HOST}/api`,
+  baseURL: `${SERVER_HOST}`,
   timeout: 25000,
   headers: {
     token: localStorage.getItem('token'),
