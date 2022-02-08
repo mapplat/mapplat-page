@@ -338,7 +338,6 @@ export default {
 
     .el-button {
       width: 100%;
-      margin: 0;
       margin: 8px 0;
     }
   }
