@@ -129,17 +129,13 @@ export default {
   }
   .el-input-line-border {
     .el-input__inner {
-      border-top: 0;
-      border-left: 0;
-      border-right: 0;
       border-radius: 0;
-      padding-left: 0;
-      padding-right: 0;
+      box-shadow: 0 1px 0;
     }
   }
   .k-input-error {
     .el-input__inner {
-      border-color: $red;
+      box-shadow: 0 1px 0 $red;
     }
   }
   .k-input-error-tip {
