@@ -29,7 +29,7 @@
           <k-icon
             icon="icon-metadata"
             :size="20"
-          ></k-icon>
+          />
         </div>
         <div
           :class="{'icon-active' : component === 'data-table'}"
@@ -39,7 +39,7 @@
           <k-icon
             icon="icon-datasets"
             :size="20"
-          ></k-icon>
+          />
         </div>
         <div
           v-if="dataInfo.spatialization"
@@ -50,7 +50,7 @@
           <k-icon
             icon="icon-map"
             :size="20"
-          ></k-icon>
+          />
         </div>
       </div>
     </template>

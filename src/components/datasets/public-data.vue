@@ -1,8 +1,7 @@
 <template>
   <div class="my-data">
     <div class="component-options-wrapper">
-      <div class="component-options-left">
-      </div>
+      <div class="component-options-left" />
       <div class="component-options-right">
         <k-input
           v-model="dataname"
@@ -15,7 +14,7 @@
               icon="icon--search"
               :size="20"
               @click="reGetDataList"
-            ></k-icon>
+            />
           </template>
         </k-input>
       </div>
@@ -27,7 +26,7 @@
       <UserData
         v-if="datalist.length"
         :datalist="datalist"
-      ></UserData>
+      />
       <div
         v-else
         class="emptydata-wrapper"
@@ -35,7 +34,7 @@
         <k-icon
           icon="icon-kong"
           :size="40"
-        ></k-icon>
+        />
         <div class="emptydata-msg">
           {{ $t('message.no_data') }}
         </div>
@@ -48,8 +47,7 @@
         layout="prev, pager, next, jumper"
         :total="count"
         @current-change="getDataList"
-      >
-      </el-pagination>
+      />
     </div>
   </div>
 </template>

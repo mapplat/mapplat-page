@@ -3,3 +3,4 @@ dist/
 public/
 report/
 src/assets/
+env.js

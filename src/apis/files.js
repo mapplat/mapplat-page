@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVER_HOST } from '@/assets/env';
+import { SERVER_HOST } from '@/env';
 import instance from './instance';
 
 const formDataHeaders = {

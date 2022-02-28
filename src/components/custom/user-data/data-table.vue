@@ -15,8 +15,7 @@
       :rows="2"
       @change="changeCellValue"
       @blur="blurCellValue"
-    >
-    </el-input>
+    />
     <el-input
       v-show="isShowHeaderEditInput"
       ref="data-table-header-edit"
@@ -28,8 +27,7 @@
       :rows="2"
       @change="changeColumnName"
       @blur="blurCellValue"
-    >
-    </el-input>
+    />
     <el-table
       ref="data-table"
       :data="dataTable.rows"
@@ -58,7 +56,7 @@
               icon="icon-bianji"
               :size="20"
               @click="(event)=>{headerEdit(event,key)}"
-            ></k-icon>
+            />
           </div>
           <div class="text-ellipsis table-header-cell-type">
             <div class="table-header-type">
@@ -80,7 +78,7 @@
               icon="icon-bianji"
               :size="20"
               @click="(event)=>{cellEdit(event,scope.row[idColumn], key, scope.row[key])}"
-            ></k-icon>
+            />
           </div>
         </template>
       </el-table-column>
@@ -94,8 +92,7 @@
         :page-size="limit"
         :total="dataTable.count"
         @current-change="getDataList"
-      >
-      </el-pagination>
+      />
     </div>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <k-icon
       icon="icon-logo"
       :size="42"
-    ></k-icon>
+    />
     <span class="title">{{ $title }}</span>
   </div>
 </template>

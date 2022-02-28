@@ -1,7 +1,7 @@
 <template>
   <div class="top-nav">
     <div class="left-wrapper">
-      <MapplatBreadcrumb></MapplatBreadcrumb>
+      <MapplatBreadcrumb />
     </div>
     <div class="right-wrapper align-center">
       <el-badge
@@ -11,10 +11,10 @@
         <k-icon
           icon="icon-notice"
           :size="20"
-        ></k-icon>
+        />
       </el-badge>
-      <MapplatUser class="zy-m-margin"></MapplatUser>
-      <KI18n></KI18n>
+      <MapplatUser class="zy-m-margin" />
+      <KI18n />
     </div>
   </div>
 </template>

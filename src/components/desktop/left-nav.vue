@@ -7,14 +7,14 @@
       <k-icon
         icon="icon-logo"
         :size="42"
-      ></k-icon>
+      />
       <span
         v-show="!collapse"
         class="title"
       >{{ $title }}</span>
     </div>
     <div class="left-nav-content">
-      <LeftMenu :collapse="collapse"></LeftMenu>
+      <LeftMenu :collapse="collapse" />
     </div>
     <div
       class="waitch-collapse"
@@ -23,7 +23,7 @@
       <k-icon
         :icon="collapse ? 'icon-youjiantou' : 'icon-zuojiantou'"
         :size="28"
-      ></k-icon>
+      />
     </div>
   </div>
 </template>

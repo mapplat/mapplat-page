@@ -11,14 +11,12 @@
         type="selection"
         :selectable="()=> selectable"
         width="55"
-      >
-      </el-table-column>
+      />
       <el-table-column
         prop="name"
         sortable
         :label="$t('message.file_name')"
-      >
-      </el-table-column>
+      />
       <el-table-column
         prop="size"
         sortable

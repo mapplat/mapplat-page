@@ -4,10 +4,10 @@
       <k-icon
         icon="icon-add"
         :size="20"
-      ></k-icon>{{ $t('message.add_dataset') }}
+      />{{ $t('message.add_dataset') }}
     </div>
     <div>
-      <ColorBarPicker></ColorBarPicker>
+      <ColorBarPicker />
     </div>
   </div>
 </template>

@@ -24,7 +24,7 @@
           class="zy-m-margin"
           icon="icon-shangchuan"
           :size="24"
-        ></k-icon>{{ $t('message.drag_and_drop_files_here_or_click_to_upload_files') }}</label>
+        />{{ $t('message.drag_and_drop_files_here_or_click_to_upload_files') }}</label>
       </div>
       <div v-if="type === 'confirm-file'">
         <el-collapse v-model="activeCollapse">
@@ -36,14 +36,14 @@
               :files="formatFiles.support"
               :selectable="true"
               @updateSelectFiles="updateSelectFiles"
-            ></FilesTable>
+            />
           </el-collapse-item>
           <el-collapse-item
             v-if="formatFiles.notSupport && formatFiles.notSupport.length"
             :title="$t('message.files_not_supported_for_upload')"
             name="not-support"
           >
-            <FilesTable :files="formatFiles.notSupport"></FilesTable>
+            <FilesTable :files="formatFiles.notSupport" />
           </el-collapse-item>
         </el-collapse>
       </div>

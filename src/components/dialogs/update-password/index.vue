@@ -15,8 +15,7 @@
           :rule="rules.password"
           type="password"
           :is-line-border="true"
-        >
-        </k-input>
+        />
         <k-input
           ref="newPassword"
           v-model="newPassword"
@@ -25,8 +24,7 @@
           :rule="rules.password"
           type="password"
           :is-line-border="true"
-        >
-        </k-input>
+        />
         <k-input
           ref="confirmNewPassword"
           v-model="confirmNewPassword"
@@ -36,8 +34,7 @@
           type="password"
           :is-line-border="true"
           @keyupEnter="updatePassworld"
-        >
-        </k-input>
+        />
       </div>
       <template #footer>
         <el-button @click="handleClose">

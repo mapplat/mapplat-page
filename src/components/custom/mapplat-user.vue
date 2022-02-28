@@ -17,7 +17,7 @@
                 icon="icon-user"
                 :size="20"
                 margin="6px 6px"
-              ></k-icon>
+              />
               {{ $t('message.profile') }}
             </div>
           </el-dropdown-item>
@@ -27,7 +27,7 @@
                 icon="icon-xiugaimima"
                 :size="20"
                 margin="6px 6px"
-              ></k-icon>
+              />
               {{ $t('message.update_password') }}
             </div>
           </el-dropdown-item>
@@ -37,7 +37,7 @@
                 icon="icon-tuichu"
                 :size="20"
                 margin="6px 6px"
-              ></k-icon>
+              />
               {{ $t('message.signout') }}
             </div>
           </el-dropdown-item>

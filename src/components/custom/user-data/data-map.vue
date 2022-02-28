@@ -1,6 +1,5 @@
 <template>
-  <div id="map-wrapper">
-  </div>
+  <div id="map-wrapper" />
 </template>
 
 <script>
@@ -8,7 +7,7 @@ import Map from 'ol/Map';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 import { transformExtent } from 'ol/proj';
-import { SERVER_HOST } from '@/assets/env';
+import { SERVER_HOST } from '@/env';
 
 const token = localStorage.getItem('token');
 export default {

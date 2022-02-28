@@ -5,7 +5,7 @@
         <k-icon
           icon="icon-logo"
           :size="42"
-        ></k-icon>
+        />
       </div>
       <div class="left-nav-item-content">
         <div
@@ -18,7 +18,7 @@
           <k-icon
             :icon="item.icon"
             :size="20"
-          ></k-icon>
+          />
           <div class="left-nav-item-title">
             {{ item.title }}
           </div>
@@ -35,7 +35,7 @@
           icon="icon-close"
           :size="12"
           @click="closePanel"
-        ></k-icon>
+        />
       </div>
       <div class="left-panel-wrapper">
         <keep-alive>

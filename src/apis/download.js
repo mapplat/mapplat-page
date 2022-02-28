@@ -1,4 +1,4 @@
-import { SERVER_HOST } from '@/assets/env';
+import { SERVER_HOST } from '@/env';
 
 function download(url) {
   const link = document.createElement('a');

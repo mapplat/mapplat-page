@@ -6,8 +6,7 @@
         :key="index"
         class="color-bar-item-content"
         :style="{width: `${100/colors.length}%`, 'background-color': color}"
-      >
-      </div>
+      />
     </div>
 
     <div class="color-invert">

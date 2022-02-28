@@ -9,7 +9,7 @@
       v-for="(colors, index) in presetColors"
       :key="index"
     >
-      <ColorBarItem :colors="colors"></ColorBarItem>
+      <ColorBarItem :colors="colors" />
     </template>
   </div>
 </template>

@@ -21,7 +21,7 @@
       @input="validate"
     >
       <template #suffix>
-        <slot name="suffix"></slot>
+        <slot name="suffix" />
       </template>
     </el-input>
     <div

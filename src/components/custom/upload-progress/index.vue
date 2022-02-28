@@ -14,14 +14,14 @@
           :key="index"
           :index="index"
           :file="file"
-        ></FileProgress>
+        />
       </div>
       <template #reference>
         <k-icon
           id="uploadProgressTriger"
           icon="icon-shangchuan"
           :size="24"
-        ></k-icon>
+        />
       </template>
     </el-popover>
   </div>

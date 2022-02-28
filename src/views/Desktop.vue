@@ -1,8 +1,8 @@
 <template>
   <div class="desktop">
-    <LeftNav class="left-nav-wrapper"></LeftNav>
+    <LeftNav class="left-nav-wrapper" />
     <div class="right-content">
-      <TopBar class="top-bar-wrapper"></TopBar>
+      <TopBar class="top-bar-wrapper" />
       <div class="desktop-content">
         <router-view v-slot="{ Component }">
           <keep-alive>
@@ -13,28 +13,18 @@
     </div>
 
     <!-- dialog -->
-    <UpdatePassword></UpdatePassword>
-    <UploadProgress></UploadProgress>
-    <DataView></DataView>
+    <UpdatePassword />
+    <UploadProgress />
+    <DataView />
   </div>
 </template>
 
-<script>
+<script setup>
 import LeftNav from '@/components/desktop/left-nav.vue';
 import TopBar from '@/components/desktop/top-bar.vue';
 import UploadProgress from '@/components/custom/upload-progress/index.vue';
 import DataView from '@/components/dialogs/data-view.vue';
 import UpdatePassword from '@/components/dialogs/update-password/index.vue';
-
-export default {
-  components: {
-    LeftNav,
-    TopBar,
-    UploadProgress,
-    DataView,
-    UpdatePassword,
-  },
-};
 </script>
 <style lang="scss">
 .desktop{

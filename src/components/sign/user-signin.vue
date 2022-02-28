@@ -4,7 +4,7 @@
       <k-icon
         icon="icon-logo"
         :size="48"
-      ></k-icon>
+      />
       <span class="title">{{ $title }}</span>
     </div>
     <div
@@ -18,8 +18,7 @@
         class="sx-m-padding"
         :label="$t('message.email')"
         :rule="rules.email"
-      >
-      </k-input>
+      />
       <div
         class="forget-password"
         @click="forgetPassword"
@@ -35,8 +34,7 @@
         :label="$t('message.password')"
         type="password"
         @keyupEnter="signin"
-      >
-      </k-input>
+      />
     </div>
     <div
       v-if="type === 'signup'"
@@ -49,8 +47,7 @@
         class="sx-m-padding"
         :label="$t('message.email')"
         :rule="rules.email"
-      >
-      </k-input>
+      />
       <k-input
         ref="verifycode"
         v-model="verifycode"
@@ -76,8 +73,7 @@
         :rule="rules.password"
         type="password"
         @keyupEnter="signup"
-      >
-      </k-input>
+      />
     </div>
     <div
       v-if="type === 'password'"
@@ -90,8 +86,7 @@
         class="sx-m-padding"
         :label="$t('message.email')"
         :rule="rules.email"
-      >
-      </k-input>
+      />
       <k-input
         ref="verifycode"
         v-model="verifycode"
@@ -117,8 +112,7 @@
         :rule="rules.password"
         type="password"
         @keyupEnter="forgetPassworld"
-      >
-      </k-input>
+      />
     </div>
     <div
       v-if="type === 'signin'"

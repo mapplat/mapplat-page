@@ -19,8 +19,6 @@ module.exports = {
     'no-console': 0,
     'no-param-reassign': 0,
     'vue/multi-word-component-names': 0,
-    'vue/script-setup-uses-vars': 0,
-    'vue/html-self-closing': 0,
     'vue/require-default-prop': 0,
     'vue/v-on-event-hyphenation': 0,
     'vue/require-explicit-emits': 0,

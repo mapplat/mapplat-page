@@ -5,7 +5,7 @@
         <k-icon
           icon="icon-home"
           :size="20"
-        ></k-icon>
+        />
       </el-breadcrumb-item>
       <el-breadcrumb-item
         v-for="breadcrumb in breadcrumbs"

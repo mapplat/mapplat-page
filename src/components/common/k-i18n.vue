@@ -9,7 +9,7 @@
         <k-icon
           icon="icon-language"
           :size="20"
-        ></k-icon>
+        />
       </span>
       <template #dropdown>
         <el-dropdown-menu>

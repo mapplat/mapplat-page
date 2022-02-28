@@ -1,5 +1,5 @@
 import mitt from 'mitt';
-import { TITLE } from '@/assets/env';
+import { TITLE } from '@/env';
 
 export default {
   install(app) {

@@ -9,8 +9,8 @@
           :size="20"
           margin="4px"
           @click.stop="updatePrivate(!item.private)"
-        ></k-icon>
-        <div v-else></div>
+        />
+        <div v-else />
         <el-dropdown trigger="hover">
           <span
             class="el-dropdown-link"
@@ -21,7 +21,7 @@
               icon="icon-gengduo"
               :size="18"
               margin="4px"
-            ></k-icon>
+            />
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -56,7 +56,7 @@
             <k-icon
               icon="icon-datasets"
               :size="132"
-            ></k-icon>
+            />
           </div>
         </template>
         <template #error>
@@ -64,7 +64,7 @@
             <k-icon
               icon="icon-datasets"
               :size="132"
-            ></k-icon>
+            />
           </div>
         </template>
       </el-image>
@@ -87,7 +87,7 @@
 <script>
 import { formatDate } from '@/utils/utils';
 import { checkRes, userDataAPI } from '@/apis';
-import { SERVER_HOST } from '@/assets/env';
+import { SERVER_HOST } from '@/env';
 
 export default {
   inject: ['isPrivate'],

@@ -5,12 +5,12 @@
       :key="item.id"
       :item="item"
       @click="openData(item)"
-    ></DataItem>
+    />
     <div
       v-for="i in 6"
       :key="i"
       class="data-item-temp"
-    ></div>
+    />
   </div>
 </template>
 <script>

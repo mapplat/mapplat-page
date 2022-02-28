@@ -3,7 +3,7 @@
     <div
       class="progress-content"
       :style="progressStye"
-    ></div>
+    />
     <div class="file-content">
       <div class="file-name text-ellipsis">
         {{ file.name }}

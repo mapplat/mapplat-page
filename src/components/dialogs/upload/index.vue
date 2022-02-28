@@ -10,7 +10,7 @@
         <UploadStart
           v-if="curentStep === steps.startUpload.value"
           @close="handleClose"
-        ></UploadStart>
+        />
       </div>
     </el-dialog>
   </div>
