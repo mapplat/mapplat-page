@@ -3,7 +3,7 @@
     <el-dropdown
       placement="bottom"
       :hide-timeout="500"
-      @command="handleCommand"
+      @command="(lang) => setCurrentLang(lang)"
     >
       <span class="gc-i18n-content">
         <k-icon
@@ -17,7 +17,7 @@
             v-for="lang in options"
             :key="lang.value"
             :command="lang.value"
-            :class="{ 'active-item': value === lang.value }"
+            :class="{ 'active-item': currentLang === lang.value }"
           >
             <div class="justify-flex-start">
               {{ lang.label }}
@@ -29,37 +29,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    locale: {
-      type: String,
-    },
+<script setup>
+import { currentLang, setCurrentLang } from '@/hooks/useI18n';
+
+const options = [
+  {
+    value: 'zh',
+    label: '简体中文',
   },
-  data() {
-    return {
-      options: [
-        {
-          value: 'zh',
-          label: '简体中文',
-        },
-        {
-          value: 'en',
-          label: 'English',
-        },
-      ],
-      value: this.defaultLocale,
-    };
+  {
+    value: 'en',
+    label: 'English',
   },
-  methods: {
-    handleCommand(command) {
-      if (this.value === command) return;
-      this.value = command;
-      localStorage.setItem('default_locale', command);
-      window.location.reload();
-    },
-  },
-};
+];
 </script>
 
 <style lang="scss">
