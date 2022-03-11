@@ -1,5 +1,9 @@
+import enLocale from 'element-plus/lib/locale/lang/en';
+import zhLocale from 'element-plus/lib/locale/lang/zh-cn';
+
 export default {
   zh: {
+    ...zhLocale,
     message: {
       setting: '设置',
       save: '保存',
@@ -94,8 +98,7 @@ export default {
     },
   },
   en: {
-    page: {
-    },
+    ...enLocale,
     message: {
       add_dataset: 'Add Dataset',
       save: 'Save',
