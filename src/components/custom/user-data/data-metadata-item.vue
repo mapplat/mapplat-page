@@ -9,17 +9,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    title: {
-      type: String,
-    },
-    value: {
-      type: [String, Number, Object, Array, Boolean],
-    },
+<script setup>
+defineProps({
+  title: {
+    type: String,
   },
-};
+  value: {
+    type: [String, Number, Object, Array, Boolean],
+  },
+});
 </script>
 <style lang="scss">
 .data-metadata-item {

@@ -6,7 +6,7 @@
   >
     <el-input
       v-show="isShowEditInput"
-      ref="data-table-cell-edit"
+      :ref="dataTableCellEditRef"
       v-model="curentCell.columnValue"
       class="data-table-edit"
       type="textarea"
@@ -18,7 +18,7 @@
     />
     <el-input
       v-show="isShowHeaderEditInput"
-      ref="data-table-header-edit"
+      :ref="dataTableHeaderEditRef"
       v-model="curentHeader.columnValue"
       class="data-table-edit"
       type="textarea"
@@ -29,7 +29,7 @@
       @blur="blurCellValue"
     />
     <el-table
-      ref="data-table"
+      :ref="dataTableRef"
       :data="dataTable.rows"
       :fit="true"
       :border="true"
@@ -96,149 +96,144 @@
     </div>
   </div>
 </template>
-
-<script>
+<script setup>
+import { notify } from '@/utils';
 import { checkRes, userDataAPI } from '@/apis';
+import {
+  nextTick, onMounted, ref,
+} from 'vue';
 
 const idColumn = 'mapplat_id';
-export default {
-  inject: ['isPrivate'],
-  props: {
-    isPrivate: {
-      type: Boolean,
-      default: false,
-    },
-    dataInfo: {
-      type: Object,
-      default: () => {},
-    },
+const dataTableRef = ref('dataTableRef');
+const dataTableCellEditRef = ref('dataTableCellEditRef');
+const dataTableHeaderEditRef = ref('dataTableHeaderEditRef');
+const props = defineProps({
+  isPrivate: {
+    type: Boolean,
+    default: false,
   },
-  setup() {
-    return {
-      idColumn,
-    };
+  dataInfo: {
+    type: Object,
+    default: () => {},
   },
-  data() {
-    return {
-      page: 1,
-      limit: 20,
-      curentHeader: {},
-      isShowHeaderEditInput: false,
-      curentCell: {},
-      isShowEditInput: false,
-      dataTable: {},
-      loading: false,
-      inputStyle: {
-        top: '0px',
-        left: '0px',
-      },
-    };
-  },
-  mounted() {
-    this.getDataList();
-  },
-  methods: {
-    async getDataList() {
-      const params = {
-        limit: this.limit,
-        page: this.page,
-      };
-      this.loading = true;
-      const result = await userDataAPI.tableList(this.dataInfo.dataUuid, params);
-      this.loading = false;
-      if (checkRes(result)) {
-        this.dataTable = result.data.data;
+});
 
-        this.$nextTick(() => {
-          const dataTable = this.$refs['data-table'];
-          if (dataTable) dataTable.doLayout();
-        });
-      } else {
-        this.$error($t('message.query_failed'), result);
-      }
-    },
-    async cellDblclick(row, column, cell, event) {
-      if (!this.isPrivate) return;
-      const columnKey = column.property;
-      if (columnKey === this.idColumn) {
-        this.$warning(`${this.idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
-        return;
-      }
-      const [columnValue, columnId] = [row[columnKey], row[this.idColumn]];
-      this.cellEdit(event, columnId, columnKey, columnValue);
-    },
-    async cellEdit(event, columnId, columnKey, columnValue) {
-      if (!this.isPrivate) return;
-      if (columnKey === this.idColumn) {
-        this.$warning(`${this.idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
-        return;
-      }
-      const { x, y } = event;
-      this.isShowEditInput = true;
-      this.inputStyle.left = `${x - 150}px`;
-      this.inputStyle.top = `${y + 12}px`;
-      this.$nextTick(() => {
-        const dataTableEdit = this.$refs['data-table-cell-edit'];
-        if (dataTableEdit) dataTableEdit.focus();
-        this.curentCell = {
-          columnValue,
-          columnKey,
-          columnId,
-        };
-      });
-    },
-    async changeCellValue() {
-      const { columnKey, columnId, columnValue } = this.curentCell;
-      const params = {
-        columnKey,
-        columnId,
-        columnValue,
-      };
-      const result = await userDataAPI.updateColumnValue(this.dataInfo.dataUuid, params);
-      if (checkRes(result)) {
-        const dataIndex = this.dataTable.rows.findIndex((val) => val[this.idColumn] === columnId);
-        if (dataIndex !== -1) {
-          this.dataTable.rows[dataIndex][columnKey] = columnValue;
-        }
-      } else {
-        this.$error($t('message.update_failed'));
-      }
-    },
-    async headerEdit(event, columnName) {
-      const { x, y } = event;
-      this.isShowHeaderEditInput = true;
-      this.inputStyle.left = `${x - 150}px`;
-      this.inputStyle.top = `${y + 12}px`;
-      this.$nextTick(() => {
-        const dataTableEdit = this.$refs['data-table-header-edit'];
-        if (dataTableEdit) dataTableEdit.focus();
-        this.curentHeader = {
-          columnValue: columnName,
-          columnName,
-        };
-      });
-    },
-    async changeColumnName() {
-      const { columnName, columnValue } = this.curentHeader;
-      const params = {
-        columnName,
-        reColumnName: columnValue,
-      };
-      const result = await userDataAPI.updateColumn(this.dataInfo.dataUuid, params);
-      if (checkRes(result)) {
-        this.getDataList();
-      } else {
-        this.$error($t('message.update_failed'));
-      }
-    },
-    blurCellValue() {
-      this.isShowEditInput = false;
-      this.isShowHeaderEditInput = false;
-      this.curentCell = {};
-      this.curentHeader = {};
-    },
-  },
+const loading = ref(false);
+const isShowHeaderEditInput = ref(false);
+const isShowEditInput = ref(false);
+const page = ref(1);
+const limit = ref(20);
+const curentHeader = ref({});
+const curentCell = ref({});
+const dataTable = ref({});
+const inputStyle = ref({
+  top: '0px',
+  left: '0px',
+});
+
+const getDataList = async () => {
+  const params = {
+    limit: limit.value,
+    page: page.value,
+  };
+  loading.value = true;
+  const result = await userDataAPI.tableList(props.dataInfo.dataUuid, params);
+  loading.value = false;
+  if (checkRes(result)) {
+    dataTable.value = result.data.data;
+
+    nextTick(() => {
+      if (dataTableRef.value) dataTableRef.value.doLayout();
+    });
+  } else {
+    notify.error($t('message.query_failed'), result);
+  }
 };
+const cellEdit = async (event, columnId, columnKey, columnValue) => {
+  if (!props.isPrivate) return;
+  if (columnKey === idColumn) {
+    notify.warning(`${idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
+    return;
+  }
+  const { x, y } = event;
+  isShowEditInput.value = true;
+  inputStyle.value.left = `${x - 150}px`;
+  inputStyle.value.top = `${y + 12}px`;
+  nextTick(() => {
+    const dataTableEdit = dataTableCellEditRef.value;
+    if (dataTableEdit) dataTableEdit.focus();
+    curentCell.value = {
+      columnValue,
+      columnKey,
+      columnId,
+    };
+  });
+};
+
+const cellDblclick = async (row, column, cell, event) => {
+  if (!props.isPrivate) return;
+  const columnKey = column.property;
+  if (columnKey === idColumn) {
+    notify.warning(`${idColumn} ${$t('message.column_is_not_allowed_to_be_edited')}`);
+    return;
+  }
+  const [columnValue, columnId] = [row[columnKey], row[idColumn]];
+  cellEdit(event, columnId, columnKey, columnValue);
+};
+const changeCellValue = async () => {
+  const { columnKey, columnId, columnValue } = curentCell.value;
+  const params = {
+    columnKey,
+    columnId,
+    columnValue,
+  };
+  const result = await userDataAPI.updateColumnValue(props.dataInfo.dataUuid, params);
+  if (checkRes(result)) {
+    const dataIndex = dataTable.value.rows.findIndex((val) => val[idColumn] === columnId);
+    if (dataIndex !== -1) {
+      dataTable.value.rows[dataIndex][columnKey] = columnValue;
+    }
+  } else {
+    notify.error($t('message.update_failed'));
+  }
+};
+const headerEdit = async (event, columnName) => {
+  const { x, y } = event;
+  isShowHeaderEditInput.value = true;
+  inputStyle.value.left = `${x - 150}px`;
+  inputStyle.value.top = `${y + 12}px`;
+  nextTick(() => {
+    const dataTableEdit = dataTableHeaderEditRef.value;
+    if (dataTableEdit) dataTableEdit.focus();
+    curentHeader.value = {
+      columnValue: columnName,
+      columnName,
+    };
+  });
+};
+const changeColumnName = async () => {
+  const { columnName, columnValue } = curentHeader.value;
+  const params = {
+    columnName,
+    reColumnName: columnValue,
+  };
+  const result = await userDataAPI.updateColumn(props.dataInfo.dataUuid, params);
+  if (checkRes(result)) {
+    getDataList();
+  } else {
+    notify.error($t('message.update_failed'));
+  }
+};
+const blurCellValue = () => {
+  isShowEditInput.value = false;
+  isShowHeaderEditInput.value = false;
+  curentCell.value = {};
+  curentHeader.value = {};
+};
+
+onMounted(() => {
+  getDataList();
+});
 </script>
 
 <style lang="scss">

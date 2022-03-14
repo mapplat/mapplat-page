@@ -9,7 +9,7 @@
     >
       <el-table-column
         type="selection"
-        :selectable="()=> selectable"
+        :selectable="() => selectable"
         width="55"
       />
       <el-table-column
@@ -30,33 +30,25 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatFileSize } from '@/utils/utils';
+import { onMounted, ref } from 'vue';
 
-export default {
-  props: {
-    selectable: {
-      type: Boolean,
-      default: false,
-    },
-    files: {
-      type: Array,
-      default: () => [],
-    },
+const multipleTableRef = ref();
+defineProps({
+  selectable: {
+    type: Boolean,
+    default: false,
   },
-  data() {
-    return {
-      selectFiles: [],
-    };
+  files: {
+    type: Array,
+    default: () => [],
   },
-  mounted() {
-    this.$refs.multipleTable.toggleAllSelection();
-  },
-  methods: {
-    handleSelectionChange(files) {
-      this.$emit('updateSelectFiles', files);
-    },
-    formatFileSize,
-  },
-};
+});
+const emit = defineEmits(['updateSelectFiles']);
+
+const handleSelectionChange = (files) => emit('updateSelectFiles', files);
+onMounted(() => {
+  multipleTableRef.value.toggleAllSelection();
+});
 </script>

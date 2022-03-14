@@ -13,12 +13,7 @@
     <el-input
       v-model="input"
       :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
-      :placeholder="placeholder"
-      :type="type"
-      :show-password="showPassword"
-      @keyup.enter="$emit('keyupEnter')"
-      @blur="$emit('blur')"
-      @input="validate"
+      v-bind="$attrs"
     >
       <template #suffix>
         <slot name="suffix" />
@@ -33,93 +28,60 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    label: {
-      type: String,
-      default: null,
-    },
-    placeholder: {
-      type: String,
-      default: null,
-    },
-    modelValue: {
-      type: [String, Number, Object, Array],
-      default: null,
-    },
-    rule: {
-      type: Object,
-      default: () => {},
-    },
-    type: {
-      type: String,
-      default: 'text',
-    },
-    isLineBorder: {
-      type: Boolean,
-      default: false,
-    },
-    round: {
-      type: Boolean,
-      default: false,
-    },
-    position: {
-      type: String,
-      default: 'top',
-    },
-    labelWidth: {
-      type: String,
-      default: '100%',
-    },
-  },
-  setup(props) {
-    const showPassword = props.type === 'password';
+<script setup>
+import { computed, ref, watch } from 'vue';
 
-    let inputPositionClass = 'k-input-label-left';
-    switch (props.position) {
-      case 'top':
-        inputPositionClass = 'k-input-label-top';
-        break;
-      case 'left':
-        inputPositionClass = 'k-input-label-left';
-        break;
-      case 'right':
-        inputPositionClass = 'k-input-label-right';
-        break;
-      default:
-        break;
+const emit = defineEmits(['update:modelValue']);
+const props = defineProps({
+  label: {
+    type: String,
+    default: null,
+  },
+  modelValue: {
+    type: [String, Number, Object, Array],
+    default: null,
+  },
+  rule: {
+    type: Object,
+    default: () => {},
+  },
+  isLineBorder: {
+    type: Boolean,
+    default: false,
+  },
+  position: {
+    type: String,
+    default: 'top',
+  },
+  labelWidth: {
+    type: String,
+    default: '100%',
+  },
+});
+
+const errorTip = ref('');
+const input = ref(props.modelValue);
+const inputClass = computed(() => `k-input-label-${props.position}`);
+
+const validate = () => {
+  errorTip.value = '';
+  if (props.rule && props.rule.format) {
+    const { format, msg } = props.rule;
+    if (!format.test(input.value)) {
+      errorTip.value = msg || 'input illegal';
     }
-    return {
-      showPassword,
-      inputClass: {
-        [inputPositionClass]: true,
-      },
-    };
-  },
-  data() {
-    return {
-      errorTip: null,
-      input: this.modelValue,
-    };
-  },
-  methods: {
-    validate() {
-      let errorTip = null;
-      if (this.rule && this.rule.format) {
-        const { format, msg } = this.rule;
-        if (!format.test(this.input)) {
-          errorTip = msg || 'input illegal';
-        }
-      }
-
-      this.errorTip = errorTip;
-      this.$emit('update:modelValue', this.input);
-      return errorTip;
-    },
-  },
+  }
+  return errorTip.value;
 };
+
+watch(input, () => {
+  validate();
+  emit('update:modelValue', input);
+}, {
+  immediate: false,
+});
 </script>
+
 <style lang="scss">
 .k-input {
   position: relative;

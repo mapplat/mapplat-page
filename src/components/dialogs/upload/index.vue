@@ -2,13 +2,12 @@
   <div class="upload-dialog">
     <el-dialog
       v-model="dialogVisible"
-      :title="dialogTitle"
+      :title="$t('message.upload_data')"
       width="30%"
       :before-close="handleClose"
     >
       <div class="upload-wrapper">
         <UploadStart
-          v-if="curentStep === steps.startUpload.value"
           @close="handleClose"
         />
       </div>
@@ -16,54 +15,23 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { bus } from '@/utils/bus';
+import { onMounted, ref } from 'vue';
 import UploadStart from './upload-start.vue';
 
-const steps = {
-  startUpload: {
-    title: $t('message.upload_data'),
-    value: 'startUpload',
-  },
-  selectFiels: {
-    value: 'selectFiels',
-  },
+const dialogVisible = ref(false);
+
+const handleClose = () => {
+  dialogVisible.value = false;
 };
-export default {
-  components: {
-    UploadStart,
-  },
-  setup() {
-    return {
-      steps,
-    };
-  },
-  data() {
-    return {
-      dialogTitle: null,
-      curentStep: steps.startUpload.value,
-      dialogVisible: false,
-    };
-  },
-  watch: {
-    curentStep: {
-      immediate: true,
-      handler(val) {
-        this.dialogTitle = this.steps[val].title;
-      },
-    },
-  },
-  created() {
-    this.$bus.off('open-upload-dialog');
-    this.$bus.on('open-upload-dialog', () => {
-      this.dialogVisible = true;
-    });
-  },
-  methods: {
-    handleClose() {
-      this.dialogVisible = false;
-    },
-  },
-};
+
+onMounted(() => {
+  bus.off('open-upload-dialog');
+  bus.on('open-upload-dialog', () => {
+    dialogVisible.value = true;
+  });
+});
 </script>
 <style lang="scss">
 .upload-wrapper {

@@ -28,23 +28,14 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import LeftMenu from '@/components/custom/left-menu/index.vue';
 
-export default {
-  components: {
-    LeftMenu,
-  },
-  data() {
-    return {
-      collapse: false,
-    };
-  },
-  methods: {
-    changeCollapse() {
-      this.collapse = !this.collapse;
-    },
-  },
+const collapse = ref();
+
+const changeCollapse = () => {
+  collapse.value = !collapse.value;
 };
 </script>
 

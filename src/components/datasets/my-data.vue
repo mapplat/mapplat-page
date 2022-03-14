@@ -13,7 +13,7 @@
         <k-input
           v-model="dataname"
           :placeholder="$t('message.search')"
-          @keyupEnter="reGetDataList"
+          @keyup.enter="reGetDataList"
         >
           <template #suffix>
             <k-icon
@@ -35,7 +35,7 @@
         :datalist="datalist"
       />
       <div
-        v-else
+        v-if="!datalist.length && !loading"
         class="emptydata-wrapper"
       >
         <k-icon
@@ -60,71 +60,66 @@
     <UploadDialog />
   </div>
 </template>
-<script>
+<script setup>
+import { notify } from '@/utils';
 import UploadDialog from '@/components/dialogs/upload/index.vue';
 import UserData from '@/components/custom/user-data/index.vue';
 import { checkRes, userDataAPI } from '@/apis';
+import { bus } from '@/utils/bus';
+import {
+  onActivated, onMounted, provide, ref,
+} from 'vue';
 
-export default {
-  components: {
-    UploadDialog,
-    UserData,
-  },
-  provide() {
-    return {
-      isPrivate: this.isPrivate,
-    };
-  },
-  data() {
-    return {
-      isPrivate: true,
-      datalist: [],
-      dataname: '',
-      count: 0,
-      limit: 60,
-      page: 1,
-      loading: false,
-      dataType: this.dataType,
-    };
-  },
-  created() {
-    this.getDataList();
-    this.$bus.off('update-user-data-list');
-    this.$bus.on('update-user-data-list', () => {
-      this.getDataList();
-    });
-  },
-  activated() {
-    this.$emit('changeActiveIndex', 'my-data');
-  },
-  methods: {
-    reGetDataList() {
-      this.page = 1;
-      this.getDataList();
-    },
-    openUploadDialog() {
-      this.$bus.emit('open-upload-dialog');
-    },
-    async getDataList() {
-      const params = {
-        limit: this.limit,
-        page: this.page,
-        name: this.dataname,
-        isPrivate: this.isPrivate,
-      };
-      this.loading = true;
-      const result = await userDataAPI.myData(params);
-      this.loading = false;
+const emit = defineEmits(['changeActiveIndex']);
 
-      if (checkRes(result)) {
-        this.datalist = result.data.data.rows;
-        this.count = result.data.data.count;
-      } else {
-        this.$error($t('message.query_failed'), result);
-      }
-    },
-  },
+const isPrivate = ref(false);
+const datalist = ref([]);
+const dataname = ref('');
+const count = ref(0);
+const limit = ref(60);
+const page = ref(1);
+const loading = ref(false);
+
+provide('isPrivate', isPrivate.value);
+
+const getDataList = async () => {
+  const params = {
+    limit: limit.value,
+    page: page.value,
+    name: dataname.value,
+    isPrivate: isPrivate.value,
+  };
+  loading.value = true;
+  const result = await userDataAPI.publicData(params);
+  loading.value = false;
+
+  if (checkRes(result)) {
+    datalist.value = result.data.data.rows;
+    count.value = result.data.data.count;
+  } else {
+    notify.error($t('message.query_failed'), result);
+  }
 };
+
+const reGetDataList = async () => {
+  page.value = 1;
+  getDataList();
+};
+
+const openUploadDialog = () => {
+  bus.emit('open-upload-dialog');
+};
+
+onActivated(() => {
+  emit('changeActiveIndex', 'my-data');
+});
+onMounted(() => {
+  getDataList();
+  bus.off('update-user-data-list');
+  bus.on('update-user-data-list', () => {
+    getDataList();
+  });
+});
 </script>
 
 <style lang="scss">

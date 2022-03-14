@@ -13,6 +13,7 @@
           class="sx-m-padding"
           :label="$t('message.old_password')"
           :rule="rules.password"
+          show-password
           type="password"
           :is-line-border="true"
         />
@@ -22,6 +23,7 @@
           class="sx-m-padding"
           :label="$t('message.new_password')"
           :rule="rules.password"
+          show-password
           type="password"
           :is-line-border="true"
         />
@@ -31,9 +33,10 @@
           class="sx-m-padding"
           :label="$t('message.confirm_new_password')"
           :rule="rules.password"
+          show-password
           type="password"
           :is-line-border="true"
-          @keyupEnter="updatePassworld"
+          @keyup.enter="updatePassworld"
         />
       </div>
       <template #footer>
@@ -51,76 +54,59 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { notify } from '@/utils';
 import paramsRules from '@/utils/paramsRules';
 import { checkRes, userAPI } from '@/apis';
 import { validateRefs } from '@/utils/helpers';
+import { bus } from '@/utils/bus';
+import { onMounted, ref } from 'vue';
 
 const rules = {
   password: paramsRules.password,
 };
-const steps = {
-  startUpload: {
-    title: $t('message.upload_data'),
-    value: 'startUpload',
-  },
-  selectFiels: {
-    value: 'selectFiels',
-  },
-};
-export default {
-  setup() {
-    return {
-      rules,
-      steps,
-    };
-  },
-  data() {
-    return {
-      dialogVisible: false,
-      repeatPassword: '',
-      confirmNewPassword: '',
-      oldPassword: '',
-      newPassword: '',
-    };
-  },
-  created() {
-    this.$bus.off('open-password-dialog');
-    this.$bus.on('open-password-dialog', () => {
-      this.dialogVisible = true;
-    });
-  },
-  methods: {
-    handleClose() {
-      this.oldPassword = '';
-      this.newPassword = '';
-      this.confirmNewPassword = '';
-      this.dialogVisible = false;
-    },
-    async updatePassworld() {
-      if (validateRefs.bind(this)()) {
-        this.$error($t('tip.illegal_parameter'));
-        return;
-      }
-      if (this.newPassword !== this.confirmNewPassword) {
-        this.$error($t('tip.illegal_confirm_password'));
-        return;
-      }
 
-      const params = {
-        oldPassword: this.oldPassword,
-        newPassword: this.newPassword,
-      };
-      const result = await userAPI.updatePassworld(params);
-      if (checkRes(result)) {
-        this.$success($t('tip.update_password_success'));
-        this.handleClose();
-      } else {
-        this.$error($t('tip.update_password_failed'));
-      }
-    },
-  },
+const dialogVisible = ref(false);
+const confirmNewPassword = ref('');
+const oldPassword = ref('');
+const newPassword = ref('');
+
+const handleClose = () => {
+  oldPassword.value = '';
+  newPassword.value = '';
+  confirmNewPassword.value = '';
+  dialogVisible.value = false;
 };
+
+const updatePassworld = async () => {
+  if (validateRefs()) {
+    notify.error($t('tip.illegal_parameter'));
+    return;
+  }
+  if (newPassword.value !== confirmNewPassword.value) {
+    notify.error($t('tip.illegal_confirm_password'));
+    return;
+  }
+
+  const params = {
+    oldPassword: oldPassword.value,
+    newPassword: newPassword.value,
+  };
+  const result = await userAPI.updatePassworld(params);
+  if (checkRes(result)) {
+    notify.success($t('tip.update_password_success'));
+    handleClose();
+  } else {
+    notify.error($t('tip.update_password_failed'));
+  }
+};
+
+onMounted(() => {
+  bus.off('open-password-dialog');
+  bus.on('open-password-dialog', () => {
+    dialogVisible.value = true;
+  });
+});
 </script>
 <style lang="scss">
 </style>

@@ -15,10 +15,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['colors'],
-};
+<script setup>
+defineProps(['colors']);
 </script>
 <style lang="scss" scoped>
 .color-bar-item {

@@ -32,8 +32,9 @@
         class="sx-m-padding"
         :rule="rules.password"
         :label="$t('message.password')"
+        show-password
         type="password"
-        @keyupEnter="signin"
+        @keyup.enter="signin"
       />
     </div>
     <div
@@ -71,8 +72,9 @@
         class="sx-m-padding"
         :label="$t('message.password')"
         :rule="rules.password"
+        show-password
         type="password"
-        @keyupEnter="signup"
+        @keyup.enter="signup"
       />
     </div>
     <div
@@ -110,8 +112,9 @@
         class="sx-m-padding"
         :label="$t('message.password')"
         :rule="rules.password"
+        show-password
         type="password"
-        @keyupEnter="forgetPassworld"
+        @keyup.enter="forgetPassworld"
       />
     </div>
     <div
@@ -167,10 +170,12 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { notify } from '@/utils';
 import { checkRes, userAPI } from '@/apis';
 import { validateRefs } from '@/utils/helpers';
 import paramsRules from '@/utils/paramsRules';
+import { ref } from 'vue';
 
 const rules = {
   email: paramsRules.email,
@@ -178,133 +183,122 @@ const rules = {
   verifycode: paramsRules.verifycode,
 };
 
-export default {
-  setup() {
-    const signinUsername = localStorage.getItem('signin_username');
-    return {
-      signinUsername,
-      rules,
-    };
-  },
-  data() {
-    return {
-      email: this.signinUsername,
-      password: null,
-      verifycode: null,
-      isCanVerifycode: true,
-      verifycodeMsg: $t('message.get_verification_code'),
-      type: 'signin',
-    };
-  },
-  methods: {
-    async signup() {
-      const params = {
-        email: this.email,
-        verifycode: this.verifycode,
-        password: this.password,
-      };
-      if (validateRefs.bind(this)()) {
-        this.$error($t('tip.illegal_parameter'));
-        return;
-      }
+const signinUsername = localStorage.getItem('signin_username');
 
-      const result = await userAPI.signup(params);
-      if (checkRes(result)) {
-        this.$success($t('tip.register_success'));
+const email = ref(signinUsername);
+const password = ref();
+const verifycode = ref();
+const isCanVerifycode = ref();
+const verifycodeMsg = ref($t('message.get_verification_code'));
+const type = ref('signin');
 
-        this.toSignin();
-      } else {
-        this.$error($t('tip.register_failed'), result);
-      }
-    },
-    toSignin() {
-      this.type = 'signin';
-      this.password = null;
-      this.verifycode = null;
-    },
-    async signin() {
-      const params = {
-        email: this.email,
-        password: this.password,
-      };
+const toSignin = () => {
+  type.value = 'signin';
+  password.value = '';
+  verifycode.value = '';
+};
+const forgetPassword = () => {
+  type.value = 'signin';
+  password.value = '';
+  verifycode.value = '';
+  type.value = 'password';
+};
 
-      const errors = validateRefs.bind(this)();
-      if (errors) {
-        this.$error($t('tip.illegal_parameter'));
-        return;
-      }
+const signup = async () => {
+  const params = {
+    email: email.value,
+    verifycode: verifycode.value,
+    password: password.value,
+  };
+  if (validateRefs()) {
+    notify.error($t('tip.illegal_parameter'));
+    return;
+  }
 
-      const result = await userAPI.signin(params);
-      localStorage.setItem('signin_username', this.email);
-      if (checkRes(result)) {
-        this.$success($t('tip.signin_success'));
-        localStorage.setItem('token', result.data.data.token);
+  const result = await userAPI.signup(params);
+  if (checkRes(result)) {
+    notify.success($t('tip.register_success'));
+    toSignin();
+  } else {
+    notify.error($t('tip.register_failed'), result);
+  }
+};
 
-        setTimeout(() => {
-          window.open('/', '_self');
-        }, 300);
-      } else {
-        this.$error($t('tip.signin_failed'), result);
-      }
-    },
-    forgetPassword() {
-      this.type = 'signin';
-      this.password = null;
-      this.verifycode = null;
-      this.type = 'password';
-    },
-    async forgetPassworld() {
-      const params = {
-        email: this.email,
-        verifycode: this.verifycode,
-        password: this.password,
-      };
-      if (validateRefs.bind(this)()) {
-        this.$error($t('tip.illegal_parameter'));
-        return;
-      }
+const signin = async () => {
+  const params = {
+    email: email.value,
+    password: password.value,
+  };
 
-      const result = await userAPI.forgetPassworld(params);
-      if (checkRes(result)) {
-        this.$success($t('tip.update_password_success'));
+  if (validateRefs()) {
+    notify.error($t('tip.illegal_parameter'));
+    return;
+  }
 
-        this.toSignin();
-      } else {
-        this.$error($t('tip.update_password_failed'), result);
-      }
-    },
-    async getVerifycode() {
-      if (!this.isCanVerifycode) return;
-      const params = {
-        email: this.email,
-      };
-      if (validateRefs.bind(this)(['email'])) {
-        this.$error($t('tip.illegal_parameter'));
-        return;
-      }
+  const result = await userAPI.signin(params);
+  localStorage.setItem('signin_username', email.value);
+  if (checkRes(result)) {
+    notify.success($t('tip.signin_success'));
+    localStorage.setItem('token', result.data.data.token);
 
-      const result = await userAPI.getVerifycode(params);
-      if (checkRes(result)) {
-        this.$success($t('tip.the_verification_code_has_been_sent_to_the_mailbox'));
-      } else {
-        this.$error($t('tip.verification_code_sent_failed'), result);
-        return;
-      }
-      this.isCanVerifycode = false;
-      let times = 60;
-      const interval = setInterval(() => {
-        if (times <= 0) {
-          clearInterval(interval);
-          this.isCanVerifycode = true;
-          this.verifycodeMsg = $t('message.get_verification_code');
-          return;
-        }
-        times -= 1;
-        this.verifycodeMsg = $t('message.resend_in_second', [times]);
-      }, 1000);
-    },
+    setTimeout(() => {
+      window.open('/', '_self');
+    }, 300);
+  } else {
+    notify.error($t('tip.signin_failed'), result);
+  }
+};
 
-  },
+const forgetPassworld = async () => {
+  const params = {
+    email: email.value,
+    verifycode: verifycode.value,
+    password: password.value,
+  };
+  if (validateRefs()) {
+    notify.error($t('tip.illegal_parameter'));
+    return;
+  }
+
+  const result = await userAPI.forgetPassworld(params);
+  if (checkRes(result)) {
+    notify.success($t('tip.update_password_success'));
+
+    toSignin();
+  } else {
+    notify.error($t('tip.update_password_failed'), result);
+  }
+};
+
+const getVerifycode = async () => {
+  if (!isCanVerifycode.value) return;
+  const params = {
+    email: email.value,
+  };
+  if (validateRefs(['email'])) {
+    notify.error($t('tip.illegal_parameter'));
+    return;
+  }
+
+  const result = await userAPI.getVerifycode(params);
+  if (checkRes(result)) {
+    notify.success($t('tip.the_verification_code_has_been_sent_to_the_mailbox'));
+  } else {
+    notify.error($t('tip.verification_code_sent_failed'), result);
+    return;
+  }
+  isCanVerifycode.value = false;
+  let times = 60;
+  const interval = setInterval(() => {
+    if (times <= 0) {
+      clearInterval(interval);
+      isCanVerifycode.value = true;
+      verifycodeMsg.value = $t('message.get_verification_code');
+      return;
+    }
+    times -= 1;
+    verifycodeMsg.value = $t('message.resend_in_second', [times]);
+  }, 1000);
 };
 </script>
 <style lang="scss">

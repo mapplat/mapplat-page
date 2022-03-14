@@ -18,30 +18,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      breadcrumbs: [{}],
-    };
-  },
-  watch: {
-    '$route.meta': {
-      immediate: true,
-      handler(meta) {
-        this.breadcrumbs = meta.breadcrumbs;
-      },
-    },
-  },
-  methods: {
-    setRoute(path) {
-      if (this.$route.path === path) return;
-      this.$router.push({
-        path,
-      });
-    },
-  },
-};
+<script setup>
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const router = useRoute();
+const breadcrumbs = computed(() => router.meta, (meta) => meta.breadcrumbs, {
+  immediate: true,
+});
 </script>
 
 <style lang="scss" scopen>

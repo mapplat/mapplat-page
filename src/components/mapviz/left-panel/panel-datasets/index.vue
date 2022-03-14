@@ -11,17 +11,6 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
 import ColorBarPicker from '@/components/common/k-color/color-bar-picker/index.vue';
-
-export default {
-  components: {
-    ColorBarPicker,
-  },
-  data() {
-    return {
-      colors: '#194d33',
-    };
-  },
-};
 </script>

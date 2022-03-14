@@ -26,7 +26,10 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
 const TAB_MENT = [
   {
     value: 'my-data',
@@ -37,21 +40,16 @@ const TAB_MENT = [
     title: $t('message.public_data'),
   },
 ];
-export default {
-  data() {
-    return {
-      activeIndex: this.$route.name,
-      TAB_MENT,
-    };
-  },
-  methods: {
-    changeActiveIndex(val) {
-      this.activeIndex = val;
-    },
-    handleSelect(key) {
-      this.activeIndex = key;
-      this.$router.push({ name: key });
-    },
-  },
+
+const router = useRoute();
+const activeIndex = ref(router.name);
+
+const changeActiveIndex = (val) => {
+  activeIndex.value = val;
+};
+
+const handleSelect = (key) => {
+  activeIndex.value = key;
+  router.push({ name: key });
 };
 </script>

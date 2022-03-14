@@ -45,51 +45,40 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatFileSize, fixedNum } from '@/utils/utils';
+import { ref, watch } from 'vue';
 
-export default {
-  props: {
-    file: {
-      type: Object,
-    },
+const props = defineProps({
+  file: {
+    type: Object,
   },
-  data() {
-    return {
-      progressStye: {},
-    };
-  },
-  watch: {
-    file: {
-      immediate: true,
-      handler() {
-        switch (this.file.status) {
-          case 'success':
-            this.progressStye = {
-              width: '0',
-              'background-color': '#e2eeff',
-            };
-            break;
-          case 'exception':
-            this.progressStye = {
-              width: '0',
-              'background-color': '#ffeaea',
-            };
-            break;
-          default:
-            this.progressStye = {
-              width: `${this.file.percentage}%`,
-              'background-color': '#e2eeff',
-            };
-        }
-      },
-    },
-  },
-  methods: {
-    formatFileSize,
-    fixedNum,
-  },
-};
+});
+const progressStye = ref({});
+
+watch(() => props.file, (file) => {
+  switch (file.status) {
+    case 'success':
+      progressStye.value = {
+        width: '0',
+        'background-color': '#e2eeff',
+      };
+      break;
+    case 'exception':
+      progressStye.value = {
+        width: '0',
+        'background-color': '#ffeaea',
+      };
+      break;
+    default:
+      progressStye.value = {
+        width: `${file.percentage}%`,
+        'background-color': '#e2eeff',
+      };
+  }
+}, {
+  immediate: true,
+});
 </script>
 
 <style lang="scss">

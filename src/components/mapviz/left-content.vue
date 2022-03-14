@@ -26,7 +26,7 @@
       </div>
     </div>
     <div
-      v-show="activeItem && activeItem.key"
+      v-show="activeItem && activeItem.component"
       class="left-panel"
     >
       <div class="left-panel-top">
@@ -39,14 +39,15 @@
       </div>
       <div class="left-panel-wrapper">
         <keep-alive>
-          <component :is="`panel-${activeItem.key}`" />
+          <component :is="activeItem.component" />
         </keep-alive>
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import PanelDatasets from '@/components/mapviz/left-panel/panel-datasets/index.vue';
 import PanelSetting from '@/components/mapviz/left-panel/panel-setting.vue';
 
@@ -54,6 +55,7 @@ const leftOptions = [{
   icon: 'icon-datasets',
   title: $t('message.data'),
   key: 'datasets',
+  component: PanelDatasets,
 }, {
   icon: 'icon-maps',
   title: $t('message.map'),
@@ -62,6 +64,7 @@ const leftOptions = [{
   icon: 'icon-shezhi',
   title: $t('message.setting'),
   key: 'setting',
+  component: PanelSetting,
 }, {
   icon: 'icon-baocun',
   title: $t('message.save'),
@@ -72,37 +75,20 @@ const leftOptions = [{
   key: 'shanchu',
 }];
 
-export default {
-  components: {
-    PanelDatasets,
-    PanelSetting,
-  },
-  setup() {
-    return {
-      leftOptions,
-    };
-  },
-  data() {
-    return {
-      activeItem: leftOptions[0],
-    };
-  },
-  methods: {
-    closePanel() {
-      this.activeItem = {};
-    },
-    handler(item) {
-      switch (item.key) {
-        case 'datasets':
-        case 'maps':
-        case 'setting':
-          this.activeItem = item;
-          break;
-        default:
-          break;
-      }
-    },
-  },
+const activeItem = ref(leftOptions[0]);
+const closePanel = () => {
+  activeItem.value = {};
+};
+const handler = (item) => {
+  switch (item.key) {
+    case 'datasets':
+    case 'maps':
+    case 'setting':
+      activeItem.value = item;
+      break;
+    default:
+      break;
+  }
 };
 </script>
 <style lang="scss">

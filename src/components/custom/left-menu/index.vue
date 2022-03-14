@@ -27,7 +27,19 @@
     </el-menu>
   </div>
 </template>
-<script>
+<script setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+defineProps({
+  collapse: {
+    type: Boolean,
+    default: false,
+  },
+});
+const route = useRoute();
+const activePath = ref();
+
 const menuConfs = [{
   icon: 'icon-datasets',
   title: $t('message.data'),
@@ -38,33 +50,12 @@ const menuConfs = [{
   title: $t('message.map'),
   path: '/maps',
 }];
-export default {
-  props: {
-    collapse: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup() {
-    return {
-      menuConfs,
-    };
-  },
-  data() {
-    return {
-      activePath: null,
-    };
-  },
-  watch: {
-    '$route.meta': {
-      deep: true,
-      immediate: true,
-      handler(meta) {
-        this.activePath = meta.activePath;
-      },
-    },
-  },
-};
+
+watch(() => route.meta, (meta) => {
+  activePath.value = meta.activePath;
+}, {
+  immediate: true,
+});
 </script>
 <style lang="scss" scoped>
 .nav-menu {

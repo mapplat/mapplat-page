@@ -1,11 +1,9 @@
 <template>
-  <div class="top-nav">
-    <div class="left-wrapper">
-      <MapplatBreadcrumb />
-    </div>
-    <div class="right-wrapper align-center">
+  <div class="top-bar">
+    <MapplatBreadcrumb />
+    <div class="align-center y-m-margin">
       <el-badge
-        class="notice-wrapper zy-m-margin"
+        class="hover-pointer zy-m-margin"
         :value="12"
       >
         <k-icon
@@ -19,47 +17,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import MapplatUser from '@/components/custom/mapplat-user.vue';
 import KI18n from '@/components/common/k-i18n.vue';
 import MapplatBreadcrumb from '@/components/custom/mapplat-breadcrumb.vue';
-
-export default {
-  components: {
-    MapplatUser,
-    MapplatBreadcrumb,
-    KI18n,
-  },
-  data() {
-    return {
-      collapse: false,
-    };
-  },
-};
 </script>
 <style lang="scss">
-.top-nav {
+.top-bar {
   background-color: $white;
-  .left-wrapper {
-    float: left;
-    height: 100%;
-    .collapse-wrapper {
-      padding-left: 12px;
-      height: 100%;
-      &:hover {
-        cursor: pointer;
-        color: $primary;
-      }
-    }
-  }
-  .right-wrapper {
-    padding-right: 24px;
-    float: right;
-    height: 100%;
-
-    .notice-wrapper {
-      cursor: pointer;
-    }
-  }
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -4,35 +4,23 @@
     <Dashboard />
   </div>
 </template>
-<script>
-import REG_EXP from '@/constant/REG_EXP';
+<script setup>
 import LeftContent from '@/components/mapviz/left-content.vue';
+import { useRoute } from 'vue-router';
+import { computed, onMounted } from 'vue';
 import Dashboard from '@/components/mapviz/dashboard.vue';
+import REG_EXP from '@/constant/REG_EXP';
+import { notify } from '@/utils';
 
-export default {
-  components: {
-    LeftContent,
-    Dashboard,
-  },
-  data() {
-    return {
-      mapid: this.$route.params.mapid,
-    };
-  },
-  created() {
-    if (!REG_EXP.uuid.test(this.mapid)) {
-      this.$error($t('reg_tip.map_id', [this.mapid]));
-      // return;
-    }
+const route = useRoute();
+const mapid = computed(() => route.params.mapid);
 
-    // 回去mapconfig
-  },
-  methods: {
-    initVizConfig() {
-      console.log(this.mapid);
-    },
-  },
-};
+onMounted(() => {
+  if (!REG_EXP.uuid.test(mapid)) {
+    notify.error($t('reg_tip.map_id', [mapid]));
+    // return;
+  }
+});
 </script>
 <style lang="scss">
 .mapviz {

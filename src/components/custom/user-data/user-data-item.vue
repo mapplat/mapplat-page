@@ -84,73 +84,70 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { notify } from '@/utils';
 import { formatDate } from '@/utils/utils';
 import { checkRes, userDataAPI } from '@/apis';
 import { SERVER_HOST } from '@/env';
+import { bus } from '@/utils/bus';
+import { inject } from 'vue';
+import { useRoute } from 'vue-router';
 
-export default {
-  inject: ['isPrivate'],
-  props: {
-    item: {
-      type: Object,
-      default: () => {},
-    },
+const router = useRoute();
+const isPrivate = inject('isPrivate');
+const props = defineProps({
+  item: {
+    type: Object,
+    default: () => {},
   },
-  setup() {
-    return {
-      SERVER_HOST,
-    };
-  },
-  methods: {
-    formatDate,
-    async updatePrivate(isPrivate) {
-      const msg = `${isPrivate ? $t('message.cancel') : ''}${$t('message.share')}`;
-      const params = {
-        isPrivate,
-      };
-      const updateRes = await userDataAPI.update(this.item.dataUuid, params);
-      if (checkRes(updateRes)) {
-        this.$bus.emit('update-user-data-list');
-        this.$bus.emit('update-public-data-list');
-        this.$success(`${msg}, ${$t('tip.success')}`);
-      } else {
-        this.$error(`${msg}, ${$t('tip.failed')}`, updateRes);
-      }
-    },
-    async deleteData() {
-      this.$confirm($t('message.this_operation_will_delete_the_file_do_you_want_to_continue'), $t('tip.tip'), {
-        confirmButtonText: $t('message.confirm'),
-        cancelButtonText: $t('message.cancel'),
-        type: 'warning',
-      }).then(async () => {
-        const deleteRes = await userDataAPI.delete(this.item.dataUuid);
-        if (checkRes(deleteRes)) {
-          this.$bus.emit('update-user-data-list');
-          this.$bus.emit('update-public-data-list');
-          this.$success($t('tip.deleted_success'));
-        } else {
-          this.$error($t('tip.deleted_failed'), deleteRes);
-        }
-      }).catch();
-    },
-    async copyData() {
-      const copyRes = await userDataAPI.copy(this.item.dataUuid);
-      if (checkRes(copyRes)) {
-        this.$bus.emit('update-user-data-list');
-        this.$success($t('message.cancel'));
-        this.$router.push({ name: 'my-data' });
-      } else {
-        this.$error($t('message.copy_success'), copyRes);
-      }
-    },
-    async download() {
-      await userDataAPI.download(this.item.dataUuid, 'csv');
-    },
-    openInMap() {
-      this.$info('TODO');
-    },
-  },
+});
+
+const updatePrivate = async (itemPrivate) => {
+  const msg = `${itemPrivate ? $t('message.cancel') : ''}${$t('message.share')}`;
+  const params = {
+    isPrivate: itemPrivate,
+  };
+  const updateRes = await userDataAPI.update(props.item.dataUuid, params);
+  if (checkRes(updateRes)) {
+    bus.emit('update-user-data-list');
+    bus.emit('update-public-data-list');
+    notify.success(`${msg}, ${$t('tip.success')}`);
+  } else {
+    notify.error(`${msg}, ${$t('tip.failed')}`, updateRes);
+  }
+};
+const deleteData = async () => {
+  notify.confirm($t('message.this_operation_will_delete_the_file_do_you_want_to_continue'), $t('tip.tip'), {
+    confirmButtonText: $t('message.confirm'),
+    cancelButtonText: $t('message.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    const deleteRes = await userDataAPI.delete(props.item.dataUuid);
+    if (checkRes(deleteRes)) {
+      bus.emit('update-user-data-list');
+      bus.emit('update-public-data-list');
+      notify.success($t('tip.deleted_success'));
+    } else {
+      notify.error($t('tip.deleted_failed'), deleteRes);
+    }
+  }).catch();
+};
+const copyData = async () => {
+  const copyRes = await userDataAPI.copy(props.item.dataUuid);
+  if (checkRes(copyRes)) {
+    bus.emit('update-user-data-list');
+    notify.success($t('message.cancel'));
+    router.push({ name: 'my-data' });
+  } else {
+    notify.error($t('message.copy_success'), copyRes);
+  }
+};
+const download = async () => {
+  userDataAPI.download(props.item.dataUuid, 'csv');
+};
+
+const openInMap = () => {
+  notify.warning('TODO');
 };
 </script>
 <style lang="scss">

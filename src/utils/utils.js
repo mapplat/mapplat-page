@@ -114,6 +114,10 @@ function formatDate(time, type = 'date') {
   }
 }
 
+function getToken() {
+  return localStorage.getItem('token');
+}
+
 export {
   formatDate,
   getRandomStr,
@@ -121,4 +125,5 @@ export {
   getType,
   formatFileSize,
   getFileHash,
+  getToken,
 };

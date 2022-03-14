@@ -67,9 +67,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { nextTick, ref } from 'vue';
+import { notify } from '@/utils';
 import FILES from '@/constant/FILES';
 import { getFilesTypeByName } from '@/utils/helpers';
+import { bus } from '@/utils/bus';
 import FilesTable from './files-table.vue';
 
 const stepTypes = {
@@ -77,170 +80,147 @@ const stepTypes = {
   confirmFile: 'confirm-file',
 };
 
-export default {
-  components: {
-    FilesTable,
-  },
-  setup() {
-    return {
-      acceptTyles: FILES.types.map((val) => `.${val}`).join(','),
-    };
-  },
-  data() {
-    return {
-      selectedFiles: [],
-      formatFiles: {
-        support: [],
-        noSupport: [],
-      },
-      type: stepTypes.inputFile,
-      loading: false,
-      activeCollapse: 'support',
-    };
-  },
-  methods: {
-    reSelected() {
-      this.selectedFiles = [];
-      this.formatFiles = {
-        support: [],
-        noSupport: [],
-      };
-      this.type = stepTypes.inputFile;
-      this.loading = false;
-      this.activeCollapse = 'support';
-    },
-    handerNext() {
-      if (!Array.isArray(this.selectedFiles) || !this.selectedFiles.length) {
-        this.$error($t('message.no_files_selected_for_upload'));
-        return;
-      }
-      if (this.selectedFiles.length > FILES.limitCount) {
-        this.$error(`${$t('message.the_number_of_files_selected_for_upload_cannot_exceed', { number: FILES.limitCount })}`);
-        return;
-      }
-      this.$bus.emit('push-upload-files', this.selectedFiles);
-      this.$nextTick(() => {
-        this.reSelected();
-        this.$emit('close');
-      });
-    },
-    dragenter(e) {
-      e.stopPropagation();
-      e.preventDefault();
-    },
-    dragover(e) {
-      e.stopPropagation();
-      e.preventDefault();
-    },
-    async drop(e) {
-      e.stopPropagation();
-      e.preventDefault();
+const acceptTyles = FILES.types.map((val) => `.${val}`).join(',');
 
-      this.loading = true;
-      const { items } = e.dataTransfer;
-      const dropFilesEntrys = [];
-      for (let item of items) {
-        if (!item || !item.webkitGetAsEntry) continue;
-        item = item.webkitGetAsEntry();
-        if (!item) continue;
-        const filesEntrys = await this.getFilesEntrys(item);
-        dropFilesEntrys.push(...filesEntrys);
-      }
+const emit = defineEmits(['close']);
+const selectedFiles = ref([]);
+const formatFiles = ref({
+  support: [],
+  noSupport: [],
+});
+const type = ref(stepTypes.inputFile);
+const loading = ref(false);
+const activeCollapse = ref('support');
 
-      const files = await this.transformFilesEntrys(dropFilesEntrys);
-      this.handerFiles(files);
+const reSelected = () => {
+  selectedFiles.value = [];
+  formatFiles.value = {
+    support: [],
+    noSupport: [],
+  };
+  type.value = stepTypes.inputFile;
+  loading.value = false;
+  activeCollapse.value = 'support';
+};
 
-      this.loading = false;
-    },
-    /**
-       * FilesEntrys转为Files
-       */
-    async transformFilesEntrys(filesEntrys) {
-      const files = [];
-      const fileEntry2File = async (fileEntry) => new Promise((resolve) => {
-        fileEntry.file((file) => {
-          // 附加文件路径
-          file._webkitRelativePath = fileEntry.fullPath;
-          resolve(file);
-        });
-      });
-      for (const filesEntry of filesEntrys) {
-        files.push(await fileEntry2File(filesEntry));
-      }
-      return files;
-    },
+const handerNext = () => {
+  if (!Array.isArray(selectedFiles.value) || !selectedFiles.value.length) {
+    notify.error($t('message.no_files_selected_for_upload'));
+    return;
+  }
+  if (selectedFiles.value.length > FILES.limitCount) {
+    notify.error(`${$t('message.the_number_of_files_selected_for_upload_cannot_exceed', { number: FILES.limitCount })}`);
+    return;
+  }
+  bus.emit('push-upload-files', selectedFiles.value);
+  nextTick(() => {
+    reSelected();
+    emit('close');
+  });
+};
 
-    /**
-       * 获取drop区域的文件
-       * @returns FilesEntrys
-       */
-    async getFilesEntrys(entrys) {
-      const filesEntrys = [];
-      const scanFiles = async (item) => new Promise((resolve) => {
-        if (item.isDirectory) {
-          const directoryReader = item.createReader();
-          directoryReader.readEntries(async (entries) => {
-            for (const entrie of entries) {
-              await scanFiles(entrie);
-            }
-            resolve();
-          });
-        } else {
-          filesEntrys.push(item);
-          resolve();
+const dragenter = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+const dragover = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+/**
+ * FilesEntrys转为Files
+ */
+const transformFilesEntrys = async (filesEntrys) => {
+  const files = [];
+  const fileEntry2File = async (fileEntry) => new Promise((resolve) => {
+    fileEntry.file((file) => {
+      // 附加文件路径
+      file._webkitRelativePath = fileEntry.fullPath;
+      resolve(file);
+    });
+  });
+  for (const filesEntry of filesEntrys) {
+    files.push(await fileEntry2File(filesEntry));
+  }
+  return files;
+};
+
+/**
+ * 获取drop区域的文件
+ * @returns FilesEntrys
+ */
+const getFilesEntrys = async (entrys) => {
+  const filesEntrys = [];
+  const scanFiles = async (item) => new Promise((resolve) => {
+    if (item.isDirectory) {
+      const directoryReader = item.createReader();
+      directoryReader.readEntries(async (entries) => {
+        for (const entrie of entries) {
+          await scanFiles(entrie);
         }
+        resolve();
       });
-      await scanFiles(entrys);
-      return filesEntrys;
-    },
-    onFileSelected(evt) {
-      this.loading = true;
+    } else {
+      filesEntrys.push(item);
+      resolve();
+    }
+  });
+  await scanFiles(entrys);
+  return filesEntrys;
+};
 
-      if (!evt.target || !evt.target.files || evt.target.files.length <= 0) {
-        return;
-      }
+const classifyFiles = (files) => {
+  const support = [];
+  const notSupport = [];
+  for (const file of files) {
+    const { size: fileSize } = file;
+    if (fileSize > FILES.limitSize || FILES.types.indexOf(getFilesTypeByName(file.name)) === -1) {
+      notSupport.push(file);
+    } else {
+      support.push(file);
+    }
+  }
+  return {
+    support,
+    notSupport,
+  };
+};
+const handerFiles = (files) => {
+  if (!files.length) {
+    notify.error($t('message.no_file_selected'));
+    return;
+  }
+  if (files.length > 100) {
+    notify.error($t('message.the_number_of_files_selected_for_upload_cannot_exceed', { number: FILES.limitCount }));
+    return;
+  }
+  type.value = stepTypes.confirmFile;
+  formatFiles.value = classifyFiles(files);
+};
 
-      const files = Array.from(evt.target.files).map((val) => {
-        val._webkitRelativePath = val.webkitRelativePath || val.name;
-        return val;
-      });
+const drop = async (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+  loading.value = true;
+  const { items } = e.dataTransfer;
+  const dropFilesEntrys = [];
+  for (let item of items) {
+    if (!item || !item.webkitGetAsEntry) continue;
+    item = item.webkitGetAsEntry();
+    if (!item) continue;
+    const filesEntrys = await getFilesEntrys(item);
+    dropFilesEntrys.push(...filesEntrys);
+  }
 
-      this.handerFiles(files);
+  const files = await transformFilesEntrys(dropFilesEntrys);
+  handerFiles(files);
 
-      this.loading = false;
-    },
-    handerFiles(files) {
-      if (!files.length) {
-        this.$error($t('message.no_file_selected'));
-        return;
-      }
-      if (files.length > 100) {
-        this.$error($t('message.the_number_of_files_selected_for_upload_cannot_exceed', { number: FILES.limitCount }));
-        return;
-      }
-      this.type = stepTypes.confirmFile;
-      this.formatFiles = this.classifyFiles(files);
-    },
-    classifyFiles(files) {
-      const support = [];
-      const notSupport = [];
-      for (const file of files) {
-        const { size: fileSize } = file;
-        if (fileSize > FILES.limitSize || FILES.types.indexOf(getFilesTypeByName(file.name)) === -1) {
-          notSupport.push(file);
-        } else {
-          support.push(file);
-        }
-      }
-      return {
-        support,
-        notSupport,
-      };
-    },
-    updateSelectFiles(files) {
-      this.selectedFiles = files;
-    },
-  },
+  loading.value = false;
+};
+
+const updateSelectFiles = (files) => {
+  selectedFiles.value = files;
 };
 </script>
 

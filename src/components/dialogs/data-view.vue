@@ -56,49 +56,39 @@
     </template>
   </el-dialog>
 </template>
-<script>
+<script setup>
 import DataMap from '@/components/custom/user-data/data-map.vue';
 import DataTable from '@/components/custom/user-data/data-table.vue';
 import DataMetadata from '@/components/custom/user-data/data-metadata.vue';
+import { bus } from '@/utils/bus';
+import { onMounted, ref } from 'vue';
 
 const components = {
-  'data-map': 'data-map',
-  'data-table': 'data-table',
-  'data-metadata': 'data-metadata',
+  'data-map': DataMap,
+  'data-table': DataTable,
+  'data-metadata': DataMetadata,
 };
 
-export default {
-  components: {
-    DataMap,
-    DataTable,
-    DataMetadata,
-  },
-  data() {
-    return {
-      isPrivate: false,
-      component: components['data-map'],
-      visible: false,
-      dataInfo: {},
-    };
-  },
-  mounted() {
-    this.$bus.off('dialog-user-data-view');
-    this.$bus.on('dialog-user-data-view', (params = {}) => {
-      this.visible = params.visible;
-      this.dataInfo = params.dataInfo;
-      this.isPrivate = params.isPrivate;
-      this.component = params.dataInfo.spatialization ? components['data-map'] : components['data-table'];
-    });
-  },
-  methods: {
-    handleClose() {
-      this.visible = false;
-    },
-    switchComponent(name) {
-      this.component = name;
-    },
-  },
+const isPrivate = ref(false);
+const visible = ref(false);
+const dataInfo = ref({});
+const component = ref(components['data-map']);
+
+const handleClose = () => {
+  visible.value = false;
 };
+const switchComponent = (name) => {
+  component.value = components[name];
+};
+onMounted(() => {
+  bus.off('dialog-user-data-view');
+  bus.on('dialog-user-data-view', (params = {}) => {
+    visible.value = params.visible;
+    dataInfo.value = params.dataInfo;
+    isPrivate.value = params.isPrivate;
+    component.value = params.dataInfo.spatialization ? components['data-map'] : components['data-table'];
+  });
+});
 </script>
 
 <style lang="scss">

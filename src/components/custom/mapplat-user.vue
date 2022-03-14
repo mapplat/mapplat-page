@@ -7,7 +7,7 @@
     >
       <span class="user-content">
         <!-- <img class="touxiang" src="@/assets/img/moren_touxiang.png" /> -->
-        {{ username }}
+        {{ router.$user.username }}
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -47,38 +47,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { signout } from '@/utils/helpers';
+import { bus } from '@/utils/bus';
+import { useRoute } from 'vue-router';
 
-export default {
-  components: {},
-  computed: {
-    username() {
-      return this.$user.username;
-    },
-  },
-  methods: {
-    handleCommand(command) {
-      switch (command) {
-        case 'signout':
-          signout();
-          break;
-        case 'updatePassword':
-          this.updatePassword();
-          break;
-        case 'toProfile':
-          this.$router.push({
-            name: 'profile',
-          });
-          break;
-        default:
-          break;
-      }
-    },
-    updatePassword() {
-      this.$bus.emit('open-password-dialog');
-    },
-  },
+const router = useRoute();
+
+const updatePassword = () => {
+  bus.emit('open-password-dialog');
+};
+const handleCommand = (command) => {
+  switch (command) {
+    case 'signout':
+      signout();
+      break;
+    case 'updatePassword':
+      updatePassword();
+      break;
+    case 'toProfile':
+      router.push({
+        name: 'profile',
+      });
+      break;
+    default:
+      break;
+  }
 };
 </script>
 

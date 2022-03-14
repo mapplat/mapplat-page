@@ -51,25 +51,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { formatDate } from '@/utils/utils';
 import DataMetadataItem from '@/components/custom/user-data/data-metadata-item.vue';
 
-export default {
-
-  components: {
-    DataMetadataItem,
+defineProps({
+  dataInfo: {
+    type: Object,
+    default: () => {},
   },
-  props: {
-    dataInfo: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  methods: {
-    formatDate,
-  },
-};
+});
 </script>
 <style lang="scss">
 .data-metadata {

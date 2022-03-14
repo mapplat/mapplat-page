@@ -13,29 +13,26 @@
     />
   </div>
 </template>
-<script>
+<script setup>
 import DataItem from '@/components/custom/user-data/user-data-item.vue';
+import { bus } from '@/utils/bus';
+import { inject } from 'vue';
 
-export default {
-  components: {
-    DataItem,
+const isPrivate = inject('isPrivate');
+
+defineProps({
+  datalist: {
+    type: Array,
+    default: () => [],
   },
-  inject: ['isPrivate'],
-  props: {
-    datalist: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  methods: {
-    openData(item) {
-      this.$bus.emit('dialog-user-data-view', {
-        isPrivate: this.isPrivate,
-        visible: true,
-        dataInfo: item,
-      });
-    },
-  },
+});
+
+const openData = (item) => {
+  bus.emit('dialog-user-data-view', {
+    isPrivate,
+    visible: true,
+    dataInfo: item,
+  });
 };
 </script>
 

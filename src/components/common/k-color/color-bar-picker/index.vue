@@ -14,8 +14,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { Sketch } from '@ckpack/vue-color';
+import { ref } from 'vue';
 import ColorBarItem from './color-bar-item.vue';
 
 const presetColors = [
@@ -50,22 +51,8 @@ const presetColors = [
   ['#000004', '#2f0a5b', '#71196e', '#b0315b', '#e45a31', '#fb9d07', '#f2ea69'],
   ['#0d0887', '#5e01a6', '#9d199c', '#cd4a76', '#ef7d51', '#f3d92c', '#f3f027'],
 ];
-export default {
-  components: {
-    Sketch,
-    ColorBarItem,
-  },
-  setup() {
-    return {
-      presetColors,
-    };
-  },
-  data() {
-    return {
-      color: '',
-    };
-  },
-};
+
+const color = ref('');
 </script>
 <style lang="scss">
 

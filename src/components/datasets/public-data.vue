@@ -6,7 +6,7 @@
         <k-input
           v-model="dataname"
           :placeholder="$t('message.search')"
-          @keyupEnter="reGetDataList"
+          @keyup.enter="reGetDataList"
         >
           <template #suffix>
             <k-icon
@@ -28,7 +28,7 @@
         :datalist="datalist"
       />
       <div
-        v-else
+        v-if="!datalist.length && !loading"
         class="emptydata-wrapper"
       >
         <k-icon
@@ -51,65 +51,59 @@
     </div>
   </div>
 </template>
-<script>
+<script setup>
+import { notify } from '@/utils';
 import UserData from '@/components/custom/user-data/index.vue';
 import { checkRes, userDataAPI } from '@/apis';
+import { bus } from '@/utils/bus';
+import {
+  onActivated, onMounted, provide, ref,
+} from 'vue';
 
-export default {
-  components: {
-    UserData,
-  },
-  provide() {
-    return {
-      isPrivate: this.isPrivate,
-    };
-  },
-  data() {
-    return {
-      isPrivate: false,
-      datalist: [],
-      dataname: '',
-      count: 0,
-      limit: 60,
-      page: 1,
-      loading: false,
-    };
-  },
-  created() {
-    this.getDataList();
-    this.$bus.off('update-public-data-list');
-    this.$bus.on('update-public-data-list', () => {
-      this.getDataList();
-    });
-  },
-  activated() {
-    this.$emit('changeActiveIndex', 'public-data');
-  },
-  methods: {
-    reGetDataList() {
-      this.page = 1;
-      this.getDataList();
-    },
-    async getDataList() {
-      const params = {
-        limit: this.limit,
-        page: this.page,
-        name: this.dataname,
-        isPrivate: this.isPrivate,
-      };
-      this.loading = true;
-      const result = await userDataAPI.publicData(params);
-      this.loading = false;
+const emit = defineEmits(['changeActiveIndex']);
+const isPrivate = ref(false);
+const datalist = ref([]);
+const dataname = ref('');
+const count = ref(0);
+const limit = ref(60);
+const page = ref(1);
+const loading = ref(false);
+provide('isPrivate', isPrivate.value);
 
-      if (checkRes(result)) {
-        this.datalist = result.data.data.rows;
-        this.count = result.data.data.count;
-      } else {
-        this.$error($t('message.query_failed'), result);
-      }
-    },
-  },
+const getDataList = async () => {
+  const params = {
+    limit: limit.value,
+    page: page.value,
+    name: dataname.value,
+    isPrivate: isPrivate.value,
+  };
+  loading.value = true;
+  const result = await userDataAPI.publicData(params);
+  loading.value = false;
+
+  if (checkRes(result)) {
+    datalist.value = result.data.data.rows;
+    count.value = result.data.data.count;
+  } else {
+    notify.error($t('message.query_failed'), result);
+  }
 };
+
+const reGetDataList = async () => {
+  page.value = 1;
+  getDataList();
+};
+
+onActivated(() => {
+  emit('changeActiveIndex', 'public-data');
+});
+onMounted(() => {
+  getDataList();
+  bus.off('update-public-data-list');
+  bus.on('update-public-data-list', () => {
+    getDataList();
+  });
+});
 </script>
 
 <style lang="scss">
