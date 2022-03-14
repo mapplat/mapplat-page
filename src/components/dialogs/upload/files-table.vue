@@ -1,7 +1,7 @@
 <template>
   <div class="file-table">
     <el-table
-      ref="multipleTable"
+      ref="multipleTableRef"
       :data="files"
       style="width: 100%"
       max-height="400"

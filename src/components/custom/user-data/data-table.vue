@@ -6,7 +6,7 @@
   >
     <el-input
       v-show="isShowEditInput"
-      :ref="dataTableCellEditRef"
+      ref="dataTableCellEditRef"
       v-model="curentCell.columnValue"
       class="data-table-edit"
       type="textarea"
@@ -18,7 +18,7 @@
     />
     <el-input
       v-show="isShowHeaderEditInput"
-      :ref="dataTableHeaderEditRef"
+      ref="dataTableHeaderEditRef"
       v-model="curentHeader.columnValue"
       class="data-table-edit"
       type="textarea"
@@ -29,7 +29,7 @@
       @blur="blurCellValue"
     />
     <el-table
-      :ref="dataTableRef"
+      ref="dataTableRef"
       :data="dataTable.rows"
       :fit="true"
       :border="true"
@@ -104,9 +104,9 @@ import {
 } from 'vue';
 
 const idColumn = 'mapplat_id';
-const dataTableRef = ref('dataTableRef');
-const dataTableCellEditRef = ref('dataTableCellEditRef');
-const dataTableHeaderEditRef = ref('dataTableHeaderEditRef');
+const dataTableRef = ref();
+const dataTableCellEditRef = ref();
+const dataTableHeaderEditRef = ref();
 const props = defineProps({
   isPrivate: {
     type: Boolean,
