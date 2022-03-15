@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -62,12 +62,6 @@ const props = defineProps({
 
 const errorTip = ref('');
 const inputClass = computed(() => `k-input-label-${props.position}`);
-
-watch(() => props.modelValue, (v) => {
-  console.log(v);
-}, {
-  immediate: true,
-});
 
 const handlerChange = (value) => {
   errorTip.value = '';
