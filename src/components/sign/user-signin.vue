@@ -12,7 +12,6 @@
       class="user-info-wrapper"
     >
       <k-input
-        ref="email"
         v-model="email"
         :is-line-border="true"
         class="sx-m-padding"
@@ -26,7 +25,6 @@
         {{ $t('message.forgot_password') }}
       </div>
       <k-input
-        ref="password"
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
@@ -42,7 +40,6 @@
       class="user-info-wrapper"
     >
       <k-input
-        ref="email"
         v-model="email"
         :is-line-border="true"
         class="sx-m-padding"
@@ -50,7 +47,6 @@
         :rule="rules.email"
       />
       <k-input
-        ref="verifycode"
         v-model="verifycode"
         :is-line-border="true"
         class="sx-m-padding"
@@ -66,7 +62,6 @@
         </template>
       </k-input>
       <k-input
-        ref="password"
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
@@ -82,7 +77,6 @@
       class="user-info-wrapper"
     >
       <k-input
-        ref="email"
         v-model="email"
         :is-line-border="true"
         class="sx-m-padding"
@@ -90,7 +84,6 @@
         :rule="rules.email"
       />
       <k-input
-        ref="verifycode"
         v-model="verifycode"
         :is-line-border="true"
         class="sx-m-padding"
@@ -106,7 +99,6 @@
         </template>
       </k-input>
       <k-input
-        ref="password"
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
@@ -129,7 +121,7 @@
       </el-button>
       <el-button
         plain
-        @click="type = 'signup'"
+        @click="toSignUp"
       >
         {{ $t('message.register') }}
       </el-button>
@@ -146,7 +138,7 @@
       </el-button>
       <el-button
         plain
-        @click="type = 'signin'"
+        @click="toSignUp"
       >
         {{ $t('message.return_signin') }}
       </el-button>
@@ -163,7 +155,7 @@
       </el-button>
       <el-button
         plain
-        @click="type = 'signin'"
+        @click="toSignin"
       >
         {{ $t('message.return_signin') }}
       </el-button>
@@ -175,7 +167,7 @@ import { notify } from '@/utils';
 import { checkRes, userAPI } from '@/apis';
 import { validateRefs } from '@/utils/helpers';
 import paramsRules from '@/utils/paramsRules';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const rules = {
   email: paramsRules.email,
@@ -188,21 +180,24 @@ const signinUsername = localStorage.getItem('signin_username');
 const email = ref(signinUsername);
 const password = ref();
 const verifycode = ref();
-const isCanVerifycode = ref();
+const isCanVerifycode = ref(true);
 const verifycodeMsg = ref($t('message.get_verification_code'));
 const type = ref('signin');
 
+const toSignUp = () => {
+  type.value = 'signup';
+};
 const toSignin = () => {
   type.value = 'signin';
-  password.value = '';
-  verifycode.value = '';
 };
 const forgetPassword = () => {
-  type.value = 'signin';
-  password.value = '';
-  verifycode.value = '';
   type.value = 'password';
 };
+watch(type, () => {
+  password.value = '';
+  verifycode.value = '';
+  isCanVerifycode.value = true;
+});
 
 const signup = async () => {
   const params = {

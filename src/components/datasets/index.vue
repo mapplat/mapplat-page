@@ -28,7 +28,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const TAB_MENT = [
   {
@@ -41,8 +41,9 @@ const TAB_MENT = [
   },
 ];
 
-const router = useRoute();
-const activeIndex = ref(router.name);
+const route = useRoute();
+const router = useRouter();
+const activeIndex = ref(route.name);
 
 const changeActiveIndex = (val) => {
   activeIndex.value = val;

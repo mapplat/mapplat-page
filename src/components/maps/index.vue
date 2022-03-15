@@ -28,7 +28,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const TAB_MENT = [
   {
@@ -42,6 +42,7 @@ const TAB_MENT = [
 ];
 
 const route = useRoute();
+const router = useRouter();
 const activeIndex = ref(route.name);
 
 const changeActiveIndex = (val) => {
@@ -50,6 +51,6 @@ const changeActiveIndex = (val) => {
 
 const handleSelect = (key) => {
   activeIndex.value = key;
-  route.push({ name: key });
+  router.push({ name: key });
 };
 </script>

@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-const router = useRoute();
+const router = useRouter();
 </script>

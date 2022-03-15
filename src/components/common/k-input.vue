@@ -11,9 +11,10 @@
       {{ label }}
     </div>
     <el-input
-      v-model="input"
+      :model-value="modelValue"
       :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
       v-bind="$attrs"
+      @change="handlerChange"
     >
       <template #suffix>
         <slot name="suffix" />
@@ -60,26 +61,24 @@ const props = defineProps({
 });
 
 const errorTip = ref('');
-const input = ref(props.modelValue);
 const inputClass = computed(() => `k-input-label-${props.position}`);
 
-const validate = () => {
+watch(() => props.modelValue, (v) => {
+  console.log(v);
+}, {
+  immediate: true,
+});
+
+const handlerChange = (value) => {
   errorTip.value = '';
   if (props.rule && props.rule.format) {
     const { format, msg } = props.rule;
-    if (!format.test(input.value)) {
+    if (!format.test(value)) {
       errorTip.value = msg || 'input illegal';
     }
   }
-  return errorTip.value;
+  emit('update:modelValue', value);
 };
-
-watch(input, () => {
-  validate();
-  emit('update:modelValue', input);
-}, {
-  immediate: false,
-});
 </script>
 
 <style lang="scss">

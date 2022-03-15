@@ -22,8 +22,8 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-const router = useRoute();
-const breadcrumbs = computed(() => router.meta, (meta) => meta.breadcrumbs, {
+const route = useRoute();
+const breadcrumbs = computed(() => route.meta, (meta) => meta.breadcrumbs, {
   immediate: true,
 });
 </script>

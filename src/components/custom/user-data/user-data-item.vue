@@ -91,9 +91,9 @@ import { checkRes, userDataAPI } from '@/apis';
 import { SERVER_HOST } from '@/env';
 import { bus } from '@/utils/bus';
 import { inject } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-const router = useRoute();
+const router = useRouter();
 const isPrivate = inject('isPrivate');
 const props = defineProps({
   item: {

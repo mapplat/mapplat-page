@@ -50,9 +50,9 @@
 <script setup>
 import { signout } from '@/utils/helpers';
 import { bus } from '@/utils/bus';
-import { useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-const router = useRoute();
+const router = useRouter();
 
 const updatePassword = () => {
   bus.emit('open-password-dialog');
