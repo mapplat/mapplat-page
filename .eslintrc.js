@@ -27,8 +27,6 @@ module.exports = {
   },
   globals: {
     $t: 'readonly',
-    $bus: 'readonly',
-    $title: 'readonly',
   },
   settings: {
     'import/resolver': {

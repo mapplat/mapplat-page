@@ -4,9 +4,12 @@
       icon="icon-logo"
       :size="42"
     />
-    <span class="title">{{ $title }}</span>
+    <span class="title">{{ TITLE }}</span>
   </div>
 </template>
+<script setup>
+import { TITLE } from '@/env';
+</script>
 <style lang="scss">
 .k-logo {
   width: 100%;

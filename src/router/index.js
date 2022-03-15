@@ -58,12 +58,10 @@ const routes = [{
     component: Datasets,
     children: [{
       path: '',
-      redirect: () => ({ path: '/datasets/my-data' }),
-    }, {
-      path: 'my-data',
       name: 'my-data',
       component: MyData,
       meta: { breadcrumbs: breadcrumbsConf['my-data'], activePath: '/datasets' },
+      alias: ['my-data'],
     }, {
       path: 'public-data',
       name: 'public-data',
@@ -76,12 +74,10 @@ const routes = [{
     component: Maps,
     children: [{
       path: '',
-      redirect: () => ({ path: '/maps/my-map' }),
-    }, {
-      path: 'my-map',
       name: 'my-map',
       component: MyMap,
       meta: { breadcrumbs: breadcrumbsConf['my-map'], activePath: '/maps' },
+      alias: ['my-map'],
     }, {
       path: 'public-map',
       name: 'public-map',
@@ -114,6 +110,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userInfo = router.$user;
+  if (to.meta && to.meta.title) document.title = to.meta.title;
   if (to.name !== 'sign' && !userInfo) {
     next({
       name: 'sign',

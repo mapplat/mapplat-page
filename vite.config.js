@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue';
 // import styleImport from 'vite-plugin-style-import';
 import { visualizer } from 'rollup-plugin-visualizer';
 import PACKAGE from './package.json';
+import { TITLE } from './src/env';
 
 // const elPlugin = styleImport({
 //   libs: [{
@@ -15,20 +16,31 @@ import PACKAGE from './package.json';
 //   }],
 // });
 
-const plugins = [vue()];
+const htmlPlugin = () => ({
+  name: 'html-transform',
+  transformIndexHtml(html) {
+    return html.replace(
+      /<title>(.*?)<\/title>/,
+      `<title>${TITLE}</title>`,
+    );
+  },
+});
 
-if (process.env.NODE_ENV_REPORT) {
-  const visualizerPlugin = visualizer({
+const visualizerPlugin = () => {
+  if (!process.env.NODE_ENV_REPORT) return;
+  const plugin = visualizer({
     name: `${PACKAGE.name}-report`,
     template: 'treemap',
     filename: 'report/report.html',
     gzipSize: true,
   });
-  visualizerPlugin.outputOptions = () => {
+  plugin.outputOptions = () => {
     console.info(`\nReport: file://${__dirname}/report/report.html\n`);
   };
-  plugins.push(visualizerPlugin);
-}
+  return plugin;
+};
+
+const plugins = [vue(), htmlPlugin(), visualizerPlugin()];
 
 // https://vitejs.dev/config/
 export default defineConfig({

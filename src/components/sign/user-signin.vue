@@ -5,7 +5,7 @@
         icon="icon-logo"
         :size="48"
       />
-      <span class="title">{{ $title }}</span>
+      <span class="title">{{ TITLE }}</span>
     </div>
     <div
       v-if="type === 'signin'"
@@ -163,6 +163,7 @@
   </div>
 </template>
 <script setup>
+import { TITLE } from '@/env';
 import { notify } from '@/utils';
 import { checkRes, userAPI } from '@/apis';
 import { validateRefs } from '@/utils/helpers';

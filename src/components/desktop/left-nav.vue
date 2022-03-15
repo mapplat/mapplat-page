@@ -11,7 +11,7 @@
       <span
         v-show="!collapse"
         class="title"
-      >{{ $title }}</span>
+      >{{ TITLE }}</span>
     </div>
     <div class="left-nav-content">
       <LeftMenu :collapse="collapse" />
@@ -31,6 +31,7 @@
 <script setup>
 import { ref } from 'vue';
 import LeftMenu from '@/components/custom/left-menu/index.vue';
+import { TITLE } from '@/env';
 
 const collapse = ref();
 

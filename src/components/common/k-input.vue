@@ -14,7 +14,7 @@
       :model-value="modelValue"
       :class="{'el-input-line-border': isLineBorder, 'k-input-error': !!errorTip}"
       v-bind="$attrs"
-      @change="handlerChange"
+      @input="handlerInput"
     >
       <template #suffix>
         <slot name="suffix" />
@@ -63,7 +63,8 @@ const props = defineProps({
 const errorTip = ref('');
 const inputClass = computed(() => `k-input-label-${props.position}`);
 
-const handlerChange = (value) => {
+const handlerInput = (value) => {
+  console.log(value);
   errorTip.value = '';
   if (props.rule && props.rule.format) {
     const { format, msg } = props.rule;
