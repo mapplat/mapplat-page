@@ -64,7 +64,6 @@ const errorTip = ref('');
 const inputClass = computed(() => `k-input-label-${props.position}`);
 
 const handlerInput = (value) => {
-  console.log(value);
   errorTip.value = '';
   if (props.rule && props.rule.format) {
     const { format, msg } = props.rule;
