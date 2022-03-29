@@ -9,6 +9,7 @@ module.exports = {
     'airbnb-base',
   ],
   rules: {
+    'import/prefer-default-export': 0,
     'func-names': 0,
     'no-continue': 0,
     'no-restricted-syntax': 0,
