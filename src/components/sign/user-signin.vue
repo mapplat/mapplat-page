@@ -11,12 +11,12 @@
       v-if="type === 'signin'"
       class="user-info-wrapper"
     >
-      <k-input
+      <v-input
         v-model="email"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.email')"
-        :rule="rules.email"
+        :tips="errors.email"
       />
       <div
         class="forget-password"
@@ -24,11 +24,11 @@
       >
         {{ $t('message.forgot_password') }}
       </div>
-      <k-input
+      <v-input
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
-        :rule="rules.password"
+        :tips="errors.password"
         :label="$t('message.password')"
         show-password
         type="password"
@@ -39,19 +39,19 @@
       v-if="type === 'signup'"
       class="user-info-wrapper"
     >
-      <k-input
+      <v-input
         v-model="email"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.email')"
-        :rule="rules.email"
+        :tips="errors.email"
       />
-      <k-input
+      <v-input
         v-model="verifycode"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.verification_code')"
-        :rule="rules.verifycode"
+        :tips="errors.verifycode"
       >
         <template #suffix>
           <span
@@ -60,13 +60,13 @@
             @click="getVerifycode"
           >{{ verifycodeMsg }}</span>
         </template>
-      </k-input>
-      <k-input
+      </v-input>
+      <v-input
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.password')"
-        :rule="rules.password"
+        :tips="errors.password"
         show-password
         type="password"
         @keyup.enter="signup"
@@ -76,19 +76,19 @@
       v-if="type === 'password'"
       class="user-info-wrapper"
     >
-      <k-input
+      <v-input
         v-model="email"
-        :is-line-border="true"
         class="sx-m-padding"
+        :is-line-border="true"
         :label="$t('message.email')"
-        :rule="rules.email"
+        :tips="errors.email"
       />
-      <k-input
+      <v-input
         v-model="verifycode"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.verification_code')"
-        :rule="rules.verifycode"
+        :tips="errors.verifycode"
       >
         <template #suffix>
           <span
@@ -97,13 +97,13 @@
             @click="getVerifycode"
           >{{ verifycodeMsg }}</span>
         </template>
-      </k-input>
-      <k-input
+      </v-input>
+      <v-input
         v-model="password"
         :is-line-border="true"
         class="sx-m-padding"
         :label="$t('message.password')"
-        :rule="rules.password"
+        :tips="errors.password"
         show-password
         type="password"
         @keyup.enter="forgetPassworld"
@@ -166,21 +166,22 @@
 import { TITLE } from '@/env';
 import { notify } from '@/utils';
 import { checkRes, userAPI } from '@/apis';
-import { validateRefs } from '@/utils/helpers';
 import paramsRules from '@/utils/paramsRules';
 import { ref, watch } from 'vue';
-
-const rules = {
-  email: paramsRules.email,
-  password: paramsRules.password,
-  verifycode: paramsRules.verifycode,
-};
+import VInput from '@/components/common/v-input.vue';
+import { useForm } from '@/hooks/useValidate';
 
 const signinUsername = localStorage.getItem('signin_username');
 
-const email = ref(signinUsername);
-const password = ref();
-const verifycode = ref();
+const { useField, validate, errors } = useForm({
+  email: paramsRules.email,
+  password: paramsRules.password,
+  verifycode: paramsRules.verifycode,
+});
+const { value: email } = useField('email', signinUsername);
+const { value: password } = useField('password');
+const { value: verifycode } = useField('verifycode');
+
 const isCanVerifycode = ref(true);
 const verifycodeMsg = ref($t('message.get_verification_code'));
 const type = ref('signin');
@@ -195,8 +196,8 @@ const forgetPassword = () => {
   type.value = 'password';
 };
 watch(type, () => {
-  password.value = '';
-  verifycode.value = '';
+  password.value = undefined;
+  verifycode.value = undefined;
   isCanVerifycode.value = true;
 });
 
@@ -206,7 +207,7 @@ const signup = async () => {
     verifycode: verifycode.value,
     password: password.value,
   };
-  if (validateRefs()) {
+  if (validate(params)) {
     notify.error($t('tip.illegal_parameter'));
     return;
   }
@@ -226,7 +227,7 @@ const signin = async () => {
     password: password.value,
   };
 
-  if (validateRefs()) {
+  if (validate(params)) {
     notify.error($t('tip.illegal_parameter'));
     return;
   }
@@ -251,7 +252,7 @@ const forgetPassworld = async () => {
     verifycode: verifycode.value,
     password: password.value,
   };
-  if (validateRefs()) {
+  if (validate(params)) {
     notify.error($t('tip.illegal_parameter'));
     return;
   }
@@ -271,7 +272,7 @@ const getVerifycode = async () => {
   const params = {
     email: email.value,
   };
-  if (validateRefs(['email'])) {
+  if (validate(params)) {
     notify.error($t('tip.illegal_parameter'));
     return;
   }

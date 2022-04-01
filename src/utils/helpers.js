@@ -1,6 +1,7 @@
 function validateRefs(refs) {
-  refs = refs || Object.keys(this.$refs);
-  const errors = refs.filter((ref) => this.$refs[ref] && 'validate' in this.$refs[ref] && typeof this.$refs[ref].validate === 'function').map((ref) => this.$refs[ref].validate()).filter((val) => !!val);
+  const errors = refs.filter((ref) => ref && 'validate' in ref && typeof ref.validate === 'function')
+    .map((ref) => ref.validate())
+    .filter((val) => !!val);
   return errors.length ? errors : null;
 }
 

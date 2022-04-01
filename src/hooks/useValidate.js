@@ -1,78 +1,84 @@
-import {
-  ref, watch, getCurrentInstance, unref,
-} from 'vue';
+import { ref, watch, unref } from 'vue';
+import parameter from '@/utils/parameter';
 
-/**
- * 参考https://vee-validate.logaretm.com/
- */
-
-const SCHEMAS_KEY = Symbol('schemas');
-const CHECKERS_KEY = Symbol('checkers');
-const ERRORS_KEY = Symbol('errors');
-const OPTIONS_KEY = Symbol('options');
-
-/**
- * useValue
- * @param {*} name useValue的checker,当是字符串时取useForm定义的checker,当是对象时可以使用自定义的checker格式为 { name: checker }
- * @param {*} params useValue 默认值
- * @param {*} options useField的配置
- * @returns {object} validate 和 errors
- */
-const useValue = (name, params, options) => {
-  const instance = getCurrentInstance();
-  const value = ref(params);
-  const schemas = unref(instance[SCHEMAS_KEY]);
-  const errors = unref(instance[ERRORS_KEY]);
-  if (typeof name !== 'string') {
-    Object.assign(schemas, name);
+function getFields(fields) {
+  if (fields) {
+    return Array.isArray(fields) ? fields : Object.keys(fields);
   }
-  const _name = typeof name === 'string' ? name : Object.keys(name)[0];
-
-  const cb = () => {
-    if (schemas[_name]) {
-      errors[_name] = schemas[_name](unref(value));
-    }
-  };
-  instance[CHECKERS_KEY].push(cb);
-
-  watch(value, cb, {
-    deep: false,
-    immediate: false,
-    ...instance[OPTIONS_KEY],
-    ...options,
-  });
-  return {
-    value,
-    errors: errors[_name],
-    validate: cb,
-  };
-};
-
+}
 /**
- * useSchema
- * @param {*} schemas useValue的默认checker
- * @param {*} options useValue的默认配置
- * @returns {object} validate 和 errors
+ * 验证表单字段
+ * @param {*} formChecker 验证规则
+ * @param {*} formOptions 可选参数
+ * @returns
  */
-const useSchema = (schemas = {}, options = {}) => {
-  const instance = getCurrentInstance();
-  instance[CHECKERS_KEY] = [];
-  instance[SCHEMAS_KEY] = ref(schemas);
-  instance[ERRORS_KEY] = ref({});
-  instance[OPTIONS_KEY] = ref(options);
-  const validate = () => {
-    const checkers = instance[CHECKERS_KEY];
-    Object.keys(checkers).forEach((key) => {
-      instance[ERRORS_KEY][key] = checkers[key]();
-    });
+const useForm = (formChecker = {}, formOptions = {}) => {
+  const validates = {};
+  const resets = {};
+  const clears = {};
+  const checker = unref(formChecker);
+  const formError = ref({});
+  const formValidate = (fields) => {
+    (getFields(fields) || Object.keys(validates)).forEach((field) => validates[field]());
+    const errors = Object.values(unref(formError)).filter((error) => !!error);
+    return Array.isArray(errors) && errors.length ? errors : undefined;
   };
+  const formReset = (fields) => (getFields(fields) || Object.keys(resets)).forEach((field) => resets[field]());
+  const formClear = (fields) => (getFields(fields) || Object.keys(clears)).forEach((field) => clears[field]());
+
+  const useField = (fieldChecker, defaultValue, fieldOptions) => {
+    const value = ref(defaultValue);
+    const fieldError = ref();
+    if (typeof fieldChecker !== 'string') {
+      Object.assign(checker, fieldChecker);
+    }
+    const field = typeof fieldChecker === 'string' ? fieldChecker : Object.keys(fieldChecker)[0];
+
+    const fieldValidate = () => {
+      const check = checker[field];
+      if (check && typeof fieldCh === 'function') {
+        fieldError.value = check(unref(value));
+      } else {
+        const error = parameter.validate({ value: unref(check) }, { value: unref(value) });
+        fieldError.value = (Array.isArray(error) && error.length) ? error[0].message : undefined;
+      }
+      formError.value[field] = fieldError;
+      return unref(fieldError);
+    };
+    const fieldClear = () => {
+      fieldError.value = undefined;
+    };
+
+    const fieldReset = () => {
+      value.value = defaultValue;
+    };
+
+    validates[field] = fieldValidate;
+    resets[field] = fieldReset;
+    clears[field] = fieldClear;
+
+    watch(value, fieldValidate, {
+      deep: false,
+      immediate: false,
+      ...formOptions,
+      ...fieldOptions,
+    });
+    return {
+      value,
+      validate: fieldValidate,
+      reset: fieldReset,
+      clear: fieldClear,
+      errors: fieldError,
+    };
+  };
+
   return {
-    validate,
-    errors: instance[ERRORS_KEY],
+    useField,
+    validate: formValidate,
+    reset: formReset,
+    clear: formClear,
+    errors: formError,
   };
 };
 
-export {
-  useValue,
-  useSchema,
-};
+export { useForm };
