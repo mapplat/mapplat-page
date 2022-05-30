@@ -16,8 +16,14 @@
       v-bind="$attrs"
       @input="handlerInput"
     >
-      <template #suffix>
-        <slot name="suffix" />
+      <template
+        v-for="(slot, slotName) in $slots"
+        #[slotName]="slotProps"
+      >
+        <slot
+          :name="slotName"
+          v-bind="slotProps"
+        />
       </template>
     </el-input>
     <div
