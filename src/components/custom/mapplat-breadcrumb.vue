@@ -8,7 +8,7 @@
         />
       </el-breadcrumb-item>
       <el-breadcrumb-item
-        v-for="breadcrumb in breadcrumbs"
+        v-for="breadcrumb in breadcrumbs.breadcrumbs"
         :key="breadcrumb.name"
         :to="{ path: breadcrumb.path }"
       >
